@@ -379,41 +379,10 @@ const userContactConfirmationEmail = (payload) => {
     `,
     };
 };
-const subscriptionActivatedEmail = (data) => {
-    return {
-        to: data.user.email,
-        subject: `✅ Subscription Activated – Welcome to Nebraska Bush Puller`,
-        html: `
-<body style="margin:0;padding:0;font-family:Inter,Segoe UI,sans-serif;background:#f7f9fc;">
-  <table width="100%" cellpadding="0" cellspacing="0" style="max-width:620px;margin:30px auto;background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 4px 14px rgba(0,0,0,0.06);">
-    <tr>
-      <td align="center" style="background:#EBF2FF;padding:25px 20px;">
-        <h2 style="margin:0;color:#5690ff;font-size:20px;">Subscription Activated!</h2>
-      </td>
-    </tr>
-    <tr>
-      <td style="padding:25px 20px;">
-        <p style="font-size:14px;color:#1e293b;line-height:1.5;">
-          Hello <strong>${data.user.fullName}</strong>,<br>
-          Your subscription for <strong>${data.plan.title}</strong> has been successfully activated.
-        </p>
-        <p style="font-size:13px;margin:8px 0;color:#1e293b;"><strong>Amount Paid:</strong> £${data.amountPaid}</p>
-        <p style="font-size:13px;margin:8px 0;color:#1e293b;"><strong>Transaction ID:</strong> ${data.trxId}</p>
-        <div style="text-align:center;margin-top:20px;">
-          <a href="${config_1.default.frontend_url}/dashboard" style="background:#5690ff;color:#fff;padding:12px 28px;border-radius:8px;text-decoration:none;font-size:14px;display:inline-block;box-shadow:0 4px 12px rgba(86,144,255,0.3);">Go to Dashboard</a>
-        </div>
-      </td>
-    </tr>
-  </table>
-</body>
-`,
-    };
-};
 exports.emailTemplate = {
     createAccount,
     resetPassword,
     resendOtp,
     userContactConfirmationEmail,
     adminContactNotificationEmail,
-    subscriptionActivatedEmail,
 };

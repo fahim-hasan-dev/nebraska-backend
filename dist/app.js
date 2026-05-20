@@ -33,7 +33,6 @@ app.use(morgan_1.Morgan.successHandler);
 app.use(morgan_1.Morgan.errorHandler);
 //body parser
 app.use((0, cors_1.default)());
-app.use('/api/v1/webhook', express_1.default.raw({ type: 'application/json' })); // Global webhook path
 app.use(express_1.default.json());
 app.use(express_1.default.urlencoded({ extended: true }));
 app.use(request_ip_1.default.mw());

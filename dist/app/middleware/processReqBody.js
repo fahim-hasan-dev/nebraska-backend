@@ -10,14 +10,12 @@ const http_status_codes_1 = require("http-status-codes");
 const path_1 = __importDefault(require("path"));
 const fs_1 = __importDefault(require("fs"));
 const sharp_1 = __importDefault(require("sharp"));
+// Upload configuration details
 const uploadFields = [
     { name: 'image', maxCount: 1 },
-    { name: 'media', maxCount: 3 },
-    { name: 'documents', maxCount: 3 },
-    { name: 'logo', maxCount: 1 },
-    { name: 'lostImage', maxCount: 4 },
-    { name: 'shippingLabel', maxCount: 1 },
+    { name: 'pictures', maxCount: 10 },
 ];
+// Middleware for parsing body and files
 const fileAndBodyProcessorUsingDiskStorage = () => {
     const uploadsDir = path_1.default.join(process.cwd(), 'uploads');
     if (!fs_1.default.existsSync(uploadsDir)) {
@@ -33,9 +31,7 @@ const fileAndBodyProcessorUsingDiskStorage = () => {
         },
         filename: (req, file, cb) => {
             const extension = path_1.default.extname(file.originalname) || `.${file.mimetype.split('/')[1]}`;
-            const filename = `${Date.now()}-${Math.random()
-                .toString(36)
-                .slice(2, 8)}${extension}`;
+            const filename = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}${extension}`;
             cb(null, filename);
         },
     });
@@ -44,16 +40,7 @@ const fileAndBodyProcessorUsingDiskStorage = () => {
         try {
             const allowedTypes = {
                 image: ['image/jpeg', 'image/png', 'image/jpg'],
-                media: ['video/mp4', 'audio/mpeg'],
-                documents: ['application/pdf'],
-                logo: ['image/jpeg', 'image/png', 'image/jpg'],
-                lostImage: ['image/jpeg', 'image/png', 'image/jpg'],
-                shippingLabel: [
-                    'image/jpeg',
-                    'image/png',
-                    'image/jpg',
-                    'application/pdf',
-                ],
+                pictures: ['image/jpeg', 'image/png', 'image/jpg'],
             };
             const fieldType = file.fieldname;
             if (!((_a = allowedTypes[fieldType]) === null || _a === void 0 ? void 0 : _a.includes(file.mimetype))) {
@@ -92,8 +79,7 @@ const fileAndBodyProcessorUsingDiskStorage = () => {
                     await Promise.all(fileArray.map(async (file) => {
                         const filePath = `/${fieldName}/${file.filename}`;
                         paths.push(filePath);
-                        if (['image', 'logo', 'lostImage', 'shippingLabel'].includes(fieldName) &&
-                            file.mimetype.startsWith('image/')) {
+                        if (['image', 'pictures'].includes(fieldName) && file.mimetype.startsWith('image/')) {
                             const fullPath = path_1.default.join(uploadsDir, fieldName, file.filename);
                             const tempPath = fullPath + '.opt';
                             try {
@@ -104,10 +90,7 @@ const fileAndBodyProcessorUsingDiskStorage = () => {
                                     sharpInstance = sharpInstance.png({ quality: 80 });
                                 }
                                 else {
-                                    sharpInstance = sharpInstance.jpeg({
-                                        quality: 80,
-                                        mozjpeg: true,
-                                    });
+                                    sharpInstance = sharpInstance.jpeg({ quality: 80, mozjpeg: true });
                                 }
                                 await sharpInstance.toFile(tempPath);
                                 fs_1.default.unlinkSync(fullPath);
@@ -122,14 +105,8 @@ const fileAndBodyProcessorUsingDiskStorage = () => {
                 }));
                 req.body = {
                     ...req.body,
-                    ...(processedFiles.logo && { logo: processedFiles.logo }),
                     ...(processedFiles.image && { image: processedFiles.image }),
-                    ...(processedFiles.shippingLabel && {
-                        shippingLabel: processedFiles.shippingLabel,
-                    }),
-                    ...(processedFiles.lostImage && {
-                        images: processedFiles.lostImage,
-                    }),
+                    ...(processedFiles.pictures && { pictures: processedFiles.pictures }),
                 };
                 next();
             }
