@@ -13,6 +13,8 @@ const notification_routes_1 = require("../modules/notification/notification.rout
 const event_route_1 = require("../modules/event/event.route");
 const eventRequest_route_1 = require("../modules/eventRequest/eventRequest.route");
 const result_route_1 = require("../modules/result/result.route");
+const sponsor_route_1 = require("../modules/sponsor/sponsor.route");
+const sponsorRequest_route_1 = require("../modules/sponsorRequest/sponsorRequest.route");
 const router = express_1.default.Router();
 const apiRoutes = [
     { path: "/user", route: user_route_1.UserRoutes },
@@ -24,6 +26,8 @@ const apiRoutes = [
     { path: "/event", route: event_route_1.EventRoutes },
     { path: "/event-request", route: eventRequest_route_1.EventRequestRoutes },
     { path: "/result", route: result_route_1.ResultRoutes },
+    { path: "/sponsor", route: sponsor_route_1.SponsorRoutes },
+    { path: "/sponsor-request", route: sponsorRequest_route_1.SponsorRequestRoutes },
 ];
 apiRoutes.forEach(route => router.use(route.path, route.route));
 exports.default = router;
