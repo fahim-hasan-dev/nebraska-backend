@@ -7,7 +7,7 @@ import fs from 'fs'
 import sharp from 'sharp'
 
 // Allowed field names for uploads
-type IFolderName = 'image' | 'pictures';
+type IFolderName = 'image' | 'pictures' | 'file';
 
 interface ProcessedFiles {
   [key: string]: string | string[] | undefined
@@ -17,6 +17,7 @@ interface ProcessedFiles {
 const uploadFields = [
   { name: 'image', maxCount: 1 },
   { name: 'pictures', maxCount: 10 },
+  { name: 'file', maxCount: 1 },
 ] as const;
 
 // Middleware for parsing body and files
@@ -46,6 +47,7 @@ export const fileAndBodyProcessorUsingDiskStorage = () => {
       const allowedTypes = {
         image: ['image/jpeg', 'image/png', 'image/jpg'],
         pictures: ['image/jpeg', 'image/png', 'image/jpg'],
+        file: ['application/pdf'],
       };
 
       const fieldType = file.fieldname as IFolderName;
@@ -126,6 +128,7 @@ export const fileAndBodyProcessorUsingDiskStorage = () => {
           ...req.body,
           ...(processedFiles.image && { image: processedFiles.image }),
           ...(processedFiles.pictures && { pictures: processedFiles.pictures }),
+          ...(processedFiles.file && { file: processedFiles.file }),
         };
 
         next();

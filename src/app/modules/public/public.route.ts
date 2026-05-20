@@ -4,6 +4,7 @@ import validateRequest from '../../middleware/validateRequest'
 import { FaqValidations, PublicValidation } from './public.validation'
 import { USER_ROLES } from '../../../enum/user'
 import auth from '../../middleware/auth'
+import { fileAndBodyProcessorUsingDiskStorage } from '../../middleware/processReqBody'
 
 const router = express.Router()
 
@@ -39,5 +40,14 @@ router.patch(
 router.get('/faq/single/:id', PublicController.getSingleFaq)
 router.get('/faq/all', PublicController.getAllFaqs)
 router.delete('/faq/:id', auth(USER_ROLES.ADMIN), PublicController.deleteFaq)
+
+router.post(
+  '/rolebook',
+  auth(USER_ROLES.ADMIN),
+  fileAndBodyProcessorUsingDiskStorage(),
+  PublicController.updateRolebook
+)
+
+router.get('/rolebook', PublicController.getRolebook)
 
 export const PublicRoutes = router

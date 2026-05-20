@@ -3,6 +3,7 @@ import { PublicServices } from './public.service'
 import catchAsync from '../../../shared/catchAsync'
 import sendResponse from '../../../shared/sendResponse'
 import { StatusCodes } from 'http-status-codes'
+import ApiError from '../../../errors/ApiError'
 
 const createPublic = catchAsync(async (req: Request, res: Response) => {
   const publicData = req.body
@@ -124,6 +125,33 @@ const deleteFaq = catchAsync(async (req: Request, res: Response) => {
   })
 })
 
+const updateRolebook = catchAsync(async (req: Request, res: Response) => {
+  const fileUrl = req.body.file;
+  if (!fileUrl) {
+    throw new ApiError(StatusCodes.BAD_REQUEST, 'PDF file is required');
+  }
+  
+  const result = await PublicServices.updateRolebook(fileUrl);
+  
+  sendResponse(res, {
+    statusCode: StatusCodes.OK,
+    success: true,
+    message: 'Rolebook updated successfully',
+    data: result,
+  })
+})
+
+const getRolebook = catchAsync(async (req: Request, res: Response) => {
+  const result = await PublicServices.getRolebook();
+  
+  sendResponse(res, {
+    statusCode: StatusCodes.OK,
+    success: true,
+    message: 'Rolebook retrieved successfully',
+    data: result,
+  })
+})
+
 export const PublicController = {
   createPublic,
   getAllPublics,
@@ -135,4 +163,6 @@ export const PublicController = {
   getAllFaqs,
   deleteFaq,
   getAllContacts,
+  updateRolebook,
+  getRolebook,
 }

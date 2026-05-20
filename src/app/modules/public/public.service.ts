@@ -137,6 +137,28 @@ const deleteFaq = async (id: string) => {
   return result
 }
 
+const updateRolebook = async (fileUrl: string) => {
+  const type = 'rolebook';
+  const isExist = await Public.findOne({ type });
+  
+  if (isExist) {
+    const result = await Public.findByIdAndUpdate(
+      isExist._id,
+      { $set: { content: fileUrl } },
+      { new: true }
+    );
+    return result;
+  } else {
+    const result = await Public.create({ type, content: fileUrl });
+    return result;
+  }
+}
+
+const getRolebook = async () => {
+  const result = await Public.findOne({ type: 'rolebook' }).lean();
+  return result || null;
+}
+
 export const PublicServices = {
   createPublic,
   getAllPublics,
@@ -148,4 +170,6 @@ export const PublicServices = {
   updateFaq,
   deleteFaq,
   getAllContacts,
+  updateRolebook,
+  getRolebook,
 }
