@@ -11,6 +11,8 @@ const public_route_1 = require("../modules/public/public.route");
 const token_route_1 = require("../modules/token/token.route");
 const notification_routes_1 = require("../modules/notification/notification.routes");
 const event_route_1 = require("../modules/event/event.route");
+const eventRequest_route_1 = require("../modules/eventRequest/eventRequest.route");
+const result_route_1 = require("../modules/result/result.route");
 const router = express_1.default.Router();
 const apiRoutes = [
     { path: "/user", route: user_route_1.UserRoutes },
@@ -20,6 +22,8 @@ const apiRoutes = [
     { path: "/token", route: token_route_1.TokenRoutes },
     { path: "/notification", route: notification_routes_1.NotificationRoutes },
     { path: "/event", route: event_route_1.EventRoutes },
+    { path: "/event-request", route: eventRequest_route_1.EventRequestRoutes },
+    { path: "/result", route: result_route_1.ResultRoutes },
 ];
 apiRoutes.forEach(route => router.use(route.path, route.route));
 exports.default = router;
