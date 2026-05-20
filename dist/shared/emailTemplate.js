@@ -9,7 +9,7 @@ const createAccount = (values) => {
     console.log(values, 'values');
     const data = {
         to: values.email,
-        subject: `Verify your Template account, ${values.name}`,
+        subject: `Verify your Nebraska Bush Puller account, ${values.name}`,
         html: `
 <body style="margin:0; padding:0; font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
   <table width="100%" cellpadding="0" cellspacing="0"
@@ -19,24 +19,24 @@ const createAccount = (values) => {
     <!-- Body -->
     <tr>
       <td style="padding:45px;">
-        <h1 style="color:#0096FF; font-size:26px; font-weight:700; margin-bottom:15px; text-align:center;">
+        <h1 style="color:#5690ff; font-size:26px; font-weight:700; margin-bottom:15px; text-align:center;">
           Verify Your Email ✨
         </h1>
 
-        <p style="color:#003060; font-size:16px; line-height:1.6; margin-bottom:25px; text-align:center;">
-          Hey <strong>${values.name}</strong>, welcome to <strong>Template</strong>! 🎉<br>
+        <p style="color:#1e293b; font-size:16px; line-height:1.6; margin-bottom:25px; text-align:center;">
+          Hey <strong>${values.name}</strong>, welcome to <strong>Nebraska Bush Puller</strong>! 🎉<br>
           Please verify your email to activate your account.
         </p>
 
         <!-- OTP Box -->
-        <div style="background:linear-gradient(145deg,#EAF4FF,#D7E9FF); border:2px solid #0096FF; 
+        <div style="background:linear-gradient(145deg,#EBF2FF,#D7E4FF); border:2px solid #5690ff; 
                     border-radius:12px; padding:25px 0; text-align:center; margin:30px auto; max-width:300px;">
-          <span style="font-size:40px; font-weight:700; color:#003060; letter-spacing:6px;">
+          <span style="font-size:40px; font-weight:700; color:#1e293b; letter-spacing:6px;">
             ${values.otp}
           </span>
         </div>
 
-        <p style="color:#003060; font-size:15px; line-height:1.6; text-align:center;">
+        <p style="color:#1e293b; font-size:15px; line-height:1.6; text-align:center;">
           This code will expire in <strong>5 minutes</strong>.<br>
           If you didn’t request this, you can safely ignore this email.
         </p>
@@ -52,9 +52,9 @@ const createAccount = (values) => {
         <!-- Button -->
         <div style="text-align:center; margin-top:45px;">
           <a href="${config_1.default.frontend_url}/otp-verify" 
-             style="background-color:#0096FF; color:#ffffff; padding:14px 32px; font-size:16px; 
+             style="background-color:#5690ff; color:#ffffff; padding:14px 32px; font-size:16px; 
                     font-weight:600; border-radius:10px; text-decoration:none; display:inline-block; 
-                    box-shadow:0 4px 12px rgba(0,150,255,0.3); transition:all 0.3s;">
+                    box-shadow:0 4px 12px rgba(86,144,255,0.3); transition:all 0.3s;">
             Open App 🚀
           </a>
         </div>
@@ -63,12 +63,12 @@ const createAccount = (values) => {
 
     <!-- Footer -->
     <tr>
-      <td align="center" style="background:linear-gradient(135deg,#F5FAFF,#E6F0FF); padding:25px 20px; border-top:1px solid #0096FF33;">
-        <p style="margin:0; color:#003060; font-size:13px;">
-          © ${new Date().getFullYear()} <strong>Template</strong>. All rights reserved.
+      <td align="center" style="background:linear-gradient(135deg,#F5F8FF,#E6EEFF); padding:25px 20px; border-top:1px solid #5690ff33;">
+        <p style="margin:0; color:#1e293b; font-size:13px;">
+          © ${new Date().getFullYear()} <strong>Nebraska Bush Puller</strong>. All rights reserved.
         </p>
-        <p style="margin:6px 0 0; color:#003060; font-size:13px;">
-          Powered by <strong style="color:#0096FF;">Template API</strong> ✨
+        <p style="margin:6px 0 0; color:#1e293b; font-size:13px;">
+          Powered by <strong style="color:#5690ff;">Nebraska Bush Puller API</strong> ✨
         </p>
       </td>
     </tr>
@@ -83,7 +83,7 @@ const resetPassword = (values) => {
     console.log(values, 'values');
     const data = {
         to: values.email,
-        subject: `Reset your App password, ${values.name}`,
+        subject: `Reset your Nebraska Bush Puller password, ${values.name}`,
         html: `
 <body style="margin:0; padding:0; font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
   <table width="100%" cellpadding="0" cellspacing="0"
@@ -93,43 +93,44 @@ const resetPassword = (values) => {
     <!-- Body -->
     <tr>
       <td style="padding:45px;">
-        <h1 style="color:#0096FF; font-size:26px; font-weight:700; margin-bottom:15px; text-align:center;">
+        <h1 style="color:#5690ff; font-size:26px; font-weight:700; margin-bottom:15px; text-align:center;">
           Password Reset Request 🔐
         </h1>
 
-        <p style="color:#003060; font-size:16px; line-height:1.6; margin-bottom:25px; text-align:center;">
+        <p style="color:#1e293b; font-size:16px; line-height:1.6; margin-bottom:25px; text-align:center;">
           Hi <strong>${values.name}</strong>, 👋<br>
-          We received a request to reset your password for your <strong>App</strong> account.
+          We received a request to reset your password for your <strong>Nebraska Bush Puller</strong> account.
           <br>Enter the code below to complete the process:
         </p>
 
         <!-- OTP Box -->
-        <div style="background:linear-gradient(145deg,#EAF4FF,#D7E9FF); border:2px solid #0096FF;
+        <div style="background:linear-gradient(145deg,#EBF2FF,#D7E4FF); border:2px solid #5690ff;
                     border-radius:12px; padding:25px 0; text-align:center; margin:30px auto; max-width:300px;">
-          <span style="font-size:40px; font-weight:700; color:#003060; letter-spacing:6px;">
+          <span style="font-size:40px; font-weight:700; color:#1e293b; letter-spacing:6px;">
             ${values.otp}
           </span>
         </div>
 
-        <p style="color:#003060; font-size:15px; line-height:1.6; text-align:center;">
+        <p style="color:#1e293b; font-size:15px; line-height:1.6; text-align:center;">
           This verification code is valid for <strong>5 minutes</strong>.<br>
           If you didn’t request this, please ignore this email — your account is safe.
         </p>
 
         <!-- Tip -->
-        <div style="margin-top:35px; background-color:#fff8e1; border-left:6px solid #ffd54f;
+        <div style="margin-top:35px; background-color:#fff8e1;
+                    border-left:6px solid #ffd54f;
                     border-radius:8px; padding:15px 18px;">
           <p style="margin:0; color:#4a4a4a; font-size:14px;">
-            ⚠️ <strong>Security Tip:</strong> Never share your reset code with anyone. App will never ask for it.
+            ⚠️ <strong>Security Tip:</strong> Never share your reset code with anyone. Nebraska Bush Puller will never ask for it.
           </p>
         </div>
 
         <!-- Button -->
         <div style="text-align:center; margin-top:45px;">
           <a href="${config_1.default.frontend_url}/otp-verify" target="_blank"
-             style="background-color:#0096FF; color:#ffffff; padding:14px 32px; font-size:16px;
+             style="background-color:#5690ff; color:#ffffff; padding:14px 32px; font-size:16px;
                     font-weight:600; border-radius:10px; text-decoration:none; display:inline-block;
-                    box-shadow:0 4px 12px rgba(0,150,255,0.3); transition:all 0.3s;">
+                    box-shadow:0 4px 12px rgba(86,144,255,0.3); transition:all 0.3s;">
             🔑 Reset Password
           </a>
         </div>
@@ -138,12 +139,12 @@ const resetPassword = (values) => {
 
     <!-- Footer -->
     <tr>
-      <td align="center" style="background:linear-gradient(135deg,#F5FAFF,#E6F0FF); padding:25px 20px; border-top:1px solid #0096FF33;">
-        <p style="margin:0; color:#003060; font-size:13px;">
-          © ${new Date().getFullYear()} <strong>Template</strong>. All rights reserved.
+      <td align="center" style="background:linear-gradient(135deg,#F5F8FF,#E6EEFF); padding:25px 20px; border-top:1px solid #5690ff33;">
+        <p style="margin:0; color:#1e293b; font-size:13px;">
+          © ${new Date().getFullYear()} <strong>Nebraska Bush Puller</strong>. All rights reserved.
         </p>
-        <p style="margin:6px 0 0; color:#003060; font-size:13px;">
-          Powered by <strong style="color:#0096FF;">Template API</strong> ✨
+        <p style="margin:6px 0 0; color:#1e293b; font-size:13px;">
+          Powered by <strong style="color:#5690ff;">Nebraska Bush Puller API</strong> ✨
         </p>
       </td>
     </tr>
@@ -169,29 +170,29 @@ const resendOtp = (values) => {
     <!-- Body -->
     <tr>
       <td style="padding:45px;">
-        <h1 style="color:#1b4332; font-size:26px; font-weight:700; margin-bottom:15px; text-align:center;">
+        <h1 style="color:#5690ff; font-size:26px; font-weight:700; margin-bottom:15px; text-align:center;">
           ${isReset ? 'Reset Your Password 🔐' : 'Verify Your Account 🚀'}
         </h1>
 
-        <p style="color:#3a5a40; font-size:16px; line-height:1.6; margin-bottom:25px; text-align:center;">
+        <p style="color:#1e293b; font-size:16px; line-height:1.6; margin-bottom:25px; text-align:center;">
           Hi <strong>${values.name}</strong>, 👋<br>
           ${isReset
-            ? 'You requested a new verification code to reset your Template password.'
-            : 'Here is your new verification code to complete your Template account setup.'}<br>
+            ? 'You requested a new verification code to reset your Nebraska Bush Puller password.'
+            : 'Here is your new verification code to complete your Nebraska Bush Puller account setup.'}<br>
           Use the code below to continue:
         </p>
 
         <!-- OTP Box -->
-        <div style="background:linear-gradient(145deg,#d8f3dc,#b7e4c7);
-                    border:2px solid #52b788; border-radius:12px;
+        <div style="background:linear-gradient(145deg,#EBF2FF,#D7E4FF);
+                    border:2px solid #5690ff; border-radius:12px;
                     padding:25px 0; text-align:center;
                     margin:30px auto; max-width:300px;">
-          <span style="font-size:40px; font-weight:700; color:#1b4332; letter-spacing:6px;">
+          <span style="font-size:40px; font-weight:700; color:#1e293b; letter-spacing:6px;">
             ${values.otp}
           </span>
         </div>
 
-        <p style="color:#3a5a40; font-size:15px; line-height:1.6; text-align:center;">
+        <p style="color:#1e293b; font-size:15px; line-height:1.6; text-align:center;">
           This code is valid for <strong>5 minutes</strong>.<br>
           If this was not you, please ignore the email.
         </p>
@@ -201,18 +202,17 @@ const resendOtp = (values) => {
                     border-left:6px solid #ffd54f;
                     border-radius:8px; padding:15px 18px;">
           <p style="margin:0; color:#4a4a4a; font-size:14px;">
-            🔒 <strong>Security Tip:</strong> Never share your OTP with anyone. Template
- will never request it.
+            🔒 <strong>Security Tip:</strong> Never share your OTP with anyone. Nebraska Bush Puller will never request it.
           </p>
         </div>
 
         <!-- Button -->
         <div style="text-align:center; margin-top:45px;">
           <a href="${config_1.default.frontend_url}/otp-verify"
-             style="background-color:#2d6a4f; color:#ffffff; padding:14px 32px;
+             style="background-color:#5690ff; color:#ffffff; padding:14px 32px;
                     font-size:16px; font-weight:600; border-radius:10px;
                     text-decoration:none; display:inline-block;
-                    box-shadow:0 4px 12px rgba(45,106,79,0.3);">
+                    box-shadow:0 4px 12px rgba(86,144,255,0.3);">
             ${isReset ? 'Reset Password' : 'Verify Account'}
           </a>
         </div>
@@ -221,12 +221,12 @@ const resendOtp = (values) => {
 
     <!-- Footer -->
     <tr>
-      <td align="center" style="background-color:#f1f8f4; padding:25px 20px; border-top:1px solid #e6f4ea;">
-        <p style="margin:0; color:#52796f; font-size:13px;">
-          © ${new Date().getFullYear()} <strong>Template</strong>. All rights reserved.
+      <td align="center" style="background:linear-gradient(135deg,#F5F8FF,#E6EEFF); padding:25px 20px; border-top:1px solid #5690ff33;">
+        <p style="margin:0; color:#64748b; font-size:13px;">
+          © ${new Date().getFullYear()} <strong>Nebraska Bush Puller</strong>. All rights reserved.
         </p>
-        <p style="margin:6px 0 0; color:#3a5a40; font-size:13px;">
-          Powered by <strong style="color:#1b4332;">Template API</strong> 🚀
+        <p style="margin:6px 0 0; color:#1e293b; font-size:13px;">
+          Powered by <strong style="color:#5690ff;">Nebraska Bush Puller API</strong> 🚀
         </p>
       </td>
     </tr>
@@ -240,7 +240,7 @@ const resendOtp = (values) => {
 const adminContactNotificationEmail = (payload) => {
     return {
         to: config_1.default.super_admin.email,
-        subject: '📩 New Contact Form Submission – App',
+        subject: '📩 New Contact Form Submission – Nebraska Bush Puller',
         html: `
 <body style="margin:0; padding:0; font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
   <table width="100%" cellpadding="0" cellspacing="0"
@@ -250,47 +250,47 @@ const adminContactNotificationEmail = (payload) => {
     <!-- Body -->
     <tr>
       <td style="padding:45px;">
-        <h1 style="color:#0096FF; font-size:26px; font-weight:700; margin-bottom:20px; text-align:center;">
+        <h1 style="color:#5690ff; font-size:26px; font-weight:700; margin-bottom:20px; text-align:center;">
           📬 New Contact Submission
         </h1>
 
-        <p style="color:#003060; font-size:16px; text-align:center; margin-bottom:30px;">
-          A new contact message has been submitted on <strong>App</strong>.
+        <p style="color:#1e293b; font-size:16px; text-align:center; margin-bottom:30px;">
+          A new contact message has been submitted on <strong>Nebraska Bush Puller</strong>.
         </p>
 
         <!-- Contact Details -->
         <table style="width:100%; border-collapse:collapse; margin:20px 0;">
           <tr>
-            <td style="padding:12px 0; font-size:15px; color:#003060;">👤 <strong>Name:</strong></td>
-            <td style="padding:12px 0; font-size:15px; color:#003060; text-align:right;">
+            <td style="padding:12px 0; font-size:15px; color:#1e293b;">👤 <strong>Name:</strong></td>
+            <td style="padding:12px 0; font-size:15px; color:#1e293b; text-align:right;">
               ${payload.name}
             </td>
           </tr>
 
-          <tr style="border-top:1px solid #0096FF22;">
-            <td style="padding:12px 0; font-size:15px; color:#003060;">📧 <strong>Email:</strong></td>
-            <td style="padding:12px 0; font-size:15px; color:#003060; text-align:right;">
+          <tr style="border-top:1px solid #5690ff22;">
+            <td style="padding:12px 0; font-size:15px; color:#1e293b;">📧 <strong>Email:</strong></td>
+            <td style="padding:12px 0; font-size:15px; color:#1e293b; text-align:right;">
               ${payload.email}
             </td>
           </tr>
 
-          <tr style="border-top:1px solid #0096FF22;">
-            <td style="padding:12px 0; font-size:15px; color:#003060;">📞 <strong>Phone:</strong></td>
-            <td style="padding:12px 0; font-size:15px; color:#003060; text-align:right;">
+          <tr style="border-top:1px solid #5690ff22;">
+            <td style="padding:12px 0; font-size:15px; color:#1e293b;">📞 <strong>Phone:</strong></td>
+            <td style="padding:12px 0; font-size:15px; color:#1e293b; text-align:right;">
               ${payload.phone || 'N/A'}
             </td>
           </tr>
         </table>
 
         <!-- Message Box -->
-        <div style="background:linear-gradient(145deg,#EAF4FF,#D7E9FF); border:2px solid #0096FF;
+        <div style="background:linear-gradient(145deg,#EBF2FF,#D7E4FF); border:2px solid #5690ff;
                     border-radius:12px; padding:20px; margin-top:30px;">
-          <p style="margin:0; font-size:15px; color:#003060; line-height:1.6;">
+          <p style="margin:0; font-size:15px; color:#1e293b; line-height:1.6;">
             “${payload.message}”
           </p>
         </div>
 
-        <p style="color:#003060; font-size:14px; margin-top:30px; text-align:center;">
+        <p style="color:#1e293b; font-size:14px; margin-top:30px; text-align:center;">
           You can respond directly to <strong>${payload.email}</strong>.
         </p>
       </td>
@@ -299,12 +299,12 @@ const adminContactNotificationEmail = (payload) => {
     <!-- Footer -->
     <tr>
       <td align="center" 
-          style="background:linear-gradient(135deg,#F5FAFF,#E6F0FF); padding:25px 20px; border-top:1px solid #0096FF33;">
-        <p style="margin:0; color:#003060; font-size:13px;">
-          © ${new Date().getFullYear()} <strong>App</strong>. All rights reserved.
+          style="background:linear-gradient(135deg,#F5F8FF,#E6EEFF); padding:25px 20px; border-top:1px solid #5690ff33;">
+        <p style="margin:0; color:#1e293b; font-size:13px;">
+          © ${new Date().getFullYear()} <strong>Nebraska Bush Puller</strong>. All rights reserved.
         </p>
-        <p style="margin:6px 0 0; color:#003060; font-size:13px;">
-          Powered by <strong style="color:#0096FF;">App API</strong> 
+        <p style="margin:6px 0 0; color:#1e293b; font-size:13px;">
+          Powered by <strong style="color:#5690ff;">Nebraska Bush Puller API</strong> 
         </p>
       </td>
     </tr>
@@ -317,7 +317,7 @@ const adminContactNotificationEmail = (payload) => {
 const userContactConfirmationEmail = (payload) => {
     return {
         to: payload.email,
-        subject: '💬 Thank You for Contacting App',
+        subject: '💬 Thank You for Contacting Nebraska Bush Puller',
         html: `
 <body style="margin:0; padding:0; font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
   <table width="100%" cellpadding="0" cellspacing="0"
@@ -327,34 +327,34 @@ const userContactConfirmationEmail = (payload) => {
     <!-- Body -->
     <tr>
       <td style="padding:45px;">
-        <h1 style="color:#0096FF; font-size:26px; font-weight:700; margin-bottom:20px; text-align:center;">
+        <h1 style="color:#5690ff; font-size:26px; font-weight:700; margin-bottom:20px; text-align:center;">
           Thank You for Contacting Us 💙
         </h1>
 
-        <p style="color:#003060; font-size:16px; line-height:1.6; text-align:center;">
+        <p style="color:#1e293b; font-size:16px; line-height:1.6; text-align:center;">
           Dear <strong>${payload.name}</strong>,<br>
           We’ve received your message! Our support team will reach out to you shortly.
         </p>
 
         <!-- User Message -->
-        <div style="background:linear-gradient(145deg,#EAF4FF,#D7E9FF); border:2px solid #0096FF; 
+        <div style="background:linear-gradient(145deg,#EBF2FF,#D7E4FF); border:2px solid #5690ff; 
                     border-radius:12px; padding:25px 20px; text-align:center; margin:30px auto; max-width:500px;">
-          <p style="font-size:15px; color:#003060; line-height:1.6; margin:0;">
+          <p style="font-size:15px; color:#1e293b; line-height:1.6; margin:0;">
             <em>“${payload.message}”</em>
           </p>
         </div>
 
-        <p style="color:#003060; font-size:15px; line-height:1.6; text-align:center;">
-          Thanks for reaching out to <strong>App</strong>.<br>
+        <p style="color:#1e293b; font-size:15px; line-height:1.6; text-align:center;">
+          Thanks for reaching out to <strong>Nebraska Bush Puller</strong>.<br>
           We truly appreciate your message 💙
         </p>
 
         <!-- Button -->
         <div style="text-align:center; margin-top:40px;">
           <a href="${config_1.default.frontend_url}"
-             style="background-color:#0096FF; color:#ffffff; padding:14px 32px; font-size:16px; 
+             style="background-color:#5690ff; color:#ffffff; padding:14px 32px; font-size:16px; 
                     font-weight:600; border-radius:10px; text-decoration:none; display:inline-block; 
-                    box-shadow:0 4px 12px rgba(0,150,255,0.3); transition:all 0.3s;">
+                    box-shadow:0 4px 12px rgba(86,144,255,0.3); transition:all 0.3s;">
             Open App 
           </a>
         </div>
@@ -364,12 +364,12 @@ const userContactConfirmationEmail = (payload) => {
     <!-- Footer -->
     <tr>
       <td align="center" 
-          style="background:linear-gradient(135deg,#F5FAFF,#E6F0FF); padding:25px 20px; border-top:1px solid #0096FF33;">
-        <p style="margin:0; color:#003060; font-size:13px;">
-          © ${new Date().getFullYear()} <strong>Template</strong>. All rights reserved.
+          style="background:linear-gradient(135deg,#F5F8FF,#E6EEFF); padding:25px 20px; border-top:1px solid #5690ff33;">
+        <p style="margin:0; color:#1e293b; font-size:13px;">
+          © ${new Date().getFullYear()} <strong>Nebraska Bush Puller</strong>. All rights reserved.
         </p>
-        <p style="margin:6px 0 0; color:#003060; font-size:13px;">
-          Powered by <strong style="color:#0096FF;">Template API</strong> ✨
+        <p style="margin:6px 0 0; color:#1e293b; font-size:13px;">
+          Powered by <strong style="color:#5690ff;">Nebraska Bush Puller API</strong> ✨
         </p>
       </td>
     </tr>
@@ -382,25 +382,25 @@ const userContactConfirmationEmail = (payload) => {
 const subscriptionActivatedEmail = (data) => {
     return {
         to: data.user.email,
-        subject: `✅ Subscription Activated – Welcome to App`,
+        subject: `✅ Subscription Activated – Welcome to Nebraska Bush Puller`,
         html: `
 <body style="margin:0;padding:0;font-family:Inter,Segoe UI,sans-serif;background:#f7f9fc;">
   <table width="100%" cellpadding="0" cellspacing="0" style="max-width:620px;margin:30px auto;background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 4px 14px rgba(0,0,0,0.06);">
     <tr>
-      <td align="center" style="background:#EAF4FF;padding:25px 20px;">
-        <h2 style="margin:0;color:#0077DD;font-size:20px;">Subscription Activated!</h2>
+      <td align="center" style="background:#EBF2FF;padding:25px 20px;">
+        <h2 style="margin:0;color:#5690ff;font-size:20px;">Subscription Activated!</h2>
       </td>
     </tr>
     <tr>
       <td style="padding:25px 20px;">
-        <p style="font-size:14px;color:#000;line-height:1.5;">
-          Hello <strong>${data.user.firstName}</strong>,<br>
+        <p style="font-size:14px;color:#1e293b;line-height:1.5;">
+          Hello <strong>${data.user.fullName}</strong>,<br>
           Your subscription for <strong>${data.plan.title}</strong> has been successfully activated.
         </p>
-        <p style="font-size:13px;margin:2px 0;"><strong>Amount Paid:</strong> £${data.amountPaid}</p>
-        <p style="font-size:13px;margin:2px 0;"><strong>Transaction ID:</strong> ${data.trxId}</p>
+        <p style="font-size:13px;margin:8px 0;color:#1e293b;"><strong>Amount Paid:</strong> £${data.amountPaid}</p>
+        <p style="font-size:13px;margin:8px 0;color:#1e293b;"><strong>Transaction ID:</strong> ${data.trxId}</p>
         <div style="text-align:center;margin-top:20px;">
-          <a href="${config_1.default.frontend_url}/dashboard" style="background:#0077DD;color:#fff;padding:12px 28px;border-radius:8px;text-decoration:none;font-size:14px;display:inline-block;">Go to Dashboard</a>
+          <a href="${config_1.default.frontend_url}/dashboard" style="background:#5690ff;color:#fff;padding:12px 28px;border-radius:8px;text-decoration:none;font-size:14px;display:inline-block;box-shadow:0 4px 12px rgba(86,144,255,0.3);">Go to Dashboard</a>
         </div>
       </td>
     </tr>

@@ -6,10 +6,12 @@ const user_interface_1 = require("./user.interface");
 exports.userSignupSchema = zod_1.z.object({
     body: zod_1.z.object({
         email: zod_1.z.string().email("Invalid email address").toLowerCase().trim(),
-        firstName: zod_1.z.string().min(1, "First name is required"),
-        lastName: zod_1.z.string().min(1, "Last name is required"),
+        fullName: zod_1.z.string().min(1, "Full name is required"),
+        phone: zod_1.z.string().min(1, "Phone number is required"),
+        address: zod_1.z.string().min(1, "Address is required"),
         password: zod_1.z.string().min(6, "Password must be at least 6 characters"),
-        role: zod_1.z.literal(user_interface_1.USER_ROLES.USER),
+        role: zod_1.z.enum([user_interface_1.USER_ROLES.FAN, user_interface_1.USER_ROLES.DRIVER]),
+        vehicleName: zod_1.z.string().optional(),
     })
 });
 exports.userLoginSchema = zod_1.z.object({
@@ -21,13 +23,14 @@ exports.userLoginSchema = zod_1.z.object({
 exports.userUpdateSchema = zod_1.z.object({
     body: zod_1.z.object({
         email: zod_1.z.string().email("Invalid email address").trim().toLowerCase().optional(),
-        firstName: zod_1.z.string().min(1, "First name is required").optional(),
-        lastName: zod_1.z.string().min(1, "Last name is required").optional(),
-        image: zod_1.z.string().url("Invalid image URL").optional(),
+        fullName: zod_1.z.string().min(1, "Full name is required").optional(),
+        phone: zod_1.z.string().optional(),
+        address: zod_1.z.string().optional(),
         password: zod_1.z.string().min(6, "Password must be at least 6 characters").optional(),
         status: zod_1.z.nativeEnum(user_interface_1.USER_STATUS).optional(),
         verified: zod_1.z.boolean().optional(),
         role: zod_1.z.nativeEnum(user_interface_1.USER_ROLES).optional(),
+        vehicleName: zod_1.z.string().optional(),
     })
 });
 exports.changePasswordSchema = zod_1.z.object({

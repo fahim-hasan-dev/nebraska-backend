@@ -10,7 +10,7 @@ router.get("/",
 );
 
 router.get("/my-plan",
-    auth(USER_ROLES.USER),
+    auth(USER_ROLES.FAN, USER_ROLES.DRIVER),
     SubscriptionController.subscriptionDetails
 );
 

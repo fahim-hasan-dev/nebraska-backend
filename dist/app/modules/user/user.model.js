@@ -53,17 +53,24 @@ const UserSchema = new mongoose_1.Schema({
         type: String,
         required: true,
     },
+    fullName: {
+        type: String,
+        required: true,
+    },
+    phone: {
+        type: String,
+        required: true,
+    },
+    address: {
+        type: String,
+        required: true,
+    },
+    vehicleName: {
+        type: String,
+    },
     image: {
         type: String,
         default: "",
-    },
-    firstName: {
-        type: String,
-        required: true,
-    },
-    lastName: {
-        type: String,
-        required: true,
     },
     status: {
         type: String,
@@ -76,8 +83,8 @@ const UserSchema = new mongoose_1.Schema({
     },
     role: {
         type: String,
-        enum: ["admin", "user"],
-        default: "user",
+        enum: ["admin", "fan", "driver"],
+        default: "fan",
     },
     authentication: {
         restrictionLeftAt: {
@@ -127,9 +134,6 @@ const UserSchema = new mongoose_1.Schema({
     toObject: {
         virtuals: true,
     },
-});
-UserSchema.virtual('fullName').get(function () {
-    return `${this.firstName} ${this.lastName}`;
 });
 UserSchema.statics.isPasswordMatched = async function (givenPassword, savedPassword) {
     return bcrypt_1.default.compare(givenPassword, savedPassword);

@@ -127,15 +127,17 @@ const createUserZodSchema = zod_1.z.object({
     body: zod_1.z.object({
         email: zod_1.z.string({ required_error: 'Email is required' }).email(),
         password: zod_1.z.string({ required_error: 'Password is required' }).min(6),
-        name: zod_1.z.string({ required_error: 'Name is required' }).optional(),
-        phone: zod_1.z.string({ required_error: 'Phone is required' }).optional(),
-        address: zod_1.z.string().optional(),
+        fullName: zod_1.z.string({ required_error: 'Full name is required' }),
+        phone: zod_1.z.string({ required_error: 'Phone is required' }),
+        address: zod_1.z.string({ required_error: 'Address is required' }),
         role: zod_1.z.enum([
             user_1.USER_ROLES.ADMIN,
-            user_1.USER_ROLES.USER,
+            user_1.USER_ROLES.FAN,
+            user_1.USER_ROLES.DRIVER,
         ], {
-            message: 'Role must be one of admin, user',
+            message: 'Role must be one of admin, fan, driver',
         }),
+        vehicleName: zod_1.z.string().optional(),
     }),
 });
 exports.AuthValidations = {

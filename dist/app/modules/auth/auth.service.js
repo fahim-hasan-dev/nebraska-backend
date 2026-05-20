@@ -84,7 +84,7 @@ const createUser = async (payload) => {
         // 3. Send OTP email
         setTimeout(() => {
             const createAccountEmail = emailTemplate_1.emailTemplate.createAccount({
-                name: `${payload.firstName} ${payload.lastName}`,
+                name: payload.fullName,
                 email: payload.email,
                 otp,
             });
@@ -96,7 +96,7 @@ const createUser = async (payload) => {
                 ...payload,
                 password: payload.password,
                 authentication,
-                role: payload.role || user_1.USER_ROLES.USER,
+                role: payload.role || user_1.USER_ROLES.FAN,
             },
         ], { session });
         if (!user[0])
@@ -150,8 +150,8 @@ const adminLogin = async (payload) => {
         throw new ApiError_1.default(http_status_codes_1.StatusCodes.UNAUTHORIZED, 'Please try again with correct credentials.');
     }
     // Create tokens
-    const tokens = auth_helper_1.AuthHelper.createToken(isUserExist._id, isUserExist.role, `${isUserExist.firstName} ${isUserExist.lastName}`, isUserExist.email);
-    return (0, loginService_1.authResponse)(http_status_codes_1.StatusCodes.OK, `Welcome back ${isUserExist.firstName}`, isUserExist.role, tokens.accessToken, tokens.refreshToken);
+    const tokens = auth_helper_1.AuthHelper.createToken(isUserExist._id, isUserExist.role, isUserExist.fullName, isUserExist.email);
+    return (0, loginService_1.authResponse)(http_status_codes_1.StatusCodes.OK, `Welcome back ${isUserExist.fullName}`, isUserExist.role, tokens.accessToken, tokens.refreshToken);
 };
 const forgetPassword = async (email, phone) => {
     const query = email
@@ -181,7 +181,7 @@ const forgetPassword = async (email, phone) => {
     // Send OTP to user
     if (email) {
         const forgetPasswordEmailTemplate = emailTemplate_1.emailTemplate.resetPassword({
-            name: `${isUserExist.firstName} ${isUserExist.lastName}`,
+            name: isUserExist.fullName,
             email: isUserExist.email,
             otp,
         });
@@ -257,15 +257,15 @@ const verifyAccount = async (email, onetimeCode) => {
     //either newly created user or existing user
     if (!isUserExist.verified) {
         await user_model_1.User.findByIdAndUpdate(isUserExist._id, { $set: { verified: true } }, { new: true });
-        const tokens = auth_helper_1.AuthHelper.createToken(isUserExist._id, isUserExist.role, isUserExist.firstName + ' ' + isUserExist.lastName, isUserExist.email);
+        const tokens = auth_helper_1.AuthHelper.createToken(isUserExist._id, isUserExist.role, isUserExist.fullName, isUserExist.email);
         const userInfo = {
             id: isUserExist._id,
             role: isUserExist.role,
-            name: `${isUserExist.firstName} ${isUserExist.lastName}`,
+            name: isUserExist.fullName,
             email: isUserExist.email,
             image: isUserExist.image,
         };
-        return (0, loginService_1.authResponse)(http_status_codes_1.StatusCodes.OK, `Welcome ${isUserExist.firstName} ${isUserExist.lastName} to our platform.`, undefined, tokens.accessToken, tokens.refreshToken, undefined, userInfo);
+        return (0, loginService_1.authResponse)(http_status_codes_1.StatusCodes.OK, `Welcome ${isUserExist.fullName} to our platform.`, undefined, tokens.accessToken, tokens.refreshToken, undefined, userInfo);
     }
     else {
         await user_model_1.User.findByIdAndUpdate(isUserExist._id, {
@@ -338,7 +338,7 @@ const resendOtpToPhoneOrEmail = async (authType, email, phone) => {
     if (email) {
         const forgetPasswordEmailTemplate = emailTemplate_1.emailTemplate.resendOtp({
             email: isUserExist.email,
-            name: `${isUserExist.firstName} ${isUserExist.lastName}`,
+            name: isUserExist.fullName,
             otp,
             type: authType,
         });
@@ -403,7 +403,7 @@ const resendOtp = async (email, authType) => {
     if (email) {
         const forgetPasswordEmailTemplate = emailTemplate_1.emailTemplate.resendOtp({
             email: email,
-            name: `${isUserExist.firstName} ${isUserExist.lastName}`,
+            name: isUserExist.fullName,
             otp,
             type: authType,
         });

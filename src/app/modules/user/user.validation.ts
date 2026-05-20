@@ -4,10 +4,12 @@ import { USER_ROLES, USER_STATUS } from "./user.interface";
 export const userSignupSchema = z.object({
   body: z.object({
     email: z.string().email("Invalid email address").toLowerCase().trim(),
-    firstName: z.string().min(1, "First name is required"),
-    lastName: z.string().min(1, "Last name is required"),
+    fullName: z.string().min(1, "Full name is required"),
+    phone: z.string().min(1, "Phone number is required"),
+    address: z.string().min(1, "Address is required"),
     password: z.string().min(6, "Password must be at least 6 characters"),
-    role: z.literal(USER_ROLES.USER),
+    role: z.enum([USER_ROLES.FAN, USER_ROLES.DRIVER]),
+    vehicleName: z.string().optional(),
   })
 });
 
@@ -21,13 +23,14 @@ export const userLoginSchema = z.object({
 export const userUpdateSchema = z.object({
   body: z.object({
     email: z.string().email("Invalid email address").trim().toLowerCase().optional(),
-    firstName: z.string().min(1, "First name is required").optional(),
-    lastName: z.string().min(1, "Last name is required").optional(),
-    image: z.string().url("Invalid image URL").optional(),
+    fullName: z.string().min(1, "Full name is required").optional(),
+    phone: z.string().optional(),
+    address: z.string().optional(),
     password: z.string().min(6, "Password must be at least 6 characters").optional(),
     status: z.nativeEnum(USER_STATUS).optional(),
     verified: z.boolean().optional(),
     role: z.nativeEnum(USER_ROLES).optional(),
+    vehicleName: z.string().optional(),
   })
 });
 

@@ -1,6 +1,7 @@
 export enum USER_ROLES {
     ADMIN = "admin",
-    USER = "user"
+    FAN = "fan",
+    DRIVER = "driver"
 }
 
 export enum USER_STATUS {

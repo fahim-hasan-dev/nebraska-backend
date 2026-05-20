@@ -16,18 +16,19 @@ type IAuthentication = {
 
 export type IUser = {
     _id: Types.ObjectId;
+    fullName: string;
     email: string;
-    image?: string;
-    password: string;
-    firstName: string;
-    lastName: string;
-    status: USER_STATUS;
-    verified: boolean;
+    phone: string;
+    address: string;
     role: USER_ROLES;
+    verified: boolean;
+    status: USER_STATUS;
+    vehicleName?: string;
+    password: string;
     authentication: IAuthentication;
+    image?: string;
     deviceToken?: string;
     fcmToken?: string;
-    fullName?: string;
 };
 
 export type UserModel = {

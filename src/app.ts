@@ -50,8 +50,11 @@ app.use('/api/v1', router);
 
 
 app.get("/", (req: Request, res: Response) => {
-    res.send("Welcome to the Backend Template!");
-})
+    res.send(`<div style="background:#070913; color:#f8fafc; font-family:'Segoe UI',sans-serif; height:100vh; display:flex; flex-direction:column; justify-content:center; align-items:center; margin:0; text-align:center; padding: 20px; box-sizing: border-box;">
+  <h1 style="color:#5690ff; margin:0 0 8px 0; font-weight:600; font-size:28px;">Nebraska Bush Puller</h1>
+  <p style="color:#94a3b8; font-size:16px; margin:0;">API Gateway is online and active.</p>
+</div>`);
+});
 
 //global error handle
 app.use(globalErrorHandler);

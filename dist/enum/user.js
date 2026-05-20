@@ -4,7 +4,8 @@ exports.ADMIN_ROLES = exports.USER_STATUS = exports.USER_ROLES = void 0;
 var USER_ROLES;
 (function (USER_ROLES) {
     USER_ROLES["ADMIN"] = "admin";
-    USER_ROLES["USER"] = "user";
+    USER_ROLES["FAN"] = "fan";
+    USER_ROLES["DRIVER"] = "driver";
 })(USER_ROLES || (exports.USER_ROLES = USER_ROLES = {}));
 var USER_STATUS;
 (function (USER_STATUS) {
