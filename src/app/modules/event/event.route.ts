@@ -47,4 +47,27 @@ router.delete(
   EventController.deleteEvent
 );
 
+// Admin can add a class to an event
+router.post(
+  '/:id/class',
+  auth(USER_ROLES.ADMIN),
+  validateRequest(EventValidations.addClassZodSchema),
+  EventController.addClassToEvent
+);
+
+// Admin can update a class status
+router.patch(
+  '/:id/class/:className/status',
+  auth(USER_ROLES.ADMIN),
+  validateRequest(EventValidations.updateClassStatusZodSchema),
+  EventController.updateClassStatus
+);
+
+// Admin can delete a class from an event
+router.delete(
+  '/:id/class/:className',
+  auth(USER_ROLES.ADMIN),
+  EventController.deleteClassFromEvent
+);
+
 export const EventRoutes = router;

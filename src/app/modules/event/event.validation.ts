@@ -48,7 +48,28 @@ const updateEventZodSchema = z.object({
   }),
 });
 
+// Validation rules for adding a class
+const addClassZodSchema = z.object({
+  body: z.object({
+    name: z.string({
+      required_error: 'Class name is required',
+    }).min(1, 'Class name cannot be empty'),
+    status: z.enum(['pending', 'live', 'completed']).optional().default('pending'),
+  }),
+});
+
+// Validation rules for updating class status
+const updateClassStatusZodSchema = z.object({
+  body: z.object({
+    status: z.enum(['pending', 'live', 'completed'], {
+      required_error: 'Class status must be pending, live, or completed',
+    }),
+  }),
+});
+
 export const EventValidations = {
   createEventZodSchema,
   updateEventZodSchema,
+  addClassZodSchema,
+  updateClassStatusZodSchema,
 };

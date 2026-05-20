@@ -1,8 +1,8 @@
 import { Schema, model } from 'mongoose';
-import { IEventRequest } from './eventRequest.interface';
+import { IEventRegistration } from './eventRegistration.interface';
 
-// Event Request Schema
-const eventRequestSchema = new Schema<IEventRequest>(
+// Event Registration Schema
+const eventRegistrationSchema = new Schema<IEventRegistration>(
   {
     event: {
       type: Schema.Types.ObjectId,
@@ -21,7 +21,7 @@ const eventRequestSchema = new Schema<IEventRequest>(
     },
     status: {
       type: String,
-      enum: ['pending', 'accepted', 'declined'],
+      enum: ['pending', 'approved', 'rejected'],
       default: 'pending',
     },
     drawPosition: {
@@ -30,8 +30,8 @@ const eventRequestSchema = new Schema<IEventRequest>(
     },
   },
   {
-    timestamps: true,
+    timestamps: true, // Automatically tracks creation and updates
   }
 );
 
-export const EventRequestModel = model<IEventRequest>('EventRequest', eventRequestSchema);
+export const EventRegistrationModel = model<IEventRegistration>('EventRegistration', eventRegistrationSchema);

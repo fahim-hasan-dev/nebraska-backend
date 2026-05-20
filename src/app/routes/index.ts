@@ -6,7 +6,7 @@ import { PublicRoutes } from '../modules/public/public.route';
 import { TokenRoutes } from '../modules/token/token.route';
 import { NotificationRoutes } from '../modules/notification/notification.routes';
 import { EventRoutes } from '../modules/event/event.route';
-import { EventRequestRoutes } from '../modules/eventRequest/eventRequest.route';
+import { EventRegistrationRoutes } from '../modules/eventRegistration/eventRegistration.route';
 import { ResultRoutes } from '../modules/result/result.route';
 import { SponsorRoutes } from '../modules/sponsor/sponsor.route';
 import { SponsorRequestRoutes } from '../modules/sponsorRequest/sponsorRequest.route';
@@ -22,7 +22,7 @@ const apiRoutes = [
     { path: "/token", route: TokenRoutes },
     { path: "/notification", route: NotificationRoutes },
     { path: "/event", route: EventRoutes },
-    { path: "/event-request", route: EventRequestRoutes },
+    { path: "/event-registration", route: EventRegistrationRoutes },
     { path: "/result", route: ResultRoutes },
     { path: "/sponsor", route: SponsorRoutes },
     { path: "/sponsor-request", route: SponsorRequestRoutes },

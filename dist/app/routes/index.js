@@ -11,7 +11,7 @@ const public_route_1 = require("../modules/public/public.route");
 const token_route_1 = require("../modules/token/token.route");
 const notification_routes_1 = require("../modules/notification/notification.routes");
 const event_route_1 = require("../modules/event/event.route");
-const eventRequest_route_1 = require("../modules/eventRequest/eventRequest.route");
+const eventRegistration_route_1 = require("../modules/eventRegistration/eventRegistration.route");
 const result_route_1 = require("../modules/result/result.route");
 const sponsor_route_1 = require("../modules/sponsor/sponsor.route");
 const sponsorRequest_route_1 = require("../modules/sponsorRequest/sponsorRequest.route");
@@ -24,7 +24,7 @@ const apiRoutes = [
     { path: "/token", route: token_route_1.TokenRoutes },
     { path: "/notification", route: notification_routes_1.NotificationRoutes },
     { path: "/event", route: event_route_1.EventRoutes },
-    { path: "/event-request", route: eventRequest_route_1.EventRequestRoutes },
+    { path: "/event-registration", route: eventRegistration_route_1.EventRegistrationRoutes },
     { path: "/result", route: result_route_1.ResultRoutes },
     { path: "/sponsor", route: sponsor_route_1.SponsorRoutes },
     { path: "/sponsor-request", route: sponsorRequest_route_1.SponsorRequestRoutes },

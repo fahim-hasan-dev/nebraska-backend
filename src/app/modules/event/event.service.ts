@@ -3,6 +3,7 @@ import ApiError from '../../../errors/ApiError';
 import QueryBuilder from '../../builder/QueryBuilder';
 import { IEvent } from './event.interface';
 import { EventModel } from './event.model';
+import { EventRegistrationModel } from '../eventRegistration/eventRegistration.model';
 
 // Create a new event
 const createEvent = async (payload: IEvent): Promise<IEvent> => {
@@ -11,7 +12,17 @@ const createEvent = async (payload: IEvent): Promise<IEvent> => {
 };
 
 // Retrieve all events with filters, pagination and search
-const getAllEvents = async (query: Record<string, unknown>) => {
+const getAllEvents = async (query: Record<string, unknown>, user?: any) => {
+  // Support aliases for searching and filtering
+  if (query.query) {
+    query.searchTerm = query.query;
+    delete query.query;
+  }
+  if (query.id) {
+    query._id = query.id;
+    delete query.id;
+  }
+
   const eventQueryBuilder = new QueryBuilder(EventModel.find(), query)
     .search(['name', 'venue']) // search by name or venue
     .filter()
@@ -21,6 +32,32 @@ const getAllEvents = async (query: Record<string, unknown>) => {
 
   const events = await eventQueryBuilder.modelQuery.lean();
   const paginationInfo = await eventQueryBuilder.getPaginationInfo();
+
+  // If user is a driver, check registration status for each event
+  if (user && user.role === 'driver') {
+    const driverId = user.authId; // The decoded token contains authId
+
+    // Extract just the event IDs for the current paginated page
+    const eventIds = events.map((e: any) => e._id);
+
+    // Find registrations ONLY for the current page's events
+    const registeredEvents = await EventRegistrationModel.find({ 
+      driver: driverId,
+      event: { $in: eventIds }
+    }).distinct('event');
+    
+    const registeredEventIds = registeredEvents.map(id => id.toString());
+
+    const eventsWithRegistration = events.map((event: any) => ({
+      ...event,
+      isRegistered: registeredEventIds.includes(event._id.toString()),
+    }));
+
+    return {
+      data: eventsWithRegistration,
+      meta: paginationInfo,
+    };
+  }
 
   return {
     data: events,
@@ -71,10 +108,80 @@ const deleteEvent = async (id: string): Promise<IEvent> => {
   return result;
 };
 
+// Add a new class to an event
+const addClassToEvent = async (eventId: string, newClass: { name: string; status?: 'pending' | 'live' | 'completed' }): Promise<IEvent> => {
+  const event = await EventModel.findById(eventId);
+  if (!event) {
+    throw new ApiError(StatusCodes.NOT_FOUND, 'Event not found');
+  }
+
+  // check if class name already exists (case-insensitive)
+  const isDuplicate = event.class.some(
+    (c) => c.name.trim().toLowerCase() === newClass.name.trim().toLowerCase()
+  );
+  if (isDuplicate) {
+    throw new ApiError(StatusCodes.BAD_REQUEST, `Class '${newClass.name}' already exists in this event`);
+  }
+
+  event.class.push({
+    name: newClass.name.trim(),
+    status: newClass.status || 'pending',
+  });
+
+  await event.save();
+  return event;
+};
+
+// Update status of a specific class in an event
+const updateClassStatus = async (eventId: string, className: string, status: 'pending' | 'live' | 'completed'): Promise<IEvent> => {
+  const event = await EventModel.findById(eventId);
+  if (!event) {
+    throw new ApiError(StatusCodes.NOT_FOUND, 'Event not found');
+  }
+
+  const classItem = event.class.find(
+    (c) => c.name.trim().toLowerCase() === className.trim().toLowerCase()
+  );
+  if (!classItem) {
+    throw new ApiError(StatusCodes.NOT_FOUND, `Class '${className}' not found in this event`);
+  }
+
+  classItem.status = status;
+  await event.save();
+  return event;
+};
+
+// Delete a class from an event
+const deleteClassFromEvent = async (eventId: string, className: string): Promise<IEvent> => {
+  const event = await EventModel.findById(eventId);
+  if (!event) {
+    throw new ApiError(StatusCodes.NOT_FOUND, 'Event not found');
+  }
+
+  const classIndex = event.class.findIndex(
+    (c) => c.name.trim().toLowerCase() === className.trim().toLowerCase()
+  );
+  if (classIndex === -1) {
+    throw new ApiError(StatusCodes.NOT_FOUND, `Class '${className}' not found in this event`);
+  }
+
+  // ensure at least one class remains
+  if (event.class.length <= 1) {
+    throw new ApiError(StatusCodes.BAD_REQUEST, 'Event must have at least one class');
+  }
+
+  event.class.splice(classIndex, 1);
+  await event.save();
+  return event;
+};
+
 export const EventServices = {
   createEvent,
   getAllEvents,
   getEventById,
   updateEvent,
   deleteEvent,
+  addClassToEvent,
+  updateClassStatus,
+  deleteClassFromEvent,
 };

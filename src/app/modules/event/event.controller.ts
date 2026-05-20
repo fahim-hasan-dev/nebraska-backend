@@ -17,7 +17,7 @@ const createEvent = catchAsync(async (req: Request, res: Response) => {
 
 // Handles getting all events
 const getAllEvents = catchAsync(async (req: Request, res: Response) => {
-  const result = await EventServices.getAllEvents(req.query);
+  const result = await EventServices.getAllEvents(req.query, req.user);
   sendResponse(res, {
     statusCode: StatusCodes.OK,
     success: true,
@@ -62,10 +62,50 @@ const deleteEvent = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+// Handles adding a new class to an event
+const addClassToEvent = catchAsync(async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const result = await EventServices.addClassToEvent(id, req.body);
+  sendResponse(res, {
+    statusCode: StatusCodes.OK,
+    success: true,
+    message: 'Class added successfully',
+    data: result,
+  });
+});
+
+// Handles updating class status inside an event
+const updateClassStatus = catchAsync(async (req: Request, res: Response) => {
+  const { id, className } = req.params;
+  const { status } = req.body;
+  const result = await EventServices.updateClassStatus(id, className, status);
+  sendResponse(res, {
+    statusCode: StatusCodes.OK,
+    success: true,
+    message: 'Class status updated successfully',
+    data: result,
+  });
+});
+
+// Handles deleting a class from an event
+const deleteClassFromEvent = catchAsync(async (req: Request, res: Response) => {
+  const { id, className } = req.params;
+  const result = await EventServices.deleteClassFromEvent(id, className);
+  sendResponse(res, {
+    statusCode: StatusCodes.OK,
+    success: true,
+    message: 'Class deleted successfully',
+    data: result,
+  });
+});
+
 export const EventController = {
   createEvent,
   getAllEvents,
   getEventById,
   updateEvent,
   deleteEvent,
+  addClassToEvent,
+  updateClassStatus,
+  deleteClassFromEvent,
 };

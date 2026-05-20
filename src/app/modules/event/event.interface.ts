@@ -14,6 +14,6 @@ export interface IEvent {
   time: string;
   venue: string;
   additionalInfo?: string;
-  pictures?: string[]; // uploaded picture paths
-  class: IClass[]; // list of event classes
+  pictures?: string[]; 
+  class: IClass[];
 }
