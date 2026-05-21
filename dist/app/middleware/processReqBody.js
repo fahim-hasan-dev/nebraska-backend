@@ -37,16 +37,28 @@ const fileAndBodyProcessorUsingDiskStorage = () => {
         },
     });
     const fileFilter = (req, file, cb) => {
-        var _a;
         try {
-            const allowedTypes = {
-                image: ['image/jpeg', 'image/png', 'image/jpg'],
-                pictures: ['image/jpeg', 'image/png', 'image/jpg'],
-                file: ['application/pdf'],
-            };
+            const isImage = file.mimetype.startsWith('image/') ||
+                /\.(jpg|jpeg|png|gif|webp|heic|heif|bmp|tiff)$/i.test(file.originalname);
+            const isAllowedDoc = [
+                'application/pdf',
+                'application/msword',
+                'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+                'text/plain'
+            ].includes(file.mimetype) || /\.(pdf|doc|docx|txt)$/i.test(file.originalname);
             const fieldType = file.fieldname;
-            if (!((_a = allowedTypes[fieldType]) === null || _a === void 0 ? void 0 : _a.includes(file.mimetype))) {
-                return cb(new ApiError_1.default(http_status_codes_1.StatusCodes.BAD_REQUEST, `Invalid file type for ${file.fieldname}`));
+            if (fieldType === 'image' || fieldType === 'pictures') {
+                if (!isImage) {
+                    return cb(new ApiError_1.default(http_status_codes_1.StatusCodes.BAD_REQUEST, `Invalid file type for ${file.fieldname}. Only image formats are supported.`));
+                }
+            }
+            else if (fieldType === 'file') {
+                if (!isImage && !isAllowedDoc) {
+                    return cb(new ApiError_1.default(http_status_codes_1.StatusCodes.BAD_REQUEST, `Invalid file type for ${file.fieldname}. Supported formats: images (JPG, PNG, WEBP, HEIC, HEIF, GIF) and documents (PDF, DOC, DOCX, TXT).`));
+                }
+            }
+            else {
+                return cb(new ApiError_1.default(http_status_codes_1.StatusCodes.BAD_REQUEST, `Unsupported field name: ${file.fieldname}`));
             }
             cb(null, true);
         }
@@ -81,7 +93,7 @@ const fileAndBodyProcessorUsingDiskStorage = () => {
                     await Promise.all(fileArray.map(async (file) => {
                         const filePath = `/${fieldName}/${file.filename}`;
                         paths.push(filePath);
-                        if (['image', 'pictures'].includes(fieldName) && file.mimetype.startsWith('image/')) {
+                        if (['image', 'pictures', 'file'].includes(fieldName) && file.mimetype.startsWith('image/')) {
                             const fullPath = path_1.default.join(uploadsDir, fieldName, file.filename);
                             const tempPath = fullPath + '.opt';
                             try {

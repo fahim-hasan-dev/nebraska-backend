@@ -220,6 +220,20 @@ const folders = {
     createRequest('Get All Notifications', 'GET', '/notification', null, [{ key: 'page', value: '1' }]),
     createRequest('Get Unread Count', 'GET', '/notification/unread-count'),
     createRequest('Send Test Push Notification', 'POST', '/notification/test-push', { raw: { title: 'Test', body: 'Test Notification', fcmToken: 'fcm_token_here' } }),
+  ],
+  'Help & Support': [
+    createRequest('Submit Support Ticket', 'POST', '/help-support/submit', {
+      mode: 'formdata',
+      formdata: [
+        { key: 'title', value: 'Password Change Problem Issue', type: 'text' },
+        { key: 'description', value: 'Users are unable to update their password due to validation or system error, preventing successful password change.', type: 'text' },
+        { key: 'image', type: 'file', src: [] }
+      ]
+    }),
+    createRequest('Get Support Tickets List', 'GET', '/help-support', null, [{ key: 'page', value: '1' }]),
+    createRequest('Get Single Support Ticket', 'GET', '/help-support/{{ticket_id}}'),
+    createRequest('Resolve Support Ticket (Admin)', 'PATCH', '/help-support/{{ticket_id}}/status', { raw: { status: 'resolved', reply: 'This issue has been successfully resolved. Please try changing your password now.' } }),
+    createRequest('Withdraw Support Ticket', 'DELETE', '/help-support/{{ticket_id}}'),
   ]
 };
 
