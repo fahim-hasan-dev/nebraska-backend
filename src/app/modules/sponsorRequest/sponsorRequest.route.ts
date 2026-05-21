@@ -10,7 +10,7 @@ const router = express.Router();
 // Submit sponsor request inquiry
 router.post(
   '/submit',
-  auth(USER_ROLES.ADMIN, USER_ROLES.DRIVER, USER_ROLES.FAN),
+  auth( USER_ROLES.DRIVER, USER_ROLES.FAN),
   validateRequest(SponsorRequestValidations.createSponsorRequestZodSchema),
   SponsorRequestController.createSponsorRequest
 );
@@ -18,14 +18,14 @@ router.post(
 // Get sponsor requests list
 router.get(
   '/',
-  auth(USER_ROLES.ADMIN, USER_ROLES.DRIVER, USER_ROLES.FAN),
+  auth(USER_ROLES.ADMIN),
   SponsorRequestController.getAllSponsorRequests
 );
 
 // Get sponsor request details by ID
 router.get(
   '/:id',
-  auth(USER_ROLES.ADMIN, USER_ROLES.DRIVER, USER_ROLES.FAN),
+  auth(USER_ROLES.ADMIN),
   SponsorRequestController.getSponsorRequestById
 );
 
@@ -40,7 +40,7 @@ router.patch(
 // Delete/withdraw a sponsor request inquiry
 router.delete(
   '/:id',
-  auth(USER_ROLES.ADMIN, USER_ROLES.DRIVER, USER_ROLES.FAN),
+  auth(USER_ROLES.ADMIN),
   SponsorRequestController.deleteSponsorRequest
 );
 
