@@ -1,6 +1,7 @@
 import { StatusCodes } from 'http-status-codes';
 import ApiError from '../../../errors/ApiError';
 import QueryBuilder from '../../builder/QueryBuilder';
+import { USER_ROLES } from '../../../enum/user';
 import { ISponsor } from './sponsor.interface';
 import { SponsorModel } from './sponsor.model';
 
@@ -11,7 +12,11 @@ const createSponsor = async (payload: ISponsor): Promise<ISponsor> => {
 };
 
 // Retrieve all sponsors with QueryBuilder
-const getAllSponsors = async (query: Record<string, unknown>) => {
+const getAllSponsors = async (query: Record<string, unknown>, user?: any) => {
+  if (user && user.role !== USER_ROLES.ADMIN) {
+    query.isActive = true;
+  }
+
   const sponsorQueryBuilder = new QueryBuilder(SponsorModel.find(), query)
     .filter()
     .sort()

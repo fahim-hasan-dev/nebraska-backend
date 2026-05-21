@@ -1,0 +1,2 @@
+{Thu May 21 2026 14:18:19} [Nebraska Bush Puller 🐞] error: ::ffff:10.10.7.94 - POST /api/v1/sponsor/create 500 - 7.037 ms
+{Thu May 21 2026 14:19:14} [Nebraska Bush Puller 🐞] error: ::ffff:10.10.7.94 - GET /api/v1/sponsor?page=1 500 - 2.044 ms

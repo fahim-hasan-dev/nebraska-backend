@@ -9,10 +9,10 @@ const sponsorSchema = new Schema<ISponsor>(
       required: [true, 'Sponsor name is required'],
       trim: true,
     },
-    tier: {
+    type: {
       type: String,
       enum: ['platinum', 'gold', 'silver'],
-      required: [true, 'Sponsor tier is required'],
+      required: [true, 'Sponsor type is required'],
     },
     image: {
       type: String,

@@ -11,6 +11,7 @@ import { ResultRoutes } from '../modules/result/result.route';
 import { SponsorRoutes } from '../modules/sponsor/sponsor.route';
 import { SponsorRequestRoutes } from '../modules/sponsorRequest/sponsorRequest.route';
 import { HelpSupportRoutes } from '../modules/helpSupport/helpSupport.route';
+import { MessageRoutes } from '../modules/message/message.route';
 
 
 const router = express.Router();
@@ -28,6 +29,7 @@ const apiRoutes = [
     { path: "/sponsor", route: SponsorRoutes },
     { path: "/sponsor-request", route: SponsorRequestRoutes },
     { path: "/help-support", route: HelpSupportRoutes },
+    { path: "/message", route: MessageRoutes },
 ]
 
 apiRoutes.forEach(route => router.use(route.path, route.route));

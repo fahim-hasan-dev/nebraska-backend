@@ -17,7 +17,7 @@ const createSponsor = catchAsync(async (req: Request, res: Response) => {
 
 // Retrieve all sponsors
 const getAllSponsors = catchAsync(async (req: Request, res: Response) => {
-  const result = await SponsorServices.getAllSponsors(req.query);
+  const result = await SponsorServices.getAllSponsors(req.query, req.user);
   sendResponse(res, {
     statusCode: StatusCodes.OK,
     success: true,
