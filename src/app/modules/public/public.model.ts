@@ -4,7 +4,7 @@ import { ContactModel, FaqModel, IContact, IFaq, IPublic, PublicModel } from './
 const publicSchema = new Schema<IPublic, PublicModel>(
   {
     content: { type: String },
-    type: { type: String, enum: ['refund-policy', 'terms-and-condition','contact','about','rolebook'] },
+    type: { type: String, enum: ['privacy-policy', 'terms-and-condition','contact','about','rolebook'] },
   },
   {
     timestamps: true,
@@ -15,8 +15,9 @@ export const Public = model<IPublic, PublicModel>('Public', publicSchema)
 
 const faqSchema = new Schema<IFaq, FaqModel>(
   {
-    question: { type: String },
-    answer: { type: String },
+    question: { type: String, required: true },
+    answer: { type: String, required: true },
+    type: { type: String, enum: ['fan', 'driver'], default: 'fan', required: true },
     createdAt: { type: Date },
     updatedAt: { type: Date },
   },

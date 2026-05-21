@@ -103,8 +103,12 @@ const createFaq = async (payload: IFaq) => {
   return result
 }
 
-const getAllFaqs = async () => {
-  const result = await Faq.find({})
+const getAllFaqs = async (query: Record<string, unknown>) => {
+  const filter: Record<string, any> = {}
+  if (query.type) {
+    filter.type = query.type
+  }
+  const result = await Faq.find(filter)
   return result || []
 }
 

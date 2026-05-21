@@ -8,6 +8,7 @@ const public_service_1 = require("./public.service");
 const catchAsync_1 = __importDefault(require("../../../shared/catchAsync"));
 const sendResponse_1 = __importDefault(require("../../../shared/sendResponse"));
 const http_status_codes_1 = require("http-status-codes");
+const ApiError_1 = __importDefault(require("../../../errors/ApiError"));
 const createPublic = (0, catchAsync_1.default)(async (req, res) => {
     const publicData = req.body;
     const result = await public_service_1.PublicServices.createPublic(publicData);
@@ -87,7 +88,7 @@ const getSingleFaq = (0, catchAsync_1.default)(async (req, res) => {
     });
 });
 const getAllFaqs = (0, catchAsync_1.default)(async (req, res) => {
-    const result = await public_service_1.PublicServices.getAllFaqs();
+    const result = await public_service_1.PublicServices.getAllFaqs(req.query);
     (0, sendResponse_1.default)(res, {
         statusCode: http_status_codes_1.StatusCodes.OK,
         success: true,
@@ -104,6 +105,28 @@ const deleteFaq = (0, catchAsync_1.default)(async (req, res) => {
         message: 'Faq deleted successfully',
     });
 });
+const updateRolebook = (0, catchAsync_1.default)(async (req, res) => {
+    const fileUrl = req.body.file;
+    if (!fileUrl) {
+        throw new ApiError_1.default(http_status_codes_1.StatusCodes.BAD_REQUEST, 'PDF file is required');
+    }
+    const result = await public_service_1.PublicServices.updateRolebook(fileUrl);
+    (0, sendResponse_1.default)(res, {
+        statusCode: http_status_codes_1.StatusCodes.OK,
+        success: true,
+        message: 'Rolebook updated successfully',
+        data: result,
+    });
+});
+const getRolebook = (0, catchAsync_1.default)(async (req, res) => {
+    const result = await public_service_1.PublicServices.getRolebook();
+    (0, sendResponse_1.default)(res, {
+        statusCode: http_status_codes_1.StatusCodes.OK,
+        success: true,
+        message: 'Rolebook retrieved successfully',
+        data: result,
+    });
+});
 exports.PublicController = {
     createPublic,
     getAllPublics,
@@ -115,4 +138,6 @@ exports.PublicController = {
     getAllFaqs,
     deleteFaq,
     getAllContacts,
+    updateRolebook,
+    getRolebook,
 };

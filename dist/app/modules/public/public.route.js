@@ -10,10 +10,11 @@ const validateRequest_1 = __importDefault(require("../../middleware/validateRequ
 const public_validation_1 = require("./public.validation");
 const user_1 = require("../../../enum/user");
 const auth_1 = __importDefault(require("../../middleware/auth"));
+const processReqBody_1 = require("../../middleware/processReqBody");
 const router = express_1.default.Router();
-router.post('/', (0, validateRequest_1.default)(public_validation_1.PublicValidation.create), public_controller_1.PublicController.createPublic);
+router.post('/', (0, auth_1.default)(user_1.USER_ROLES.ADMIN), (0, validateRequest_1.default)(public_validation_1.PublicValidation.create), public_controller_1.PublicController.createPublic);
 router.get('/:type', public_controller_1.PublicController.getAllPublics);
-router.delete('/:id', public_controller_1.PublicController.deletePublic);
+router.delete('/:id', (0, auth_1.default)(user_1.USER_ROLES.ADMIN), public_controller_1.PublicController.deletePublic);
 router.post('/contact', (0, validateRequest_1.default)(public_validation_1.PublicValidation.contactZodSchema), public_controller_1.PublicController.createContact);
 router.get('/contact/all', public_controller_1.PublicController.getAllContacts);
 router.post('/faq', (0, auth_1.default)(user_1.USER_ROLES.ADMIN), (0, validateRequest_1.default)(public_validation_1.FaqValidations.create), public_controller_1.PublicController.createFaq);
@@ -21,4 +22,6 @@ router.patch('/faq/:id', (0, auth_1.default)(user_1.USER_ROLES.ADMIN), (0, valid
 router.get('/faq/single/:id', public_controller_1.PublicController.getSingleFaq);
 router.get('/faq/all', public_controller_1.PublicController.getAllFaqs);
 router.delete('/faq/:id', (0, auth_1.default)(user_1.USER_ROLES.ADMIN), public_controller_1.PublicController.deleteFaq);
+router.post('/rolebook', (0, auth_1.default)(user_1.USER_ROLES.ADMIN), (0, processReqBody_1.fileAndBodyProcessorUsingDiskStorage)(), public_controller_1.PublicController.updateRolebook);
+router.get('/rolebook', public_controller_1.PublicController.getRolebook);
 exports.PublicRoutes = router;

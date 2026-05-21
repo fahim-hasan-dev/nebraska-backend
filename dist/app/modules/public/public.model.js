@@ -4,14 +4,15 @@ exports.Contact = exports.Faq = exports.Public = void 0;
 const mongoose_1 = require("mongoose");
 const publicSchema = new mongoose_1.Schema({
     content: { type: String },
-    type: { type: String, enum: ['refund-policy', 'terms-and-condition', 'contact', 'about'] },
+    type: { type: String, enum: ['privacy-policy', 'terms-and-condition', 'contact', 'about', 'rolebook'] },
 }, {
     timestamps: true,
 });
 exports.Public = (0, mongoose_1.model)('Public', publicSchema);
 const faqSchema = new mongoose_1.Schema({
-    question: { type: String },
-    answer: { type: String },
+    question: { type: String, required: true },
+    answer: { type: String, required: true },
+    type: { type: String, enum: ['fan', 'driver'], default: 'fan', required: true },
     createdAt: { type: Date },
     updatedAt: { type: Date },
 }, {

@@ -10,7 +10,7 @@ const createSponsorRequest = catchAsync(async (req: Request, res: Response) => {
   const user = req.user as JwtPayload;
   const payload = {
     ...req.body,
-    user: user.userId, // Link with current logged in user
+    user: user.authId, // Link with current logged in user
   };
 
   const result = await SponsorRequestServices.createSponsorRequest(payload);
@@ -29,7 +29,7 @@ const getAllSponsorRequests = catchAsync(async (req: Request, res: Response) => 
 
   // Non-admins see only their own requests
   if (user.role !== 'admin') {
-    query.user = user.userId;
+    query.user = user.authId;
   }
 
   const result = await SponsorRequestServices.getAllSponsorRequests(query);

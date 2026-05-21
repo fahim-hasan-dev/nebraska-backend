@@ -425,10 +425,10 @@ const getAccessToken = async (token: string) => {
       config.jwt.jwt_refresh_secret as string,
     )
 
-    const { userId, role } = decodedToken
+    const { authId, role } = decodedToken
 
     const tokens = AuthHelper.createToken(
-      userId,
+      authId,
       role,
       decodedToken.name,
       decodedToken.email,

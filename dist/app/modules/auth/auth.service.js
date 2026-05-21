@@ -298,8 +298,8 @@ const getAccessToken = async (token) => {
     }
     try {
         const decodedToken = jwtHelper_1.jwtHelper.verifyToken(token, config_1.default.jwt.jwt_refresh_secret);
-        const { userId, role } = decodedToken;
-        const tokens = auth_helper_1.AuthHelper.createToken(userId, role, decodedToken.name, decodedToken.email);
+        const { authId, role } = decodedToken;
+        const tokens = auth_helper_1.AuthHelper.createToken(authId, role, decodedToken.name, decodedToken.email);
         return {
             accessToken: tokens.accessToken,
         };

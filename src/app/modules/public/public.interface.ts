@@ -21,6 +21,7 @@ export type PublicModel = Model<IPublic>
 export type IFaq = {
   question: string
   answer: string
+  type: 'fan' | 'driver'
   createdAt: Date
   updatedAt: Date
 }

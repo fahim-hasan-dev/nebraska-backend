@@ -7,13 +7,8 @@ import { JwtPayload } from 'jsonwebtoken';
 
 // Submit a new registration to join an event class
 const createEventRegistration = catchAsync(async (req: Request, res: Response) => {
-  const user = req.user as JwtPayload;
-  const payload = {
-    ...req.body,
-    driver: user.userId, // use logged in driver id
-  };
-
-  const result = await EventRegistrationServices.createEventRegistration(payload);
+  
+  const result = await EventRegistrationServices.createEventRegistration(req.user, req.body);
   sendResponse(res, {
     statusCode: StatusCodes.CREATED,
     success: true,
@@ -29,7 +24,7 @@ const getAllEventRegistrations = catchAsync(async (req: Request, res: Response) 
 
   // drivers only see their own registrations
   if (user.role === 'driver') {
-    query.driver = user.userId;
+    query.driver = user.authId;
   }
 
   const result = await EventRegistrationServices.getAllEventRegistrations(query);

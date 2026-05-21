@@ -5,9 +5,10 @@ import { IEventRegistration } from './eventRegistration.interface';
 import { EventRegistrationModel } from './eventRegistration.model';
 import { EventModel } from '../event/event.model';
 import { User } from '../user/user.model';
+import { JwtPayload } from 'jsonwebtoken';
 
 // Create a new event registration
-const createEventRegistration = async (payload: IEventRegistration): Promise<IEventRegistration> => {
+const createEventRegistration = async (user:JwtPayload,payload: IEventRegistration): Promise<IEventRegistration> => {
   const event = await EventModel.findById(payload.event);
   if (!event) {
     throw new ApiError(StatusCodes.NOT_FOUND, 'Event not found');
@@ -19,15 +20,16 @@ const createEventRegistration = async (payload: IEventRegistration): Promise<IEv
     throw new ApiError(StatusCodes.BAD_REQUEST, `Class '${payload.class}' not found in event`);
   }
 
-  const driver = await User.findById(payload.driver);
+  const driver = await User.findById(user.authId);
   if (!driver) {
     throw new ApiError(StatusCodes.NOT_FOUND, 'Driver not found');
   }
+  payload.driver = driver._id;
 
   // check if duplicate request exists
   const existingRegistration = await EventRegistrationModel.findOne({
     event: payload.event,
-    driver: payload.driver,
+    driver: driver._id,
     class: payload.class,
   });
 
@@ -46,7 +48,10 @@ const getAllEventRegistrations = async (query: Record<string, unknown>) => {
     .sort()
     .paginate()
     .fields()
-    .populate(['event', 'driver']);
+    .populate(['event', 'driver'], {
+      event: 'name date time venue',
+      driver: 'fullName email phone image vehicleName',
+    });
 
   const registrations = await registrationQueryBuilder.modelQuery.lean();
   const paginationInfo = await registrationQueryBuilder.getPaginationInfo();
@@ -59,7 +64,10 @@ const getAllEventRegistrations = async (query: Record<string, unknown>) => {
 
 // Get registration by ID
 const getEventRegistrationById = async (id: string): Promise<IEventRegistration> => {
-  const result = await EventRegistrationModel.findById(id).populate(['event', 'driver']);
+  const result = await EventRegistrationModel.findById(id).populate([
+    { path: 'event', select: 'name date time venue' },
+    { path: 'driver', select: 'fullName email phone image vehicleName' },
+  ]);
   if (!result) {
     throw new ApiError(StatusCodes.NOT_FOUND, 'Event registration not found');
   }

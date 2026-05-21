@@ -81,8 +81,12 @@ const createFaq = async (payload) => {
         throw new ApiError_1.default(http_status_codes_1.StatusCodes.BAD_REQUEST, 'Failed to create Faq');
     return result;
 };
-const getAllFaqs = async () => {
-    const result = await public_model_1.Faq.find({});
+const getAllFaqs = async (query) => {
+    const filter = {};
+    if (query.type) {
+        filter.type = query.type;
+    }
+    const result = await public_model_1.Faq.find(filter);
     return result || [];
 };
 const getSingleFaq = async (id) => {
@@ -107,6 +111,22 @@ const deleteFaq = async (id) => {
     const result = await public_model_1.Faq.findByIdAndDelete(id);
     return result;
 };
+const updateRolebook = async (fileUrl) => {
+    const type = 'rolebook';
+    const isExist = await public_model_1.Public.findOne({ type });
+    if (isExist) {
+        const result = await public_model_1.Public.findByIdAndUpdate(isExist._id, { $set: { content: fileUrl } }, { new: true });
+        return result;
+    }
+    else {
+        const result = await public_model_1.Public.create({ type, content: fileUrl });
+        return result;
+    }
+};
+const getRolebook = async () => {
+    const result = await public_model_1.Public.findOne({ type: 'rolebook' }).lean();
+    return result || null;
+};
 exports.PublicServices = {
     createPublic,
     getAllPublics,
@@ -118,4 +138,6 @@ exports.PublicServices = {
     updateFaq,
     deleteFaq,
     getAllContacts,
+    updateRolebook,
+    getRolebook,
 };

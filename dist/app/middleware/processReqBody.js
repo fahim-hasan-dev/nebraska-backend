@@ -14,6 +14,7 @@ const sharp_1 = __importDefault(require("sharp"));
 const uploadFields = [
     { name: 'image', maxCount: 1 },
     { name: 'pictures', maxCount: 10 },
+    { name: 'file', maxCount: 1 },
 ];
 // Middleware for parsing body and files
 const fileAndBodyProcessorUsingDiskStorage = () => {
@@ -41,6 +42,7 @@ const fileAndBodyProcessorUsingDiskStorage = () => {
             const allowedTypes = {
                 image: ['image/jpeg', 'image/png', 'image/jpg'],
                 pictures: ['image/jpeg', 'image/png', 'image/jpg'],
+                file: ['application/pdf'],
             };
             const fieldType = file.fieldname;
             if (!((_a = allowedTypes[fieldType]) === null || _a === void 0 ? void 0 : _a.includes(file.mimetype))) {
@@ -107,6 +109,7 @@ const fileAndBodyProcessorUsingDiskStorage = () => {
                     ...req.body,
                     ...(processedFiles.image && { image: processedFiles.image }),
                     ...(processedFiles.pictures && { pictures: processedFiles.pictures }),
+                    ...(processedFiles.file && { file: processedFiles.file }),
                 };
                 next();
             }
