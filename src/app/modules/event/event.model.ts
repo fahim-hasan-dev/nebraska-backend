@@ -1,5 +1,5 @@
 import { Schema, model } from 'mongoose';
-import { IEvent, IClass } from './event.interface';
+import { IEvent, IClass, ILocation } from './event.interface';
 
 // Nested class schema - no auto _id to keep it clean
 const classSchema = new Schema<IClass>({
@@ -14,6 +14,22 @@ const classSchema = new Schema<IClass>({
     default: 'pending'
   }
 }, { 
+  _id: false
+});
+
+// GeoJSON Point Location schema
+const locationSchema = new Schema<ILocation>({
+  type: {
+    type: String,
+    enum: ['Point'],
+    default: 'Point',
+    required: true
+  },
+  coordinates: {
+    type: [Number],
+    required: [true, 'Coordinates are required']
+  }
+}, {
   _id: false
 });
 
@@ -38,6 +54,10 @@ const eventSchema = new Schema<IEvent>({
     required: [true, 'Event venue is required'],
     trim: true
   },
+  location: {
+    type: locationSchema,
+    required: [true, 'Event venue location coordinates are required']
+  },
   additionalInfo: {
     type: String,
     trim: true,
@@ -46,6 +66,10 @@ const eventSchema = new Schema<IEvent>({
   pictures: {
     type: [String],
     default: []
+  },
+  entryFee: {
+    type: Number,
+    required: [true, 'Entry fee is required']
   },
   class: {
     type: [classSchema],
@@ -60,6 +84,9 @@ const eventSchema = new Schema<IEvent>({
 }, {
   timestamps: true // tracks createdAt and updatedAt
 });
+
+// Enable geospatial queries
+eventSchema.index({ location: '2dsphere' });
 
 // Export event model
 export const EventModel = model<IEvent>('Event', eventSchema);

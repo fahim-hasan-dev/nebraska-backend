@@ -24,6 +24,9 @@ const eventRegistrationSchema = new Schema<IEventRegistration>(
       enum: ['pending', 'approved', 'rejected'],
       default: 'pending',
     },
+    note: {
+      type: String
+    },
     drawPosition: {
       type: Number,
       default: null,

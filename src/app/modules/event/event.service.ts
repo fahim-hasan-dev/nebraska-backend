@@ -24,7 +24,7 @@ const getAllEvents = async (query: Record<string, unknown>, user?: any) => {
   }
 
   const eventQueryBuilder = new QueryBuilder(EventModel.find(), query)
-    .search(['name', 'venue']) // search by name or venue
+    .search(['name', 'venue']) 
     .filter()
     .sort()
     .fields()
@@ -35,7 +35,7 @@ const getAllEvents = async (query: Record<string, unknown>, user?: any) => {
 
   // If user is a driver, check registration status for each event
   if (user && user.role === 'driver') {
-    const driverId = user.authId; // The decoded token contains authId
+    const driverId = user.authId; 
 
     // Extract just the event IDs for the current paginated page
     const eventIds = events.map((e: any) => e._id);
@@ -66,12 +66,23 @@ const getAllEvents = async (query: Record<string, unknown>, user?: any) => {
 };
 
 // Get a single event by ID
-const getEventById = async (id: string): Promise<IEvent> => {
-  const result = await EventModel.findById(id);
+const getEventById = async (id: string, user?: any): Promise<IEvent> => {
+  const result = await EventModel.findById(id).lean();
   if (!result) {
     throw new ApiError(StatusCodes.NOT_FOUND, 'Event not found');
   }
-  return result;
+
+  const eventData = { ...result } as IEvent;
+
+  if (user && user.role === 'driver') {
+    const isRegistered = await EventRegistrationModel.findOne({
+      driver: user.authId,
+      event: id,
+    });
+    eventData.isRegistered = !!isRegistered;
+  }
+
+  return eventData;
 };
 
 // Update event details

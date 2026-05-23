@@ -1,4 +1,0 @@
-{Thu May 21 2026 15:08:32} [Nebraska Bush Puller 🐞] error: ::ffff:10.10.7.94 - GET /favicon.ico 404 - 2.718 ms
-{Thu May 21 2026 15:12:27} [Nebraska Bush Puller 🐞] error: ::ffff:10.10.7.94 - POST /api/v1/message/create 403 - 16.808 ms
-{Thu May 21 2026 15:15:20} [Nebraska Bush Puller 🐞] error: ::ffff:10.10.7.94 - GET /api/v1/message?page=1&limit=20 500 - 3.283 ms
-{Thu May 21 2026 15:16:41} [Nebraska Bush Puller 🐞] error: ::ffff:10.10.7.94 - GET /api/v1/message?page=1&limit=20 500 - 11.603 ms

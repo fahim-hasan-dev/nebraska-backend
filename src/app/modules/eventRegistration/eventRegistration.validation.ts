@@ -5,6 +5,7 @@ const createEventRegistrationZodSchema = z.object({
   body: z.object({
     event: z.string({ required_error: 'Event ID is required' }),
     class: z.string({ required_error: 'Class name is required' }).min(1, 'Class cannot be empty'),
+    note: z.string().optional(),
   }),
 });
 

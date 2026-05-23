@@ -30,7 +30,7 @@ const getAllEvents = catchAsync(async (req: Request, res: Response) => {
 // Handles getting a single event by ID
 const getEventById = catchAsync(async (req: Request, res: Response) => {
   const { id } = req.params;
-  const result = await EventServices.getEventById(id);
+  const result = await EventServices.getEventById(id, req.user);
   sendResponse(res, {
     statusCode: StatusCodes.OK,
     success: true,

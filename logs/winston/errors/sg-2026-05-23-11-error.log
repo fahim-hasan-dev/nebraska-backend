@@ -1,0 +1,5 @@
+{Sat May 23 2026 11:03:03} [Nebraska Bush Puller 🐞] error: ::ffff:10.10.7.105 - POST /api/v1/help-support/submit 500 - 15.588 ms
+{Sat May 23 2026 11:08:10} [Nebraska Bush Puller 🐞] error: ::ffff:10.10.7.105 - GET /api/v1/help-support?page=1&limit=15&searchTerm= 500 - 3.177 ms
+{Sat May 23 2026 11:09:24} [Nebraska Bush Puller 🐞] error: ::ffff:10.10.7.105 - GET /api/v1/event?page=1&limit=10&fields=_id,name,class 500 - 4.365 ms
+{Sat May 23 2026 11:12:14} [Nebraska Bush Puller 🐞] error: ::ffff:10.10.7.105 - GET /api/v1/event/%7B%7Bevent_id%7D%7D 500 - 4.717 ms
+{Sat May 23 2026 11:12:24} [Nebraska Bush Puller 🐞] error: ::ffff:10.10.7.105 - GET /api/v1/event/%7B%7Bevent_id%7D%7D 400 - 100.865 ms

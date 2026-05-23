@@ -3,6 +3,7 @@ import { UserController } from './user.controller'
 import auth from '../../middleware/auth'
 import { USER_ROLES } from '../../../enum/user'
 import fileUploadHandler from '../../middleware/fileUploadHandler'
+import { fileAndBodyProcessorUsingDiskStorage } from '../../middleware/processReqBody'
 
 const router = express.Router()
 
@@ -14,8 +15,8 @@ router.get(
 router.get('/', auth(USER_ROLES.ADMIN), UserController.getAllUser);
 router.patch(
   '/profile',
+  fileAndBodyProcessorUsingDiskStorage(),
   auth(USER_ROLES.FAN, USER_ROLES.DRIVER, USER_ROLES.ADMIN),
-  fileUploadHandler(),
   UserController.updateProfile,
 )
 

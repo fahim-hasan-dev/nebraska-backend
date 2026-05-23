@@ -7,5 +7,6 @@ export interface IEventRegistration {
   driver: Types.ObjectId;
   class: string;
   status: 'pending' | 'approved' | 'rejected';
+  note?: string;
   drawPosition?: number | null;
 }
