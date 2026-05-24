@@ -15,6 +15,14 @@ router.post(
   EventRegistrationController.createEventRegistration
 );
 
+// Admin manually registers a driver directly with approved status (Admin only)
+router.post(
+  '/admin-add',
+  auth(USER_ROLES.ADMIN),
+  validateRequest(EventRegistrationValidations.adminAddRegistrationZodSchema),
+  EventRegistrationController.adminAddEventRegistration
+);
+
 // Draw pulling order positions (Admin only)
 router.post(
   '/draw',

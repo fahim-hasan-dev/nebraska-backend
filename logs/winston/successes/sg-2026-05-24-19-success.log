@@ -1,0 +1,92 @@
+{Sun May 24 2026 19:04:47} [Nebraska Bush Puller 🚀] info: [32m🚀 Database connected successfully[39m
+{Sun May 24 2026 19:04:47} [Nebraska Bush Puller 🚀] info: [34mℹ️ Admin account already exists. Skipping admin creation.[39m
+{Sun May 24 2026 19:04:47} [Nebraska Bush Puller 🚀] info: [32m🍁 Server connected successfully[39m
+{Sun May 24 2026 19:04:47} [Nebraska Bush Puller 🚀] info: [33m♻️  Application listening on port:5003[39m
+{Sun May 24 2026 19:05:00} [Nebraska Bush Puller 🚀] info: [32m🚀 Database connected successfully[39m
+{Sun May 24 2026 19:05:00} [Nebraska Bush Puller 🚀] info: [34mℹ️ Admin account already exists. Skipping admin creation.[39m
+{Sun May 24 2026 19:05:00} [Nebraska Bush Puller 🚀] info: [32m🍁 Server connected successfully[39m
+{Sun May 24 2026 19:05:00} [Nebraska Bush Puller 🚀] info: [33m♻️  Application listening on port:5003[39m
+{Sun May 24 2026 19:05:09} [Nebraska Bush Puller 🚀] info: [32m🚀 Database connected successfully[39m
+{Sun May 24 2026 19:05:09} [Nebraska Bush Puller 🚀] info: [34mℹ️ Admin account already exists. Skipping admin creation.[39m
+{Sun May 24 2026 19:05:09} [Nebraska Bush Puller 🚀] info: [32m🍁 Server connected successfully[39m
+{Sun May 24 2026 19:05:09} [Nebraska Bush Puller 🚀] info: [33m♻️  Application listening on port:5003[39m
+{Sun May 24 2026 19:05:15} [Nebraska Bush Puller 🚀] info: [32m🚀 Database connected successfully[39m
+{Sun May 24 2026 19:05:15} [Nebraska Bush Puller 🚀] info: [34mℹ️ Admin account already exists. Skipping admin creation.[39m
+{Sun May 24 2026 19:05:15} [Nebraska Bush Puller 🚀] info: [32m🍁 Server connected successfully[39m
+{Sun May 24 2026 19:05:15} [Nebraska Bush Puller 🚀] info: [33m♻️  Application listening on port:5003[39m
+{Sun May 24 2026 19:06:26} [Nebraska Bush Puller 🚀] info: ::ffff:10.10.7.105 - GET /api/v1/event/6a118366079962e04fdf3c40 200 - 21.245 ms
+{Sun May 24 2026 19:06:26} [Nebraska Bush Puller 🚀] info: ::ffff:10.10.7.105 - GET /pictures/1779532646834-va5ye2.jpg 200 - 2.990 ms
+{Sun May 24 2026 19:06:26} [Nebraska Bush Puller 🚀] info: ::ffff:10.10.7.105 - GET /pictures/1779532646834-x01eh9.jpg 200 - 1.285 ms
+{Sun May 24 2026 19:06:26} [Nebraska Bush Puller 🚀] info: ::ffff:10.10.7.105 - GET /pictures/1779532646835-9fm0b9.jpg 200 - 2.128 ms
+{Sun May 24 2026 19:06:38} [Nebraska Bush Puller 🚀] info: ::ffff:10.10.7.105 - GET /api/v1/event/6a119727d62e88836c8a2c53 200 - 4.932 ms
+{Sun May 24 2026 19:06:48} [Nebraska Bush Puller 🚀] info: ::ffff:10.10.7.105 - GET /api/v1/event?page=1&limit=10 200 - 71.412 ms
+{Sun May 24 2026 19:06:50} [Nebraska Bush Puller 🚀] info: ::ffff:10.10.7.105 - GET /api/v1/event/6a11bff770e2f9e142ba154d 200 - 4.984 ms
+{Sun May 24 2026 19:07:02} [Nebraska Bush Puller 🚀] info: ::ffff:10.10.7.105 - GET /api/v1/event/6a11837c079962e04fdf3c44 200 - 2.926 ms
+{Sun May 24 2026 19:07:03} [Nebraska Bush Puller 🚀] info: ::ffff:10.10.7.105 - GET /pictures/1779532668873-veoy9b.jpg 200 - 1.215 ms
+{Sun May 24 2026 19:07:03} [Nebraska Bush Puller 🚀] info: ::ffff:10.10.7.105 - GET /pictures/1779532668873-lfryj4.jpg 200 - 0.748 ms
+{Sun May 24 2026 19:07:03} [Nebraska Bush Puller 🚀] info: ::ffff:10.10.7.105 - GET /pictures/1779532668874-8fvkoj.jpg 200 - 1.149 ms
+{Sun May 24 2026 19:07:07} [Nebraska Bush Puller 🚀] info: ::ffff:10.10.7.105 - GET /api/v1/event/6a119727d62e88836c8a2c53 200 - 4.627 ms
+{Sun May 24 2026 19:07:12} [Nebraska Bush Puller 🚀] info: ::ffff:10.10.7.105 - GET /api/v1/event/6a11bdadab17198f42a5ccee 200 - 3.209 ms
+{Sun May 24 2026 19:07:19} [Nebraska Bush Puller 🚀] info: ::ffff:10.10.7.105 - GET /api/v1/event/6a11bff770e2f9e142ba154d 200 - 4.647 ms
+{Sun May 24 2026 19:14:15} [Nebraska Bush Puller 🚀] info: ::ffff:10.10.7.105 - GET /api/v1/user/me 200 - 81.967 ms
+{Sun May 24 2026 19:14:17} [Nebraska Bush Puller 🚀] info: ::ffff:10.10.7.105 - GET /api/v1/event?page=1&limit=10 200 - 92.608 ms
+{Sun May 24 2026 19:14:17} [Nebraska Bush Puller 🚀] info: ::ffff:10.10.7.105 - GET /api/v1/event?page=1&limit=20&fields=_id,name,class 200 - 56.403 ms
+{Sun May 24 2026 19:14:17} [Nebraska Bush Puller 🚀] info: ::ffff:10.10.7.105 - GET /api/v1/event-registration?page=1&limit=20&driver=6a1116c33be0e9e64f1da0f2&status=approved 200 - 63.592 ms
+{Sun May 24 2026 19:14:17} [Nebraska Bush Puller 🚀] info: ::ffff:10.10.7.105 - GET /api/v1/result?page=1&limit=10&sort=-distance&driver=6a1116c33be0e9e64f1da0f2 200 - 18.033 ms
+{Sun May 24 2026 19:14:17} [Nebraska Bush Puller 🚀] info: ::ffff:10.10.7.105 - GET /api/v1/message?page=1&limit=20 200 - 11.225 ms
+{Sun May 24 2026 19:14:24} [Nebraska Bush Puller 🚀] info: ::ffff:10.10.7.105 - GET /api/v1/event/6a119727d62e88836c8a2c53 200 - 6.365 ms
+{Sun May 24 2026 19:14:36} [Nebraska Bush Puller 🚀] info: ::ffff:10.10.7.105 - GET /api/v1/event/6a118366079962e04fdf3c40 200 - 4.694 ms
+{Sun May 24 2026 19:14:45} [Nebraska Bush Puller 🚀] info: ::ffff:10.10.7.105 - GET /api/v1/event/6a118366079962e04fdf3c40 200 - 4.494 ms
+{Sun May 24 2026 19:14:59} [Nebraska Bush Puller 🚀] info: ::ffff:10.10.7.105 - GET /api/v1/event/6a118366079962e04fdf3c40 200 - 4.165 ms
+{Sun May 24 2026 19:15:03} [Nebraska Bush Puller 🚀] info: ::ffff:10.10.7.105 - GET /api/v1/event/6a11bff770e2f9e142ba154f 200 - 5.114 ms
+{Sun May 24 2026 19:15:21} [Nebraska Bush Puller 🚀] info: ::ffff:10.10.7.105 - GET /api/v1/event/6a11bff770e2f9e142ba154f 200 - 3.126 ms
+{Sun May 24 2026 19:15:30} [Nebraska Bush Puller 🚀] info: ::ffff:10.10.7.105 - GET /api/v1/event/6a11bff770e2f9e142ba154e 200 - 4.050 ms
+{Sun May 24 2026 19:15:40} [Nebraska Bush Puller 🚀] info: ::ffff:10.10.7.105 - GET /api/v1/event/6a11bff770e2f9e142ba154d 200 - 4.306 ms
+{Sun May 24 2026 19:15:52} [Nebraska Bush Puller 🚀] info: ::ffff:10.10.7.105 - GET /api/v1/event/6a11bdadab17198f42a5ccee 200 - 4.638 ms
+{Sun May 24 2026 19:16:04} [Nebraska Bush Puller 🚀] info: ::ffff:10.10.7.105 - GET /api/v1/event/6a119727d62e88836c8a2c53 200 - 4.929 ms
+{Sun May 24 2026 19:16:53} [Nebraska Bush Puller 🚀] info: ::ffff:10.10.7.105 - POST /api/v1/auth/login 200 - 312.684 ms
+{Sun May 24 2026 19:16:54} [Nebraska Bush Puller 🚀] info: ::ffff:10.10.7.105 - GET /api/v1/event?page=1&limit=10 200 - 5.283 ms
+{Sun May 24 2026 19:16:54} [Nebraska Bush Puller 🚀] info: ::ffff:10.10.7.105 - GET /api/v1/event?page=1&limit=20&fields=_id,name,class 200 - 8.211 ms
+{Sun May 24 2026 19:16:54} [Nebraska Bush Puller 🚀] info: ::ffff:10.10.7.105 - GET /api/v1/event?page=1&limit=20&fields=_id,name,class 200 - 9.542 ms
+{Sun May 24 2026 19:16:54} [Nebraska Bush Puller 🚀] info: ::ffff:10.10.7.105 - GET /api/v1/result?page=1&limit=10&sort=-distance 200 - 11.111 ms
+{Sun May 24 2026 19:16:54} [Nebraska Bush Puller 🚀] info: ::ffff:10.10.7.105 - GET /api/v1/message?page=1&limit=20 200 - 5.759 ms
+{Sun May 24 2026 19:17:02} [Nebraska Bush Puller 🚀] info: ::ffff:10.10.7.105 - GET /api/v1/result?limit=20&sort=-distance&event=6a11bff770e2f9e142ba154f&class=Modified%20Tractors 200 - 18.509 ms
+{Sun May 24 2026 19:17:08} [Nebraska Bush Puller 🚀] info: ::ffff:10.10.7.105 - GET /api/v1/result?limit=20&sort=-distance&event=6a1194ba09b0beba5bee0018&class=fsadf 200 - 6.091 ms
+{Sun May 24 2026 19:17:10} [Nebraska Bush Puller 🚀] info: ::ffff:10.10.7.105 - GET /api/v1/result?limit=20&sort=-distance&event=6a11bff770e2f9e142ba154d&class=Pro%20Stock%20Tractors 200 - 7.811 ms
+{Sun May 24 2026 19:17:22} [Nebraska Bush Puller 🚀] info: ::ffff:10.10.7.105 - GET /api/v1/result?limit=20&sort=-distance&event=6a11bdadab17198f42a5ccee&class=Class%20X%20-%20Limited%20Pro 200 - 3.609 ms
+{Sun May 24 2026 19:17:26} [Nebraska Bush Puller 🚀] info: ::ffff:10.10.7.105 - GET /api/v1/result?limit=20&sort=-distance&event=6a11bff770e2f9e142ba154d&class=Pro%20Stock%20Tractors 200 - 8.083 ms
+{Sun May 24 2026 19:17:30} [Nebraska Bush Puller 🚀] info: ::ffff:10.10.7.105 - GET /api/v1/result?limit=20&sort=-distance&event=6a11bff770e2f9e142ba154e&class=Limited%20Pro%20Stock 200 - 5.778 ms
+{Sun May 24 2026 19:17:37} [Nebraska Bush Puller 🚀] info: ::ffff:10.10.7.105 - GET /api/v1/result?limit=20&sort=-distance&event=6a11bff770e2f9e142ba154e&class=Light%20Super%20Stock 200 - 3.254 ms
+{Sun May 24 2026 19:17:39} [Nebraska Bush Puller 🚀] info: ::ffff:10.10.7.105 - GET /api/v1/result?limit=20&sort=-distance&event=6a11bff770e2f9e142ba154f&class=Modified%20Tractors 200 - 7.228 ms
+{Sun May 24 2026 19:17:42} [Nebraska Bush Puller 🚀] info: ::ffff:10.10.7.105 - GET /api/v1/result?limit=20&sort=-distance&event=6a11bff770e2f9e142ba154f&class=Two%20Wheel%20Drive%20Trucks 200 - 3.213 ms
+{Sun May 24 2026 19:17:45} [Nebraska Bush Puller 🚀] info: ::ffff:10.10.7.105 - GET /api/v1/result?limit=20&sort=-distance&event=6a11bff770e2f9e142ba154d&class=Pro%20Stock%20Tractors 200 - 9.195 ms
+{Sun May 24 2026 19:17:48} [Nebraska Bush Puller 🚀] info: ::ffff:10.10.7.105 - GET /api/v1/result?limit=20&sort=-distance&event=6a11bff770e2f9e142ba154d&class=Super%20Farm%20Tractors 200 - 5.930 ms
+{Sun May 24 2026 19:17:50} [Nebraska Bush Puller 🚀] info: ::ffff:10.10.7.105 - GET /api/v1/result?limit=20&sort=-distance&event=6a11bff770e2f9e142ba154e&class=Limited%20Pro%20Stock 200 - 8.676 ms
+{Sun May 24 2026 19:18:00} [Nebraska Bush Puller 🚀] info: ::ffff:10.10.7.105 - GET /api/v1/event?page=1&limit=10 200 - 5.331 ms
+{Sun May 24 2026 19:18:03} [Nebraska Bush Puller 🚀] info: ::ffff:10.10.7.105 - GET /api/v1/event/6a11bff770e2f9e142ba154f 200 - 5.753 ms
+{Sun May 24 2026 19:18:08} [Nebraska Bush Puller 🚀] info: ::ffff:10.10.7.105 - GET /api/v1/event/6a11bff770e2f9e142ba154d 200 - 5.417 ms
+{Sun May 24 2026 19:20:22} [Nebraska Bush Puller 🚀] info: ::ffff:10.10.7.94 - GET /api/v1/event?page=1&limit=15&fields=_id%2Cname%2Cclass 200 - 134.039 ms
+{Sun May 24 2026 19:20:22} [Nebraska Bush Puller 🚀] info: ::ffff:10.10.7.94 - GET /api/v1/event?page=1&limit=15&fields=_id%2Cname%2Cclass 200 - 6.084 ms
+{Sun May 24 2026 19:20:29} [Nebraska Bush Puller 🚀] info: ::ffff:10.10.7.94 - GET /api/v1/event-registration?page=1&limit=15&fields=_id%2Cemail%2CfullName%2CvehicleName%2Cphone&event=6a1194ba09b0beba5bee0018&class=fsadf&status=approved 200 - 15.543 ms
+{Sun May 24 2026 19:20:34} [Nebraska Bush Puller 🚀] info: ::ffff:10.10.7.94 - GET /api/v1/event-registration?page=1&limit=15&fields=_id%2Cemail%2CfullName%2CvehicleName%2Cphone&searchTerm=gfd&event=6a1194ba09b0beba5bee0018&class=fsadf&status=approved 200 - 32.802 ms
+{Sun May 24 2026 19:20:36} [Nebraska Bush Puller 🚀] info: ::ffff:10.10.7.94 - GET /api/v1/event-registration?page=1&limit=15&fields=_id%2Cemail%2CfullName%2CvehicleName%2Cphone&event=6a1194ba09b0beba5bee0018&class=fsadf&status=approved 200 - 3.600 ms
+{Sun May 24 2026 19:20:38} [Nebraska Bush Puller 🚀] info: ::ffff:10.10.7.94 - GET /api/v1/event-registration?page=1&limit=15&fields=_id%2Cemail%2CfullName%2CvehicleName%2Cphone&searchTerm=dl&event=6a1194ba09b0beba5bee0018&class=fsadf&status=approved 200 - 4.484 ms
+{Sun May 24 2026 19:20:39} [Nebraska Bush Puller 🚀] info: ::ffff:10.10.7.94 - GET /api/v1/event-registration?page=1&limit=15&fields=_id%2Cemail%2CfullName%2CvehicleName%2Cphone&searchTerm=dleo&event=6a1194ba09b0beba5bee0018&class=fsadf&status=approved 200 - 5.875 ms
+{Sun May 24 2026 19:20:40} [Nebraska Bush Puller 🚀] info: ::ffff:10.10.7.94 - GET /api/v1/event-registration?page=1&limit=15&fields=_id%2Cemail%2CfullName%2CvehicleName%2Cphone&searchTerm=dleold-&event=6a1194ba09b0beba5bee0018&class=fsadf&status=approved 200 - 5.229 ms
+{Sun May 24 2026 19:20:42} [Nebraska Bush Puller 🚀] info: ::ffff:10.10.7.94 - GET /api/v1/event-registration?page=1&limit=15&fields=_id%2Cemail%2CfullName%2CvehicleName%2Cphone&searchTerm=dleold&event=6a1194ba09b0beba5bee0018&class=fsadf&status=approved 200 - 7.172 ms
+{Sun May 24 2026 19:20:43} [Nebraska Bush Puller 🚀] info: ::ffff:10.10.7.94 - GET /api/v1/event-registration?page=1&limit=15&fields=_id%2Cemail%2CfullName%2CvehicleName%2Cphone&event=6a1194ba09b0beba5bee0018&class=fsadf&status=approved 200 - 6.822 ms
+{Sun May 24 2026 19:24:37} [Nebraska Bush Puller 🚀] info: ::ffff:10.10.7.94 - GET /api/v1/event?page=1&limit=15&fields=_id%2Cname%2Cclass 200 - 484.731 ms
+{Sun May 24 2026 19:24:37} [Nebraska Bush Puller 🚀] info: ::ffff:10.10.7.94 - GET /api/v1/event?page=1&limit=15&fields=_id%2Cname%2Cclass 200 - 32.476 ms
+{Sun May 24 2026 19:24:37} [Nebraska Bush Puller 🚀] info: ::ffff:10.10.7.94 - GET /api/v1/event?page=1&limit=15&fields=_id%2Cname%2Cclass 200 - 14.772 ms
+{Sun May 24 2026 19:24:38} [Nebraska Bush Puller 🚀] info: ::ffff:10.10.7.94 - GET /api/v1/user?page=1&limit=15&fields=_id%2Cemail%2CfullName%2CvehicleName%2Cphone&role=driver 200 - 48.620 ms
+{Sun May 24 2026 19:24:38} [Nebraska Bush Puller 🚀] info: ::ffff:10.10.7.94 - GET /api/v1/event?page=1&limit=15&fields=_id%2Cname%2Cclass 200 - 8.795 ms
+{Sun May 24 2026 19:24:38} [Nebraska Bush Puller 🚀] info: ::ffff:10.10.7.94 - GET /api/v1/user?page=1&limit=15&fields=_id%2Cemail%2CfullName%2CvehicleName%2Cphone&role=driver 200 - 17.137 ms
+{Sun May 24 2026 19:24:49} [Nebraska Bush Puller 🚀] info: ::ffff:10.10.7.94 - GET /api/v1/user?page=1&limit=15&fields=_id%2Cemail%2CfullName%2CvehicleName%2Cphone&searchTerm=fds&role=driver 200 - 17.871 ms
+{Sun May 24 2026 19:24:51} [Nebraska Bush Puller 🚀] info: ::ffff:10.10.7.94 - GET /api/v1/user?page=1&limit=15&fields=_id%2Cemail%2CfullName%2CvehicleName%2Cphone&role=driver 200 - 7.917 ms
+{Sun May 24 2026 19:24:53} [Nebraska Bush Puller 🚀] info: ::ffff:10.10.7.94 - GET /api/v1/user?page=1&limit=15&fields=_id%2Cemail%2CfullName%2CvehicleName%2Cphone&searchTerm=he&role=driver 200 - 5.255 ms
+{Sun May 24 2026 19:24:54} [Nebraska Bush Puller 🚀] info: ::ffff:10.10.7.94 - GET /api/v1/user?page=1&limit=15&fields=_id%2Cemail%2CfullName%2CvehicleName%2Cphone&searchTerm=hello&role=driver 200 - 4.541 ms
+{Sun May 24 2026 19:24:56} [Nebraska Bush Puller 🚀] info: ::ffff:10.10.7.94 - GET /api/v1/user?page=1&limit=15&fields=_id%2Cemail%2CfullName%2CvehicleName%2Cphone&role=driver 200 - 4.069 ms
+{Sun May 24 2026 19:24:57} [Nebraska Bush Puller 🚀] info: ::ffff:10.10.7.94 - GET /api/v1/user?page=1&limit=15&fields=_id%2Cemail%2CfullName%2CvehicleName%2Cphone&searchTerm=ka&role=driver 200 - 6.218 ms
+{Sun May 24 2026 19:24:58} [Nebraska Bush Puller 🚀] info: ::ffff:10.10.7.94 - GET /api/v1/user?page=1&limit=15&fields=_id%2Cemail%2CfullName%2CvehicleName%2Cphone&searchTerm=kar&role=driver 200 - 6.708 ms
+{Sun May 24 2026 19:24:58} [Nebraska Bush Puller 🚀] info: ::ffff:10.10.7.94 - GET /api/v1/user?page=1&limit=15&fields=_id%2Cemail%2CfullName%2CvehicleName%2Cphone&searchTerm=karaa&role=driver 200 - 8.539 ms
+{Sun May 24 2026 19:25:01} [Nebraska Bush Puller 🚀] info: ::ffff:10.10.7.94 - GET /api/v1/user?page=1&limit=15&fields=_id%2Cemail%2CfullName%2CvehicleName%2Cphone&role=driver 200 - 4.792 ms

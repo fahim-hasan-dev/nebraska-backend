@@ -26,8 +26,19 @@ const drawEventRegistrationZodSchema = z.object({
   }),
 });
 
+// Validation rules for Admin to manually add a driver registration
+const adminAddRegistrationZodSchema = z.object({
+  body: z.object({
+    event: z.string({ required_error: 'Event ID is required' }),
+    driver: z.string({ required_error: 'Driver ID is required' }),
+    class: z.string({ required_error: 'Class name is required' }).min(1, 'Class cannot be empty'),
+    note: z.string().optional(),
+  }),
+});
+
 export const EventRegistrationValidations = {
   createEventRegistrationZodSchema,
   updateEventRegistrationStatusZodSchema,
   drawEventRegistrationZodSchema,
+  adminAddRegistrationZodSchema,
 };

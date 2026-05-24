@@ -1,2 +1,0 @@
-{Sun May 24 2026 10:03:32} [Nebraska Bush Puller 🚀] info: ::ffff:10.10.7.94 - GET /api/v1/event?page=1&limit=15&fields=_id%2Cname%2Cclass 200 - 24.034 ms
-{Sun May 24 2026 10:03:32} [Nebraska Bush Puller 🚀] info: ::ffff:10.10.7.94 - GET /api/v1/event?page=1&limit=15&fields=_id%2Cname%2Cclass 200 - 6.663 ms

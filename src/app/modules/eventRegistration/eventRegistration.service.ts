@@ -192,6 +192,45 @@ const cancelDrawRegistrations = async (eventId: string, className: string) => {
   return result;
 };
 
+// Admin manually registers a driver directly with approved status
+const adminAddEventRegistration = async (payload: IEventRegistration): Promise<IEventRegistration> => {
+  const event = await EventModel.findById(payload.event);
+  if (!event) {
+    throw new ApiError(StatusCodes.NOT_FOUND, 'Event not found');
+  }
+
+  // check if class exists in event classes array
+  const classExists = event.class.some((c) => c.name === payload.class);
+  if (!classExists) {
+    throw new ApiError(StatusCodes.BAD_REQUEST, `Class '${payload.class}' not found in event`);
+  }
+
+  const driver = await User.findById(payload.driver);
+  if (!driver) {
+    throw new ApiError(StatusCodes.NOT_FOUND, 'Driver not found');
+  }
+  if (driver.role !== 'driver') {
+    throw new ApiError(StatusCodes.BAD_REQUEST, 'Specified user is not a driver');
+  }
+
+  // check if duplicate request exists
+  const existingRegistration = await EventRegistrationModel.findOne({
+    event: payload.event,
+    driver: payload.driver,
+    class: payload.class,
+  });
+
+  if (existingRegistration) {
+    throw new ApiError(StatusCodes.BAD_REQUEST, 'Driver is already registered for this class in the event');
+  }
+
+  // Set status directly to approved
+  payload.status = 'approved';
+
+  const result = await EventRegistrationModel.create(payload);
+  return result;
+};
+
 export const EventRegistrationServices = {
   createEventRegistration,
   getAllEventRegistrations,
@@ -200,4 +239,5 @@ export const EventRegistrationServices = {
   deleteEventRegistration,
   drawRegistrations,
   cancelDrawRegistrations,
+  adminAddEventRegistration,
 };

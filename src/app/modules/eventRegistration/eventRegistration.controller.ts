@@ -90,6 +90,17 @@ const cancelDrawRegistrations = catchAsync(async (req: Request, res: Response) =
   });
 });
 
+// Admin manually adds a driver registration directly with approved status
+const adminAddEventRegistration = catchAsync(async (req: Request, res: Response) => {
+  const result = await EventRegistrationServices.adminAddEventRegistration(req.body);
+  sendResponse(res, {
+    statusCode: StatusCodes.CREATED,
+    success: true,
+    message: 'Driver added to event successfully',
+    data: result,
+  });
+});
+
 export const EventRegistrationController = {
   createEventRegistration,
   getAllEventRegistrations,
@@ -98,4 +109,5 @@ export const EventRegistrationController = {
   deleteEventRegistration,
   drawRegistrations,
   cancelDrawRegistrations,
+  adminAddEventRegistration,
 };
