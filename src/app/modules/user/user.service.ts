@@ -12,6 +12,7 @@ import config from '../../../config'
 const getAllUser = async (query: Record<string, unknown>) => {
     const userQueryBuilder = new QueryBuilder(User.find().select('-password -authentication'), query)
         .filter()
+        .search(["fullName","email","phone"])
         .sort()
         .fields()
         .paginate()

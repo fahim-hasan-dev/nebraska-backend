@@ -1,0 +1,16 @@
+{Sat May 23 2026 19:13:51} [Nebraska Bush Puller 🐞] error: ::ffff:10.10.7.105 - GET /api/v1/result?page=1 500 - 14.039 ms
+{Sat May 23 2026 19:24:21} [Nebraska Bush Puller 🐞] error: ::ffff:10.10.7.94 - GET /api/v1/eventRegistration?page=1&limit=15&fields=_id%2Cemail%2CfullName%2CvehicleName&event=6a0d9959db20173330dbb1a7&class=pro&status=approved 404 - 0.670 ms
+{Sat May 23 2026 19:24:32} [Nebraska Bush Puller 🐞] error: ::ffff:10.10.7.94 - GET /api/v1/eventRegistration?page=1&limit=15&fields=_id%2Cemail%2CfullName%2CvehicleName&event=6a0d9959db20173330dbb1a7&class=pro&status=approved 404 - 0.302 ms
+{Sat May 23 2026 19:24:32} [Nebraska Bush Puller 🐞] error: ::ffff:10.10.7.94 - GET /api/v1/eventRegistration?page=1&limit=15&fields=_id%2Cemail%2CfullName%2CvehicleName&event=6a0d9959db20173330dbb1a7&class=pro&status=approved 404 - 0.732 ms
+{Sat May 23 2026 19:24:44} [Nebraska Bush Puller 🐞] error: ::ffff:10.10.7.94 - GET /api/v1/eventRegistration?page=1&limit=15&fields=_id%2Cemail%2CfullName%2CvehicleName&event=6a0d9959db20173330dbb1a7&class=pro&status=approved 404 - 0.324 ms
+{Sat May 23 2026 19:24:47} [Nebraska Bush Puller 🐞] error: ::ffff:10.10.7.94 - GET /api/v1/eventRegistration?page=1&limit=15&fields=_id%2Cemail%2CfullName%2CvehicleName&event=6a0d9959db20173330dbb1a7&class=simple&status=approved 404 - 0.294 ms
+{Sat May 23 2026 19:24:49} [Nebraska Bush Puller 🐞] error: ::ffff:10.10.7.94 - GET /api/v1/eventRegistration?page=1&limit=15&fields=_id%2Cemail%2CfullName%2CvehicleName&event=6a0d9959db20173330dbb1a7&class=pro&status=approved 404 - 0.366 ms
+{Sat May 23 2026 19:24:53} [Nebraska Bush Puller 🐞] error: ::ffff:10.10.7.94 - GET /api/v1/eventRegistration?page=1&limit=15&fields=_id%2Cemail%2CfullName%2CvehicleName&searchTerm=d&event=6a0d9959db20173330dbb1a7&class=pro&status=approved 404 - 0.371 ms
+{Sat May 23 2026 19:24:55} [Nebraska Bush Puller 🐞] error: ::ffff:10.10.7.94 - GET /api/v1/eventRegistration?page=1&limit=15&fields=_id%2Cemail%2CfullName%2CvehicleName&event=6a0d9959db20173330dbb1a7&class=pro&status=approved 404 - 0.314 ms
+{Sat May 23 2026 19:35:21} [Nebraska Bush Puller 🐞] error: ::ffff:10.10.7.94 - POST /api/v1/result/create 409 - 20.081 ms
+{Sat May 23 2026 19:45:33} [Nebraska Bush Puller 🐞] error: ::ffff:10.10.7.94 - GET /api/v1/event-registration/6a1116c33be0e9e64f1da0f2 404 - 17.732 ms
+{Sat May 23 2026 19:45:33} [Nebraska Bush Puller 🐞] error: ::ffff:10.10.7.94 - GET /api/v1/event-registration/6a1116c33be0e9e64f1da0f2 404 - 2.163 ms
+{Sat May 23 2026 19:46:50} [Nebraska Bush Puller 🐞] error: ::ffff:10.10.7.94 - GET /api/v1/event-registration/6a1116c33be0e9e64f1da0f2 404 - 5.706 ms
+{Sat May 23 2026 19:46:50} [Nebraska Bush Puller 🐞] error: ::ffff:10.10.7.94 - GET /api/v1/event-registration/6a1116c33be0e9e64f1da0f2 404 - 6.488 ms
+{Sat May 23 2026 19:46:50} [Nebraska Bush Puller 🐞] error: ::ffff:10.10.7.94 - GET /api/v1/event-registration/6a1116c33be0e9e64f1da0f2 404 - 2.943 ms
+{Sat May 23 2026 19:46:56} [Nebraska Bush Puller 🐞] error: ::ffff:10.10.7.94 - GET /api/v1/event-registration/6a1116c33be0e9e64f1da0f2 404 - 3.402 ms

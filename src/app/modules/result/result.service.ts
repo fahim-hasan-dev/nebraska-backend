@@ -28,6 +28,19 @@ const createResult = async (payload: IResult): Promise<IResult> => {
     throw new ApiError(StatusCodes.BAD_REQUEST, 'Specified user is not a driver');
   }
 
+  // Check if a result already exists for this driver in this specific event class
+  const isExistResult = await ResultModel.findOne({
+    event: payload.event,
+    class: payload.class,
+    driver: payload.driver,
+  });
+  if (isExistResult) {
+    throw new ApiError(
+      StatusCodes.CONFLICT,
+      'A result has already been recorded for this driver in this event class'
+    );
+  }
+
   const result = await ResultModel.create(payload);
   return result;
 };
@@ -39,7 +52,10 @@ const getAllResults = async (query: Record<string, unknown>) => {
     .sort()
     .paginate()
     .fields()
-    .populate(['event', 'driver']);
+    .populate([
+      { path: 'event', select: 'name date venue' },
+      { path: 'driver', select: 'fullName vehicleName image' }
+    ]);
 
   const results = await resultQueryBuilder.modelQuery.lean();
   const paginationInfo = await resultQueryBuilder.getPaginationInfo();
@@ -69,6 +85,23 @@ const updateResult = async (id: string, payload: Partial<IResult>): Promise<IRes
   // validation when event/class are updated
   const eventId = payload.event || result.event;
   const className = payload.class || result.class;
+  const driverId = payload.driver || result.driver;
+
+  // Check if updating results in a duplicate event, class, and driver combination
+  if (payload.event || payload.class || payload.driver) {
+    const isExistDuplicate = await ResultModel.findOne({
+      _id: { $ne: id },
+      event: eventId,
+      class: className,
+      driver: driverId,
+    });
+    if (isExistDuplicate) {
+      throw new ApiError(
+        StatusCodes.CONFLICT,
+        'A result has already been recorded for this driver in this event class'
+      );
+    }
+  }
 
   if (payload.event || payload.class) {
     const event = await EventModel.findById(eventId);

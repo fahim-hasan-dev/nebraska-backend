@@ -22,11 +22,6 @@ const getAllEventRegistrations = catchAsync(async (req: Request, res: Response) 
   const user = req.user as JwtPayload;
   const query = { ...req.query };
 
-  // drivers only see their own registrations
-  if (user.role === 'driver') {
-    query.driver = user.authId;
-  }
-
   const result = await EventRegistrationServices.getAllEventRegistrations(query);
   sendResponse(res, {
     statusCode: StatusCodes.OK,

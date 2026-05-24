@@ -43,7 +43,38 @@ const createEventRegistration = async (user:JwtPayload,payload: IEventRegistrati
 
 // Get all event registrations
 const getAllEventRegistrations = async (query: Record<string, unknown>) => {
-  const registrationQueryBuilder = new QueryBuilder(EventRegistrationModel.find(), query)
+  let searchFilters: any = {};
+
+  if (query.searchTerm) {
+    const searchTerm = query.searchTerm as string;
+
+    // Find drivers matching search criteria
+    const matchingDrivers = await User.find({
+      $or: [
+        { fullName: { $regex: searchTerm, $options: 'i' } },
+        { email: { $regex: searchTerm, $options: 'i' } },
+        { phone: { $regex: searchTerm, $options: 'i' } }
+      ]
+    }).select('_id');
+    const driverIds = matchingDrivers.map(d => d._id);
+
+    // Find events matching search criteria
+    const matchingEvents = await EventModel.find({
+      name: { $regex: searchTerm, $options: 'i' }
+    }).select('_id');
+    const eventIds = matchingEvents.map(e => e._id);
+
+    searchFilters = {
+      $or: [
+        { driver: { $in: driverIds } },
+        { event: { $in: eventIds } }
+      ]
+    };
+    delete query.searchTerm;
+  }
+
+  const baseQuery = EventRegistrationModel.find(searchFilters);
+  const registrationQueryBuilder = new QueryBuilder(baseQuery, query)
     .filter()
     .sort()
     .paginate()

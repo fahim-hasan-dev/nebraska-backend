@@ -23,7 +23,10 @@ const getAllEvents = async (query: Record<string, unknown>, user?: any) => {
     delete query.id;
   }
 
-  const eventQueryBuilder = new QueryBuilder(EventModel.find(), query)
+  const eventQueryBuilder = new QueryBuilder(
+    EventModel.find().select('name date time venue location entryFee class'),
+    query
+  )
     .search(['name', 'venue']) 
     .filter()
     .sort()
