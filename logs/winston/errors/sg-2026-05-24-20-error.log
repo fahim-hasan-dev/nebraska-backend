@@ -1,0 +1,2 @@
+{Sun May 24 2026 20:31:04} [Nebraska Bush Puller 🐞] error: ::ffff:10.10.7.34 - POST /api/v1/auth/login 400 - 61.578 ms
+{Sun May 24 2026 20:31:24} [Nebraska Bush Puller 🐞] error: ::ffff:10.10.7.34 - POST /api/v1/auth/login 400 - 4.417 ms

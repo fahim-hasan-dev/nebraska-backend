@@ -42,14 +42,14 @@ router.post(
 // Get registrations (driver gets their own, admin gets all)
 router.get(
   '/',
-  auth(USER_ROLES.ADMIN, USER_ROLES.DRIVER),
+  auth(USER_ROLES.ADMIN, USER_ROLES.DRIVER, USER_ROLES.FAN),
   EventRegistrationController.getAllEventRegistrations
 );
 
 // Get single registration detail
 router.get(
   '/:id',
-  auth(USER_ROLES.ADMIN, USER_ROLES.DRIVER),
+  auth(USER_ROLES.ADMIN, USER_ROLES.DRIVER, USER_ROLES.FAN),
   EventRegistrationController.getEventRegistrationById
 );
 

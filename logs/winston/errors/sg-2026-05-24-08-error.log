@@ -1,8 +1,0 @@
-{Sun May 24 2026 08:15:09} [Nebraska Bush Puller 🐞] error: ::ffff:10.10.7.105 - GET /api/v1/event/%7B%7Bevent_id%7D%7D 500 - 14.518 ms
-{Sun May 24 2026 08:15:44} [Nebraska Bush Puller 🐞] error: ::ffff:10.10.7.105 - GET /api/v1/event/%7B%7Bevent_id%7D%7D 400 - 103.364 ms
-{Sun May 24 2026 08:31:01} [Nebraska Bush Puller 🐞] error: ::ffff:10.10.7.105 - POST /api/v1/event-registration/submit 400 - 9.251 ms
-{Sun May 24 2026 08:54:42} [Nebraska Bush Puller 🐞] error: ::ffff:10.10.7.105 - GET /api/v1/event-registration?driver 500 - 13.887 ms
-{Sun May 24 2026 08:58:38} [Nebraska Bush Puller 🐞] error: ::ffff:10.10.7.105 - GET /api/v1/event/6a11bdadab17198f42a5ccee 404 - 2.850 ms
-{Sun May 24 2026 08:58:39} [Nebraska Bush Puller 🐞] error: ::ffff:10.10.7.105 - GET /api/v1/event/6a11bdadab17198f42a5ccee 404 - 0.757 ms
-{Sun May 24 2026 08:58:39} [Nebraska Bush Puller 🐞] error: ::ffff:10.10.7.105 - GET /favicon.ico 404 - 5.067 ms
-{Sun May 24 2026 08:58:39} [Nebraska Bush Puller 🐞] error: ::ffff:10.10.7.105 - GET /favicon.ico 404 - 0.278 ms

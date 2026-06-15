@@ -1,0 +1,32 @@
+{Mon May 25 2026 08:54:58} [Nebraska Bush Puller 🚀] info: [32m🚀 Database connected successfully[39m
+{Mon May 25 2026 08:54:58} [Nebraska Bush Puller 🚀] info: [34mℹ️ Admin account already exists. Skipping admin creation.[39m
+{Mon May 25 2026 08:54:58} [Nebraska Bush Puller 🚀] info: [32m🍁 Server connected successfully[39m
+{Mon May 25 2026 08:54:58} [Nebraska Bush Puller 🚀] info: [33m♻️  Application listening on port:5003[39m
+{Mon May 25 2026 08:55:36} [Nebraska Bush Puller 🚀] info: ::ffff:10.10.7.34 - POST /api/v1/auth/login 200 - 242.699 ms
+{Mon May 25 2026 08:55:36} [Nebraska Bush Puller 🚀] info: ::ffff:10.10.7.34 - GET /api/v1/event?page=1&limit=10 200 - 52.007 ms
+{Mon May 25 2026 08:55:36} [Nebraska Bush Puller 🚀] info: ::ffff:10.10.7.34 - GET /api/v1/result?page=1&limit=10&sort=-distance 200 - 40.048 ms
+{Mon May 25 2026 08:55:36} [Nebraska Bush Puller 🚀] info: ::ffff:10.10.7.34 - GET /api/v1/event?page=1&limit=20&fields=_id,name,class 200 - 36.282 ms
+{Mon May 25 2026 08:55:36} [Nebraska Bush Puller 🚀] info: ::ffff:10.10.7.34 - GET /api/v1/message?page=1&limit=20 200 - 37.527 ms
+{Mon May 25 2026 08:55:36} [Nebraska Bush Puller 🚀] info: ::ffff:10.10.7.34 - GET /api/v1/event?page=1&limit=20&fields=_id,name,class 200 - 37.953 ms
+{Mon May 25 2026 08:56:00} [Nebraska Bush Puller 🚀] info: ::ffff:10.10.7.34 - GET /api/v1/result?page=1&limit=10&sort=-distance&event=6a119727d62e88836c8a2c53&class=fdsf 200 - 6.347 ms
+{Mon May 25 2026 08:56:02} [Nebraska Bush Puller 🚀] info: ::ffff:10.10.7.34 - GET /api/v1/result?page=1&limit=10&sort=-distance&event=6a11bff770e2f9e142ba154f&class=Modified%20Tractors 200 - 10.046 ms
+{Mon May 25 2026 08:56:09} [Nebraska Bush Puller 🚀] info: ::ffff:10.10.7.34 - GET /api/v1/result?page=1&limit=10&sort=-distance&event=6a11bff770e2f9e142ba154f&class=Two%20Wheel%20Drive%20Trucks 200 - 7.734 ms
+{Mon May 25 2026 08:56:12} [Nebraska Bush Puller 🚀] info: ::ffff:10.10.7.34 - GET /api/v1/result?page=1&limit=10&sort=-distance&event=6a11bff770e2f9e142ba154e&class=Limited%20Pro%20Stock 200 - 6.830 ms
+{Mon May 25 2026 08:56:15} [Nebraska Bush Puller 🚀] info: ::ffff:10.10.7.34 - GET /api/v1/result?page=1&limit=10&sort=-distance&event=6a11bff770e2f9e142ba154e&class=Light%20Super%20Stock 200 - 7.351 ms
+{Mon May 25 2026 08:56:19} [Nebraska Bush Puller 🚀] info: ::ffff:10.10.7.34 - GET /api/v1/result?page=1&limit=10&sort=-distance&event=6a11bff770e2f9e142ba154d&class=Pro%20Stock%20Tractors 200 - 6.665 ms
+{Mon May 25 2026 08:56:34} [Nebraska Bush Puller 🚀] info: ::ffff:10.10.7.34 - GET /api/v1/result?limit=20&sort=-distance&event=6a11bff770e2f9e142ba154e&class=Limited%20Pro%20Stock 200 - 6.314 ms
+{Mon May 25 2026 08:56:39} [Nebraska Bush Puller 🚀] info: ::ffff:10.10.7.34 - GET /api/v1/result?limit=20&sort=-distance&event=6a11bff770e2f9e142ba154e&class=Limited%20Pro%20Stock 200 - 11.765 ms
+{Mon May 25 2026 08:56:41} [Nebraska Bush Puller 🚀] info: ::ffff:10.10.7.34 - GET /api/v1/result?limit=20&sort=-distance&event=6a11bdadab17198f42a5ccee&class=Class%20X%20-%20Limited%20Pro 200 - 4.200 ms
+{Mon May 25 2026 08:56:43} [Nebraska Bush Puller 🚀] info: ::ffff:10.10.7.34 - GET /api/v1/result?limit=20&sort=-distance&event=6a11bff770e2f9e142ba154f&class=Modified%20Tractors 200 - 7.812 ms
+{Mon May 25 2026 08:56:50} [Nebraska Bush Puller 🚀] info: ::ffff:10.10.7.34 - GET /api/v1/public/privacy-policy 200 - 4.088 ms
+{Mon May 25 2026 08:56:50} [Nebraska Bush Puller 🚀] info: ::ffff:10.10.7.34 - GET /api/v1/public/terms-and-condition 200 - 2.789 ms
+{Mon May 25 2026 08:56:50} [Nebraska Bush Puller 🚀] info: ::ffff:10.10.7.34 - GET /api/v1/public/rolebook 200 - 2.095 ms
+{Mon May 25 2026 08:56:50} [Nebraska Bush Puller 🚀] info: ::ffff:10.10.7.34 - GET /api/v1/public/faq/all?type=fan 200 - 2.491 ms
+{Mon May 25 2026 08:56:50} [Nebraska Bush Puller 🚀] info: ::ffff:10.10.7.34 - GET /api/v1/sponsor?page=1 200 - 5.998 ms
+{Mon May 25 2026 08:56:55} [Nebraska Bush Puller 🚀] info: ::ffff:10.10.7.34 - GET /api/v1/public/privacy-policy 200 - 1.430 ms
+{Mon May 25 2026 08:56:55} [Nebraska Bush Puller 🚀] info: ::ffff:10.10.7.34 - GET /api/v1/public/terms-and-condition 200 - 1.210 ms
+{Mon May 25 2026 08:56:55} [Nebraska Bush Puller 🚀] info: ::ffff:10.10.7.34 - GET /api/v1/public/faq/all?type=fan 200 - 1.564 ms
+{Mon May 25 2026 08:56:55} [Nebraska Bush Puller 🚀] info: ::ffff:10.10.7.34 - GET /api/v1/sponsor?page=1 200 - 4.540 ms
+{Mon May 25 2026 08:56:55} [Nebraska Bush Puller 🚀] info: ::ffff:10.10.7.34 - GET /api/v1/public/rolebook 200 - 1.558 ms
+{Mon May 25 2026 08:57:06} [Nebraska Bush Puller 🚀] info: ::ffff:10.10.7.34 - GET /api/v1/event/6a11bff770e2f9e142ba154f 200 - 3.577 ms
+{Mon May 25 2026 08:57:21} [Nebraska Bush Puller 🚀] info: ::ffff:10.10.7.34 - GET /api/v1/event/6a11bff770e2f9e142ba154d 200 - 2.818 ms

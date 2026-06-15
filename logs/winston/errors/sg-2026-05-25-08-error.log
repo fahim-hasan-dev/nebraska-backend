@@ -1,0 +1,3 @@
+{Mon May 25 2026 08:55:25} [Nebraska Bush Puller 🐞] error: ::ffff:10.10.7.34 - POST /api/v1/auth/login 400 - 30.767 ms
+{Mon May 25 2026 08:57:25} [Nebraska Bush Puller 🐞] error: ::ffff:10.10.7.34 - GET /api/v1/event-registration?event=6a11bff770e2f9e142ba154d&class=Pro%20Stock%20Tractors&status=approved 403 - 3.073 ms
+{Mon May 25 2026 08:57:31} [Nebraska Bush Puller 🐞] error: ::ffff:10.10.7.34 - GET /api/v1/event-registration?event=6a11bff770e2f9e142ba154d&class=Pro%20Stock%20Tractors&status=approved 403 - 1.654 ms

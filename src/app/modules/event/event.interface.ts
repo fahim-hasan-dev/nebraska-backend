@@ -21,7 +21,7 @@ export interface IEvent {
   venue: string;
   location: ILocation; 
   additionalInfo?: string;
-  pictures?: string[]; 
+  pictures: string[]; 
   class: IClass[];
   entryFee: number;
   isRegistered?: boolean;

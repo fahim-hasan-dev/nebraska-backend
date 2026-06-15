@@ -1,8 +1,0 @@
-{Wed May 20 2026 17:11:58} [Nebraska Bush Puller 🐞] error: ::ffff:10.10.7.94 - POST /api/v1/event/create 400 - 42.834 ms
-{Wed May 20 2026 17:12:09} [Nebraska Bush Puller 🐞] error: ::ffff:10.10.7.94 - POST /api/v1/event/create 400 - 12.202 ms
-{Wed May 20 2026 17:15:04} [Nebraska Bush Puller 🐞] error: ::ffff:10.10.7.94 - POST /api/v1/event/create 400 - 24.333 ms
-{Wed May 20 2026 17:15:14} [Nebraska Bush Puller 🐞] error: ::ffff:10.10.7.94 - POST /api/v1/event/create 400 - 11.446 ms
-{Wed May 20 2026 17:49:20} [Nebraska Bush Puller 🐞] error: ::ffff:10.10.7.94 - PATCH /api/v1/event/6a0d9959db20173330dbb1a7/class/pro/status 500 - 11.125 ms
-{Wed May 20 2026 17:49:30} [Nebraska Bush Puller 🐞] error: ::ffff:10.10.7.94 - PATCH /api/v1/event/6a0d9959db20173330dbb1a7/class/simple/status 500 - 0.815 ms
-{Wed May 20 2026 17:49:35} [Nebraska Bush Puller 🐞] error: ::ffff:10.10.7.94 - PATCH /api/v1/event/6a0d9959db20173330dbb1a7/class/pro/status 500 - 0.857 ms
-{Wed May 20 2026 17:50:04} [Nebraska Bush Puller 🐞] error: ::ffff:10.10.7.94 - PATCH /api/v1/event/6a0d9959db20173330dbb1a7/class/pro/status 500 - 0.756 ms

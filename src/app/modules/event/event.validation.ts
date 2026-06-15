@@ -37,7 +37,7 @@ const createEventZodSchema = z.object({
     }).min(1, 'Event venue cannot be empty'),
     location: locationZodSchema,
     additionalInfo: z.string().optional().default(''),
-    pictures: z.array(z.string()).optional().default([]),
+    pictures: z.array(z.string()).min(1, 'At least one picture is required'),
     class: z.array(classZodSchema).min(1, 'At least one class is required'),
     entryFee: z.number({
       required_error: 'Entry fee is required',

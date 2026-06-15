@@ -64,8 +64,7 @@ const eventSchema = new Schema<IEvent>({
     default: ''
   },
   pictures: {
-    type: [String],
-    default: []
+    type: [String]
   },
   entryFee: {
     type: Number,

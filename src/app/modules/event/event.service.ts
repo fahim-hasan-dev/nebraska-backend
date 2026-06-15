@@ -24,7 +24,7 @@ const getAllEvents = async (query: Record<string, unknown>, user?: any) => {
   }
 
   const eventQueryBuilder = new QueryBuilder(
-    EventModel.find().select('name date time venue location entryFee class'),
+    EventModel.find().select('name date time venue location entryFee class pictures'),
     query
   )
     .search(['name', 'venue']) 

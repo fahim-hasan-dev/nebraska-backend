@@ -1,6 +1,0 @@
-{Thu May 21 2026 09:12:08} [Nebraska Bush Puller 🐞] error: ::ffff:10.10.7.94 - POST /api/v1/public 500 - 10.681 ms
-{Thu May 21 2026 09:17:54} [Nebraska Bush Puller 🐞] error: ::ffff:10.10.7.94 - POST /api/v1/terms-and-condition 404 - 0.729 ms
-{Thu May 21 2026 09:18:05} [Nebraska Bush Puller 🐞] error: ::ffff:10.10.7.94 - POST /api/v1/pbulic/terms-and-condition 404 - 0.328 ms
-{Thu May 21 2026 09:18:17} [Nebraska Bush Puller 🐞] error: ::ffff:10.10.7.94 - POST /api/v1/pbulic 404 - 0.327 ms
-{Thu May 21 2026 09:18:32} [Nebraska Bush Puller 🐞] error: ::ffff:10.10.7.94 - POST /api/v1/public 500 - 1.522 ms
-{Thu May 21 2026 09:27:49} [Nebraska Bush Puller 🐞] error: ::ffff:10.10.7.94 - POST /api/v1/public/faq 500 - 1.710 ms
