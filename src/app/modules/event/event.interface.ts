@@ -1,6 +1,5 @@
 import { Types } from "mongoose";
 
-// A specific class in an event
 export interface IClass {
   name: string;
   status: 'pending' | 'live' | 'completed';
