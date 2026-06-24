@@ -76,6 +76,16 @@ const deleteMyAccount = catchAsync(async (req: Request, res: Response) => {
 
 
 
+const createDriver = catchAsync(async (req: Request, res: Response) => {
+  const result = await UserServices.createDriver(req.body)
+  sendResponse<IUser>(res, {
+    statusCode: StatusCodes.CREATED,
+    success: true,
+    message: 'Driver account created successfully',
+    data: result,
+  })
+})
+
 export const UserController = {
   getAllUser,
   updateProfile,
@@ -83,5 +93,5 @@ export const UserController = {
   deleteUser,
   getProfile,
   deleteMyAccount,
- 
+  createDriver,
 }

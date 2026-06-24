@@ -41,9 +41,21 @@ export const changePasswordSchema = z.object({
   })
 });
 
+export const createDriverSchema = z.object({
+  body: z.object({
+    email: z.string().email("Invalid email address").toLowerCase().trim(),
+    fullName: z.string().min(1, "Full name is required"),
+    phone: z.string().min(1, "Phone number is required"),
+    address: z.string().min(1, "Address is required"),
+    password: z.string().min(6, "Password must be at least 6 characters"),
+    vehicleName: z.string().optional(),
+  })
+});
+
 export const UserValidations = {
   userSignupSchema,
   userLoginSchema,
   userUpdateSchema,
   changePasswordSchema,
+  createDriverSchema,
 };

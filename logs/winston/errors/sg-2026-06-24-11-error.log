@@ -1,0 +1,4 @@
+{Wed Jun 24 2026 11:08:45} [Nebraska Bush Puller 🐞] error: ::ffff:10.10.26.207 - POST /api/v1/auth/admin-login 400 - 31.080 ms
+{Wed Jun 24 2026 11:13:12} [Nebraska Bush Puller 🐞] error: ::ffff:10.10.26.207 - GET /favicon.ico 404 - 0.572 ms
+{Wed Jun 24 2026 11:18:43} [Nebraska Bush Puller 🐞] error: ::ffff:10.10.26.207 - POST /api/v1/event/create 400 - 1709.771 ms
+{Wed Jun 24 2026 11:20:28} [Nebraska Bush Puller 🐞] error: ::ffff:10.10.26.207 - POST /api/v1/event/create 400 - 543.816 ms

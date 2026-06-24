@@ -4,6 +4,8 @@ import auth from '../../middleware/auth'
 import { USER_ROLES } from '../../../enum/user'
 import fileUploadHandler from '../../middleware/fileUploadHandler'
 import { fileAndBodyProcessorUsingDiskStorage } from '../../middleware/processReqBody'
+import validateRequest from '../../middleware/validateRequest'
+import { UserValidations } from './user.validation'
 
 const router = express.Router()
 
@@ -18,6 +20,13 @@ router.patch(
   fileAndBodyProcessorUsingDiskStorage(),
   auth(USER_ROLES.FAN, USER_ROLES.DRIVER, USER_ROLES.ADMIN),
   UserController.updateProfile,
+)
+
+router.post(
+  '/create-driver',
+  auth(USER_ROLES.ADMIN),
+  validateRequest(UserValidations.createDriverSchema),
+  UserController.createDriver
 )
 
 // delete my account

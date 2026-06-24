@@ -9,6 +9,8 @@ const ApiError_1 = __importDefault(require("../../../errors/ApiError"));
 const user_model_1 = require("./user.model");
 const user_1 = require("../../../enum/user");
 const QueryBuilder_1 = __importDefault(require("../../builder/QueryBuilder"));
+const emailTemplate_1 = require("../../../shared/emailTemplate");
+const emailHelper_1 = require("../../../helpers/emailHelper");
 const getAllUser = async (query) => {
     const userQueryBuilder = new QueryBuilder_1.default(user_model_1.User.find().select('-password -authentication'), query)
         .filter()
@@ -65,6 +67,36 @@ const deleteMyAccount = async (user) => {
     await user_model_1.User.findByIdAndDelete(isExistUser._id);
     return 'Account deleted successfully';
 };
+const createDriver = async (payload) => {
+    var _a;
+    const email = (_a = payload.email) === null || _a === void 0 ? void 0 : _a.toLowerCase().trim();
+    const isUserExist = await user_model_1.User.findOne({
+        email,
+        status: { $ne: user_1.USER_STATUS.DELETED },
+    });
+    if (isUserExist) {
+        throw new ApiError_1.default(http_status_codes_1.StatusCodes.BAD_REQUEST, 'An account with this email already exists.');
+    }
+    const driverData = {
+        ...payload,
+        role: user_1.USER_ROLES.DRIVER,
+        verified: true,
+    };
+    const result = await user_model_1.User.create(driverData);
+    if (!result) {
+        throw new ApiError_1.default(http_status_codes_1.StatusCodes.BAD_REQUEST, 'Failed to create driver account.');
+    }
+    // Send credentials email to driver
+    setTimeout(async () => {
+        const mailData = emailTemplate_1.emailTemplate.driverAccountCreated({
+            name: result.fullName,
+            email: result.email,
+            password: payload.password,
+        });
+        await emailHelper_1.emailHelper.sendEmail(mailData);
+    }, 0);
+    return result;
+};
 exports.UserServices = {
     updateProfile,
     getAllUser,
@@ -72,4 +104,5 @@ exports.UserServices = {
     deleteUser,
     getProfile,
     deleteMyAccount,
+    createDriver,
 };

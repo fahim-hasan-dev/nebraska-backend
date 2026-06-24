@@ -7,6 +7,8 @@ import { JwtPayload } from 'jsonwebtoken'
 import { logger } from '../../../shared/logger'
 import QueryBuilder from '../../builder/QueryBuilder'
 import config from '../../../config'
+import { emailTemplate } from '../../../shared/emailTemplate'
+import { emailHelper } from '../../../helpers/emailHelper'
 
 
 const getAllUser = async (query: Record<string, unknown>) => {
@@ -97,6 +99,41 @@ const deleteMyAccount = async (user: JwtPayload) => {
     return 'Account deleted successfully'
 }
 
+const createDriver = async (payload: Partial<IUser>) => {
+    const email = payload.email?.toLowerCase().trim();
+    const isUserExist = await User.findOne({
+        email,
+        status: { $ne: USER_STATUS.DELETED },
+    });
+
+    if (isUserExist) {
+        throw new ApiError(StatusCodes.BAD_REQUEST, 'An account with this email already exists.');
+    }
+
+    const driverData = {
+        ...payload,
+        role: USER_ROLES.DRIVER,
+        verified: true,
+    };
+
+    const result = await User.create(driverData);
+    if (!result) {
+        throw new ApiError(StatusCodes.BAD_REQUEST, 'Failed to create driver account.');
+    }
+
+    // Send credentials email to driver
+    setTimeout(async () => {
+        const mailData = emailTemplate.driverAccountCreated({
+            name: result.fullName,
+            email: result.email,
+            password: payload.password as string,
+        });
+        await emailHelper.sendEmail(mailData);
+    }, 0);
+
+    return result;
+}
+
 export const UserServices = {
     updateProfile,
     getAllUser,
@@ -104,4 +141,5 @@ export const UserServices = {
     deleteUser,
     getProfile,
     deleteMyAccount,
+    createDriver,
 }

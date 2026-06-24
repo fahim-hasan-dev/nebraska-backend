@@ -379,10 +379,69 @@ const userContactConfirmationEmail = (payload) => {
     `,
     };
 };
+const driverAccountCreated = (values) => {
+    return {
+        to: values.email,
+        subject: 'Welcome to Nebraska Bush Puller – Your Driver Account Credentials',
+        html: `
+<body style="margin:0; padding:0; font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+  <table width="100%" cellpadding="0" cellspacing="0"
+         style="max-width:640px; margin:40px auto; background-color:#ffffff; border-radius:14px;
+                overflow:hidden; box-shadow:0 5px 25px rgba(0,0,0,0.08);">
+    
+    <!-- Body -->
+    <tr>
+      <td style="padding:45px;">
+        <h1 style="color:#5690ff; font-size:26px; font-weight:700; margin-bottom:15px; text-align:center;">
+          Driver Account Created 🚗
+        </h1>
+
+        <p style="color:#1e293b; font-size:16px; line-height:1.6; margin-bottom:25px; text-align:center;">
+          Hello <strong>${values.name}</strong>,<br>
+          An administrator has created a driver account for you on <strong>Nebraska Bush Puller</strong>! ✨
+        </p>
+
+        <!-- Credentials Box -->
+        <div style="background-color:#F5F8FF; border:1px solid #5690ff33; border-radius:12px; padding:20px; margin:30px auto; max-width:400px;">
+          <p style="margin:0 0 10px 0; color:#1e293b; font-size:15px;"><strong>Email:</strong> ${values.email}</p>
+          <p style="margin:0; color:#1e293b; font-size:15px;"><strong>Password:</strong> ${values.password}</p>
+        </div>
+
+        <p style="color:#1e293b; font-size:15px; line-height:1.6; text-align:center;">
+          Your account is already verified. You can log in immediately using the credentials above and change your password in the app.
+        </p>
+
+        <!-- Button -->
+        <div style="text-align:center; margin-top:45px;">
+          <a href="${config_1.default.frontend_url}/login" 
+             style="background-color:#5690ff; color:#ffffff; padding:14px 32px; font-size:16px; 
+                    font-weight:600; border-radius:10px; text-decoration:none; display:inline-block; 
+                    box-shadow:0 4px 12px rgba(86,144,255,0.3); transition:all 0.3s;">
+            Log In Now 🚀
+          </a>
+        </div>
+      </td>
+    </tr>
+
+    <!-- Footer -->
+    <tr>
+      <td align="center" style="background:linear-gradient(135deg,#F5F8FF,#E6EEFF); padding:25px 20px; border-top:1px solid #5690ff33;">
+        <p style="margin:0; color:#1e293b; font-size:13px;">
+          © ${new Date().getFullYear()} <strong>Nebraska Bush Puller</strong>. All rights reserved.
+        </p>
+      </td>
+    </tr>
+
+  </table>
+</body>
+    `,
+    };
+};
 exports.emailTemplate = {
     createAccount,
     resetPassword,
     resendOtp,
     userContactConfirmationEmail,
     adminContactNotificationEmail,
+    driverAccountCreated,
 };

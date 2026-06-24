@@ -64,6 +64,15 @@ const deleteMyAccount = (0, catchAsync_1.default)(async (req, res) => {
         message: "Account deleted successfully",
     });
 });
+const createDriver = (0, catchAsync_1.default)(async (req, res) => {
+    const result = await user_service_1.UserServices.createDriver(req.body);
+    (0, sendResponse_1.default)(res, {
+        statusCode: http_status_codes_1.StatusCodes.CREATED,
+        success: true,
+        message: 'Driver account created successfully',
+        data: result,
+    });
+});
 exports.UserController = {
     getAllUser,
     updateProfile,
@@ -71,4 +80,5 @@ exports.UserController = {
     deleteUser,
     getProfile,
     deleteMyAccount,
+    createDriver,
 };
