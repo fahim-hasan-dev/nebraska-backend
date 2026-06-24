@@ -12,7 +12,10 @@ import { emailHelper } from '../../../helpers/emailHelper'
 
 
 const getAllUser = async (query: Record<string, unknown>) => {
-    const userQueryBuilder = new QueryBuilder(User.find().select('-password -authentication'), query)
+    const userQueryBuilder = new QueryBuilder(
+        User.find({ role: { $ne: USER_ROLES.ADMIN } }).select('-password -authentication'),
+        query
+    )
         .filter()
         .search(["fullName","email","phone"])
         .sort()
@@ -23,7 +26,7 @@ const getAllUser = async (query: Record<string, unknown>) => {
     const users = await userQueryBuilder.modelQuery.lean()
     const paginationInfo = await userQueryBuilder.getPaginationInfo()
 
-    const totalUsers = await User.countDocuments()
+    const totalUsers = await User.countDocuments({ role: { $ne: USER_ROLES.ADMIN } })
     const staticData = { totalUsers }
 
     return {
