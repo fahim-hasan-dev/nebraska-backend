@@ -4,10 +4,15 @@ import QueryBuilder from '../../builder/QueryBuilder';
 import { IEvent } from './event.interface';
 import { EventModel } from './event.model';
 import { EventRegistrationModel } from '../eventRegistration/eventRegistration.model';
+import { RedisHelper } from '../../../helpers/redis';
 
 // Create a new event
 const createEvent = async (payload: IEvent): Promise<IEvent> => {
   const result = await EventModel.create(payload);
+  
+  // Invalidate event lists
+  await RedisHelper.deleteCachePattern('events:base:*');
+  
   return result;
 };
 
@@ -23,20 +28,37 @@ const getAllEvents = async (query: Record<string, unknown>, user?: any) => {
     delete query.id;
   }
 
-  const eventQueryBuilder = new QueryBuilder(
-    EventModel.find().select('name date time venue location entryFee class pictures'),
-    query
-  )
-    .search(['name', 'venue']) 
-    .filter()
-    .sort()
-    .fields()
-    .paginate();
+  // Generate cache key for this query
+  const cacheKey = RedisHelper.generateQueryKey('events:base', query);
+  let cachedResult = await RedisHelper.getCache<{ data: any[]; meta: any }>(cacheKey);
 
-  const events = await eventQueryBuilder.modelQuery.lean();
-  const paginationInfo = await eventQueryBuilder.getPaginationInfo();
+  if (!cachedResult) {
+    const eventQueryBuilder = new QueryBuilder(
+      EventModel.find().select('name date time venue location entryFee class pictures'),
+      query
+    )
+      .search(['name', 'venue']) 
+      .filter()
+      .sort()
+      .fields()
+      .paginate();
 
-  // If user is a driver, check registration status for each event
+    const events = await eventQueryBuilder.modelQuery.lean();
+    const paginationInfo = await eventQueryBuilder.getPaginationInfo();
+
+    cachedResult = {
+      data: events,
+      meta: paginationInfo,
+    };
+
+    // Cache event list for 1 hour (3600 seconds)
+    await RedisHelper.setCache(cacheKey, cachedResult, 3600);
+  }
+
+  const events = cachedResult.data;
+  const paginationInfo = cachedResult.meta;
+
+  // If user is a driver, check registration status for each event dynamically
   if (user && user.role === 'driver') {
     const driverId = user.authId; 
 
@@ -70,22 +92,30 @@ const getAllEvents = async (query: Record<string, unknown>, user?: any) => {
 
 // Get a single event by ID
 const getEventById = async (id: string, user?: any): Promise<IEvent> => {
-  const result = await EventModel.findById(id).lean();
-  if (!result) {
-    throw new ApiError(StatusCodes.NOT_FOUND, 'Event not found');
+  const cacheKey = `event:detail:${id}`;
+  let eventData = await RedisHelper.getCache<any>(cacheKey);
+
+  if (!eventData) {
+    const result = await EventModel.findById(id).lean();
+    if (!result) {
+      throw new ApiError(StatusCodes.NOT_FOUND, 'Event not found');
+    }
+    eventData = result;
+    // Cache event details for 1 hour (3600 seconds)
+    await RedisHelper.setCache(cacheKey, eventData, 3600);
   }
 
-  const eventData = { ...result } as IEvent;
+  const responseData = { ...eventData } as IEvent;
 
   if (user && user.role === 'driver') {
     const isRegistered = await EventRegistrationModel.findOne({
       driver: user.authId,
       event: id,
     });
-    eventData.isRegistered = !!isRegistered;
+    responseData.isRegistered = !!isRegistered;
   }
 
-  return eventData;
+  return responseData;
 };
 
 // Update event details
@@ -104,6 +134,10 @@ const updateEvent = async (id: string, payload: Partial<IEvent>): Promise<IEvent
     throw new ApiError(StatusCodes.INTERNAL_SERVER_ERROR, 'Failed to update event');
   }
 
+  // Invalidate caches
+  await RedisHelper.deleteCache(`event:detail:${id}`);
+  await RedisHelper.deleteCachePattern('events:base:*');
+
   return result;
 };
 
@@ -118,6 +152,10 @@ const deleteEvent = async (id: string): Promise<IEvent> => {
   if (!result) {
     throw new ApiError(StatusCodes.INTERNAL_SERVER_ERROR, 'Failed to delete event');
   }
+
+  // Invalidate caches
+  await RedisHelper.deleteCache(`event:detail:${id}`);
+  await RedisHelper.deleteCachePattern('events:base:*');
 
   return result;
 };
@@ -143,6 +181,11 @@ const addClassToEvent = async (eventId: string, newClass: { name: string; status
   });
 
   await event.save();
+
+  // Invalidate caches
+  await RedisHelper.deleteCache(`event:detail:${eventId}`);
+  await RedisHelper.deleteCachePattern('events:base:*');
+
   return event;
 };
 
@@ -162,6 +205,11 @@ const updateClassStatus = async (eventId: string, className: string, status: 'pe
 
   classItem.status = status;
   await event.save();
+
+  // Invalidate caches
+  await RedisHelper.deleteCache(`event:detail:${eventId}`);
+  await RedisHelper.deleteCachePattern('events:base:*');
+
   return event;
 };
 
@@ -186,6 +234,11 @@ const deleteClassFromEvent = async (eventId: string, className: string): Promise
 
   event.class.splice(classIndex, 1);
   await event.save();
+
+  // Invalidate caches
+  await RedisHelper.deleteCache(`event:detail:${eventId}`);
+  await RedisHelper.deleteCachePattern('events:base:*');
+
   return event;
 };
 
@@ -199,3 +252,4 @@ export const EventServices = {
   updateClassStatus,
   deleteClassFromEvent,
 };
+

@@ -6,6 +6,7 @@ import { ResultModel } from './result.model';
 import { EventModel } from '../event/event.model';
 import { User } from '../user/user.model';
 import { USER_ROLES } from '../../../enum/user';
+import { RedisHelper } from '../../../helpers/redis';
 
 // Record a new driver pull result
 const createResult = async (payload: IResult): Promise<IResult> => {
@@ -42,11 +43,21 @@ const createResult = async (payload: IResult): Promise<IResult> => {
   }
 
   const result = await ResultModel.create(payload);
+
+  // Invalidate result lists
+  await RedisHelper.deleteCachePattern('results:all:*');
+
   return result;
 };
 
 // Retrieve all results with QueryBuilder support
 const getAllResults = async (query: Record<string, unknown>) => {
+  const cacheKey = RedisHelper.generateQueryKey('results:all', query);
+  const cachedData = await RedisHelper.getCache<any>(cacheKey);
+  if (cachedData) {
+    return cachedData;
+  }
+
   const resultQueryBuilder = new QueryBuilder(ResultModel.find(), query)
     .filter()
     .sort()
@@ -60,18 +71,33 @@ const getAllResults = async (query: Record<string, unknown>) => {
   const results = await resultQueryBuilder.modelQuery.lean();
   const paginationInfo = await resultQueryBuilder.getPaginationInfo();
 
-  return {
+  const responseResult = {
     data: results,
     meta: paginationInfo,
   };
+
+  // Cache list for 1 hour (3600 seconds)
+  await RedisHelper.setCache(cacheKey, responseResult, 3600);
+
+  return responseResult;
 };
 
 // Retrieve single result detail by ID
 const getResultById = async (id: string): Promise<IResult> => {
+  const cacheKey = `result:detail:${id}`;
+  const cachedData = await RedisHelper.getCache<any>(cacheKey);
+  if (cachedData) {
+    return cachedData;
+  }
+
   const result = await ResultModel.findById(id).populate(['event', 'driver']);
   if (!result) {
     throw new ApiError(StatusCodes.NOT_FOUND, 'Result not found');
   }
+
+  // Cache detail for 1 hour (3600 seconds)
+  await RedisHelper.setCache(cacheKey, result, 3600);
+
   return result;
 };
 
@@ -127,6 +153,11 @@ const updateResult = async (id: string, payload: Partial<IResult>): Promise<IRes
 
   Object.assign(result, payload);
   await result.save();
+
+  // Invalidate caches
+  await RedisHelper.deleteCache(`result:detail:${id}`);
+  await RedisHelper.deleteCachePattern('results:all:*');
+
   return result;
 };
 
@@ -141,6 +172,11 @@ const deleteResult = async (id: string): Promise<IResult> => {
   if (!deletedResult) {
     throw new ApiError(StatusCodes.INTERNAL_SERVER_ERROR, 'Failed to delete result');
   }
+
+  // Invalidate caches
+  await RedisHelper.deleteCache(`result:detail:${id}`);
+  await RedisHelper.deleteCachePattern('results:all:*');
+
   return deletedResult;
 };
 
@@ -151,3 +187,4 @@ export const ResultServices = {
   updateResult,
   deleteResult,
 };
+

@@ -9,6 +9,7 @@ import QueryBuilder from '../../builder/QueryBuilder'
 import config from '../../../config'
 import { emailTemplate } from '../../../shared/emailTemplate'
 import { emailHelper } from '../../../helpers/emailHelper'
+import { RedisHelper } from '../../../helpers/redis'
 
 
 const getAllUser = async (query: Record<string, unknown>) => {
@@ -37,7 +38,16 @@ const getAllUser = async (query: Record<string, unknown>) => {
 }
 
 const getSingleUser = async (id: string) => {
+    const cacheKey = `user:profile:${id}`;
+    const cachedData = await RedisHelper.getCache<any>(cacheKey);
+    if (cachedData) {
+        return cachedData;
+    }
+
     const result = await User.findById(id).select('-password -authentication')
+    if (result) {
+        await RedisHelper.setCache(cacheKey, result, 86400); // 24 hours TTL
+    }
     return result
 }
 
@@ -49,6 +59,10 @@ const deleteUser = async (id: string) => {
     }
 
     const result = await User.findByIdAndDelete(id)
+
+    // Invalidate cache
+    await RedisHelper.deleteCache(`user:profile:${id}`);
+
     return result
 }
 
@@ -72,10 +86,19 @@ const updateProfile = async (
         throw new ApiError(StatusCodes.BAD_REQUEST, 'Failed to update profile')
     }
 
+    // Invalidate cache
+    await RedisHelper.deleteCache(`user:profile:${user.authId}`);
+
     return updatedUser
 }
 
 const getProfile = async (user: JwtPayload) => {
+    const cacheKey = `user:profile:${user.authId}`;
+    const cachedData = await RedisHelper.getCache<any>(cacheKey);
+    if (cachedData) {
+        return cachedData;
+    }
+
     const isExistUser = await User.findById(user.authId).lean().select('-password -authentication')
     if (!isExistUser) {
         throw new ApiError(
@@ -84,6 +107,7 @@ const getProfile = async (user: JwtPayload) => {
         )
     }
 
+    await RedisHelper.setCache(cacheKey, isExistUser, 86400); 
     return isExistUser
 }
 
@@ -98,6 +122,9 @@ const deleteMyAccount = async (user: JwtPayload) => {
     }
 
     await User.findByIdAndDelete(isExistUser._id)
+
+    // Invalidate cache
+    await RedisHelper.deleteCache(`user:profile:${user.authId}`);
 
     return 'Account deleted successfully'
 }
@@ -146,3 +173,4 @@ export const UserServices = {
     deleteMyAccount,
     createDriver,
 }
+

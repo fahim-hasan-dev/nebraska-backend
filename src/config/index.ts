@@ -53,5 +53,10 @@ export default {
         secretAccessKey: process.env.R2_SECRET_ACCESS_KEY,
         bucketName: process.env.R2_BUCKET_NAME,
         publicUrl: process.env.R2_PUBLIC_URL,
+    },
+    redis: {
+        host: process.env.REDIS_HOST || '127.0.0.1',
+        port: Number(process.env.REDIS_PORT) || 6379,
+        password: process.env.REDIS_PASSWORD || undefined,
     }
 }

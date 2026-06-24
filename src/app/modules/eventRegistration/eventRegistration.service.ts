@@ -6,6 +6,7 @@ import { EventRegistrationModel } from './eventRegistration.model';
 import { EventModel } from '../event/event.model';
 import { User } from '../user/user.model';
 import { JwtPayload } from 'jsonwebtoken';
+import { RedisHelper } from '../../../helpers/redis';
 
 // Create a new event registration
 const createEventRegistration = async (user:JwtPayload,payload: IEventRegistration): Promise<IEventRegistration> => {
@@ -38,11 +39,21 @@ const createEventRegistration = async (user:JwtPayload,payload: IEventRegistrati
   }
 
   const result = await EventRegistrationModel.create(payload);
+
+  // Invalidate registration lists
+  await RedisHelper.deleteCachePattern('registrations:all:*');
+
   return result;
 };
 
 // Get all event registrations
 const getAllEventRegistrations = async (query: Record<string, unknown>) => {
+  const cacheKey = RedisHelper.generateQueryKey('registrations:all', query);
+  const cachedData = await RedisHelper.getCache<any>(cacheKey);
+  if (cachedData) {
+    return cachedData;
+  }
+
   let searchFilters: any = {};
 
   if (query.searchTerm) {
@@ -87,14 +98,25 @@ const getAllEventRegistrations = async (query: Record<string, unknown>) => {
   const registrations = await registrationQueryBuilder.modelQuery.lean();
   const paginationInfo = await registrationQueryBuilder.getPaginationInfo();
 
-  return {
+  const responseResult = {
     data: registrations,
     meta: paginationInfo,
   };
+
+  // Cache list for 1 hour (3600 seconds)
+  await RedisHelper.setCache(cacheKey, responseResult, 3600);
+
+  return responseResult;
 };
 
 // Get registration by ID
 const getEventRegistrationById = async (id: string): Promise<IEventRegistration> => {
+  const cacheKey = `registration:detail:${id}`;
+  const cachedData = await RedisHelper.getCache<any>(cacheKey);
+  if (cachedData) {
+    return cachedData;
+  }
+
   const result = await EventRegistrationModel.findById(id).populate([
     { path: 'event', select: 'name date time venue' },
     { path: 'driver', select: 'fullName email phone image vehicleName' },
@@ -102,6 +124,10 @@ const getEventRegistrationById = async (id: string): Promise<IEventRegistration>
   if (!result) {
     throw new ApiError(StatusCodes.NOT_FOUND, 'Event registration not found');
   }
+
+  // Cache detail for 1 hour (3600 seconds)
+  await RedisHelper.setCache(cacheKey, result, 3600);
+
   return result;
 };
 
@@ -114,6 +140,11 @@ const updateEventRegistrationStatus = async (id: string, status: string): Promis
 
   registration.status = status as 'pending' | 'approved' | 'rejected';
   await registration.save();
+
+  // Invalidate caches
+  await RedisHelper.deleteCache(`registration:detail:${id}`);
+  await RedisHelper.deleteCachePattern('registrations:all:*');
+
   return registration;
 };
 
@@ -128,6 +159,11 @@ const deleteEventRegistration = async (id: string): Promise<IEventRegistration> 
   if (!result) {
     throw new ApiError(StatusCodes.INTERNAL_SERVER_ERROR, 'Failed to delete registration');
   }
+
+  // Invalidate caches
+  await RedisHelper.deleteCache(`registration:detail:${id}`);
+  await RedisHelper.deleteCachePattern('registrations:all:*');
+
   return result;
 };
 
@@ -169,6 +205,10 @@ const drawRegistrations = async (eventId: string, className: string): Promise<IE
     })
   );
 
+  // Invalidate caches since positions are updated
+  await RedisHelper.deleteCachePattern('registration:detail:*');
+  await RedisHelper.deleteCachePattern('registrations:all:*');
+
   // Return sorted by drawPosition
   return savedRegistrations.sort((a, b) => {
     const posA = (a as any).drawPosition || 0;
@@ -188,6 +228,10 @@ const cancelDrawRegistrations = async (eventId: string, className: string) => {
     { event: eventId, class: className },
     { $set: { drawPosition: null } }
   );
+
+  // Invalidate caches
+  await RedisHelper.deleteCachePattern('registration:detail:*');
+  await RedisHelper.deleteCachePattern('registrations:all:*');
 
   return result;
 };
@@ -228,6 +272,10 @@ const adminAddEventRegistration = async (payload: IEventRegistration): Promise<I
   payload.status = 'approved';
 
   const result = await EventRegistrationModel.create(payload);
+
+  // Invalidate registration lists
+  await RedisHelper.deleteCachePattern('registrations:all:*');
+
   return result;
 };
 
@@ -241,3 +289,4 @@ export const EventRegistrationServices = {
   cancelDrawRegistrations,
   adminAddEventRegistration,
 };
+

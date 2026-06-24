@@ -6,6 +6,7 @@ import { User } from '../../../app/modules/user/user.model'
 import { emailHelper } from '../../../helpers/emailHelper'
 import QueryBuilder from '../../builder/QueryBuilder'
 import { emailTemplate } from '../../../shared/emailTemplate'
+import { RedisHelper } from '../../../helpers/redis'
 
 const createPublic = async (payload: IPublic) => {
   const isExist = await Public.findOne({
@@ -29,18 +30,37 @@ const createPublic = async (payload: IPublic) => {
       throw new ApiError(StatusCodes.BAD_REQUEST, 'Failed to create Public')
   }
 
+  // Invalidate cache
+  await RedisHelper.deleteCache(`public:type:${payload.type}`);
+
   return `${payload.type} created successfully}`
 }
 
 const getAllPublics = async (
   type: 'privacy-policy' | 'terms-and-condition',
 ) => {
+  const cacheKey = `public:type:${type}`;
+  const cachedData = await RedisHelper.getCache<any>(cacheKey);
+  if (cachedData) {
+    return cachedData;
+  }
+
   const result = await Public.findOne({ type: type }).lean()
-  return result || null
+  const responseData = result || null;
+
+  if (responseData) {
+    await RedisHelper.setCache(cacheKey, responseData); // Cache permanently
+  }
+
+  return responseData;
 }
 
 const deletePublic = async (id: string) => {
   const result = await Public.findByIdAndDelete(id)
+  if (result) {
+    // Invalidate specific cache
+    await RedisHelper.deleteCache(`public:type:${result.type}`);
+  }
   return result
 }
 
@@ -100,21 +120,48 @@ const createFaq = async (payload: IFaq) => {
   const result = await Faq.create(payload)
   if (!result)
     throw new ApiError(StatusCodes.BAD_REQUEST, 'Failed to create Faq')
+
+  // Invalidate FAQ lists
+  await RedisHelper.deleteCachePattern('faqs:all:*');
+
   return result
 }
 
 const getAllFaqs = async (query: Record<string, unknown>) => {
+  const type = query.type || 'all';
+  const cacheKey = `faqs:all:${type}`;
+  const cachedData = await RedisHelper.getCache<any>(cacheKey);
+  if (cachedData) {
+    return cachedData;
+  }
+
   const filter: Record<string, any> = {}
   if (query.type) {
     filter.type = query.type
   }
   const result = await Faq.find(filter)
-  return result || []
+  const responseData = result || [];
+
+  await RedisHelper.setCache(cacheKey, responseData); // Cache permanently
+
+  return responseData;
 }
 
 const getSingleFaq = async (id: string) => {
+  const cacheKey = `faq:detail:${id}`;
+  const cachedData = await RedisHelper.getCache<any>(cacheKey);
+  if (cachedData) {
+    return cachedData;
+  }
+
   const result = await Faq.findById(id)
-  return result || null
+  const responseData = result || null;
+
+  if (responseData) {
+    await RedisHelper.setCache(cacheKey, responseData); // Cache permanently
+  }
+
+  return responseData;
 }
 
 const updateFaq = async (id: string, payload: Partial<IFaq>) => {
@@ -129,6 +176,11 @@ const updateFaq = async (id: string, payload: Partial<IFaq>) => {
       new: true,
     },
   )
+
+  // Invalidate cache
+  await RedisHelper.deleteCache(`faq:detail:${id}`);
+  await RedisHelper.deleteCachePattern('faqs:all:*');
+
   return result
 }
 
@@ -138,29 +190,50 @@ const deleteFaq = async (id: string) => {
     throw new ApiError(StatusCodes.NOT_FOUND, 'Faq not found')
   }
   const result = await Faq.findByIdAndDelete(id)
+
+  // Invalidate cache
+  await RedisHelper.deleteCache(`faq:detail:${id}`);
+  await RedisHelper.deleteCachePattern('faqs:all:*');
+
   return result
 }
 
 const updateRolebook = async (fileUrl: string) => {
   const type = 'rolebook';
   const isExist = await Public.findOne({ type });
+  let result;
   
   if (isExist) {
-    const result = await Public.findByIdAndUpdate(
+    result = await Public.findByIdAndUpdate(
       isExist._id,
       { $set: { content: fileUrl } },
       { new: true }
     );
-    return result;
   } else {
-    const result = await Public.create({ type, content: fileUrl });
-    return result;
+    result = await Public.create({ type, content: fileUrl });
   }
+
+  // Invalidate rolebook cache
+  await RedisHelper.deleteCache('public:rolebook');
+
+  return result;
 }
 
 const getRolebook = async () => {
+  const cacheKey = 'public:rolebook';
+  const cachedData = await RedisHelper.getCache<any>(cacheKey);
+  if (cachedData) {
+    return cachedData;
+  }
+
   const result = await Public.findOne({ type: 'rolebook' }).lean();
-  return result || null;
+  const responseData = result || null;
+
+  if (responseData) {
+    await RedisHelper.setCache(cacheKey, responseData); // Cache permanently
+  }
+
+  return responseData;
 }
 
 export const PublicServices = {
@@ -177,3 +250,4 @@ export const PublicServices = {
   updateRolebook,
   getRolebook,
 }
+
