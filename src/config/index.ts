@@ -46,5 +46,12 @@ export default {
         webhookSecret: process.env.WEBHOOK_SECRET,
         paymentSuccess: process.env.SUCCESS_URL,
         frontendUrl: process.env.FRONTEND_URL,
+    },
+    r2: {
+        endpoint: process.env.R2_ENDPOINT,
+        accessKeyId: process.env.R2_ACCESS_KEY_ID,
+        secretAccessKey: process.env.R2_SECRET_ACCESS_KEY,
+        bucketName: process.env.R2_BUCKET_NAME,
+        publicUrl: process.env.R2_PUBLIC_URL,
     }
 }

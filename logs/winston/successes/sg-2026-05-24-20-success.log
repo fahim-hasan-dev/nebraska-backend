@@ -1,3 +1,0 @@
-{Sun May 24 2026 20:26:58} [Nebraska Bush Puller 🚀] info: ::ffff:10.10.7.34 - GET /api/v1/user/me 200 - 133.333 ms
-{Sun May 24 2026 20:26:59} [Nebraska Bush Puller 🚀] info: ::ffff:10.10.7.34 - GET /api/v1/event?page=1&limit=10 200 - 68.063 ms
-{Sun May 24 2026 20:26:59} [Nebraska Bush Puller 🚀] info: ::ffff:10.10.7.34 - GET /api/v1/message?page=1&limit=20 200 - 56.597 ms

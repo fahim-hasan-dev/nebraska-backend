@@ -5,6 +5,7 @@ import { StatusCodes } from 'http-status-codes'
 import path from 'path'
 import fs from 'fs'
 import sharp from 'sharp'
+import { uploadToR2 } from '../../helpers/r2.helper'
 
 // Allowed field names for uploads
 type IFolderName = 'image' | 'pictures' | 'file';
@@ -109,11 +110,9 @@ export const fileAndBodyProcessorUsingDiskStorage = () => {
 
             await Promise.all(
               fileArray.map(async (file) => {
-                const filePath = `/${fieldName}/${file.filename}`;
-                paths.push(filePath);
+                const fullPath = path.join(uploadsDir, fieldName, file.filename);
 
                 if (['image', 'pictures', 'file'].includes(fieldName) && file.mimetype.startsWith('image/')) {
-                  const fullPath = path.join(uploadsDir, fieldName, file.filename);
                   const tempPath = fullPath + '.opt';
 
                   try {
@@ -131,9 +130,13 @@ export const fileAndBodyProcessorUsingDiskStorage = () => {
                     fs.unlinkSync(fullPath);
                     fs.renameSync(tempPath, fullPath);
                   } catch (err) {
-                    console.error(`Failed to optimize ${filePath}:`, err);
+                    console.error(`Failed to optimize image:`, err);
                   }
                 }
+
+                // Upload to R2 (helper handles local file deletion)
+                const r2Url = await uploadToR2(fullPath, fieldName, file.filename, file.mimetype);
+                paths.push(r2Url);
               })
             );
 

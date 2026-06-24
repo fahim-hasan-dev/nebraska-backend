@@ -1,9 +1,10 @@
-import { Request } from 'express';
+import { Request, Response, NextFunction } from 'express';
 import fs from 'fs';
 import { StatusCodes } from 'http-status-codes';
 import multer, { FileFilterCallback } from 'multer';
 import path from 'path';
 import ApiError from '../../errors/ApiError';
+import { uploadToR2 } from '../../helpers/r2.helper';
 
 const fileUploadHandler = () => {
 
@@ -89,7 +90,32 @@ const fileUploadHandler = () => {
             { name: 'image', maxCount: 3 },
             { name: 'media', maxCount: 2 },
         ]);
-    return upload;
+
+    return (req: Request, res: Response, next: NextFunction) => {
+        upload(req, res, async (err) => {
+            if (err) return next(err);
+
+            if (req.files) {
+                try {
+                    const filesMap = req.files as { [fieldname: string]: Express.Multer.File[] };
+                    for (const [fieldname, files] of Object.entries(filesMap)) {
+                        for (const file of files) {
+                            const url = await uploadToR2(
+                                file.path,
+                                fieldname,
+                                file.filename,
+                                file.mimetype
+                            );
+                            (file as any).location = url;
+                        }
+                    }
+                } catch (uploadErr) {
+                    return next(uploadErr);
+                }
+            }
+            next();
+        });
+    };
 
 };
 

@@ -16,6 +16,7 @@ const result_route_1 = require("../modules/result/result.route");
 const sponsor_route_1 = require("../modules/sponsor/sponsor.route");
 const sponsorRequest_route_1 = require("../modules/sponsorRequest/sponsorRequest.route");
 const helpSupport_route_1 = require("../modules/helpSupport/helpSupport.route");
+const message_route_1 = require("../modules/message/message.route");
 const router = express_1.default.Router();
 const apiRoutes = [
     { path: "/user", route: user_route_1.UserRoutes },
@@ -30,6 +31,7 @@ const apiRoutes = [
     { path: "/sponsor", route: sponsor_route_1.SponsorRoutes },
     { path: "/sponsor-request", route: sponsorRequest_route_1.SponsorRequestRoutes },
     { path: "/help-support", route: helpSupport_route_1.HelpSupportRoutes },
+    { path: "/message", route: message_route_1.MessageRoutes },
 ];
 apiRoutes.forEach(route => router.use(route.path, route.route));
 exports.default = router;

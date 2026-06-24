@@ -8,6 +8,7 @@ const http_status_codes_1 = require("http-status-codes");
 const multer_1 = __importDefault(require("multer"));
 const path_1 = __importDefault(require("path"));
 const ApiError_1 = __importDefault(require("../../errors/ApiError"));
+const r2_helper_1 = require("../../helpers/r2.helper");
 const fileUploadHandler = () => {
     //create upload folder
     const baseUploadDir = path_1.default.join(process.cwd(), 'uploads');
@@ -81,6 +82,26 @@ const fileUploadHandler = () => {
         { name: 'image', maxCount: 3 },
         { name: 'media', maxCount: 2 },
     ]);
-    return upload;
+    return (req, res, next) => {
+        upload(req, res, async (err) => {
+            if (err)
+                return next(err);
+            if (req.files) {
+                try {
+                    const filesMap = req.files;
+                    for (const [fieldname, files] of Object.entries(filesMap)) {
+                        for (const file of files) {
+                            const url = await (0, r2_helper_1.uploadToR2)(file.path, fieldname, file.filename, file.mimetype);
+                            file.location = url;
+                        }
+                    }
+                }
+                catch (uploadErr) {
+                    return next(uploadErr);
+                }
+            }
+            next();
+        });
+    };
 };
 exports.default = fileUploadHandler;

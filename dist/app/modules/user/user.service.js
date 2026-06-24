@@ -12,6 +12,7 @@ const QueryBuilder_1 = __importDefault(require("../../builder/QueryBuilder"));
 const getAllUser = async (query) => {
     const userQueryBuilder = new QueryBuilder_1.default(user_model_1.User.find().select('-password -authentication'), query)
         .filter()
+        .search(["fullName", "email", "phone"])
         .sort()
         .fields()
         .paginate();

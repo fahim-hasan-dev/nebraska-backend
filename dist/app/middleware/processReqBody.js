@@ -10,6 +10,7 @@ const http_status_codes_1 = require("http-status-codes");
 const path_1 = __importDefault(require("path"));
 const fs_1 = __importDefault(require("fs"));
 const sharp_1 = __importDefault(require("sharp"));
+const r2_helper_1 = require("../../helpers/r2.helper");
 // Upload configuration details
 const uploadFields = [
     { name: 'image', maxCount: 1 },
@@ -91,10 +92,8 @@ const fileAndBodyProcessorUsingDiskStorage = () => {
                     const maxCount = (_a = fieldsConfig.get(fieldName)) !== null && _a !== void 0 ? _a : 1;
                     const paths = [];
                     await Promise.all(fileArray.map(async (file) => {
-                        const filePath = `/${fieldName}/${file.filename}`;
-                        paths.push(filePath);
+                        const fullPath = path_1.default.join(uploadsDir, fieldName, file.filename);
                         if (['image', 'pictures', 'file'].includes(fieldName) && file.mimetype.startsWith('image/')) {
-                            const fullPath = path_1.default.join(uploadsDir, fieldName, file.filename);
                             const tempPath = fullPath + '.opt';
                             try {
                                 let sharpInstance = (0, sharp_1.default)(fullPath)
@@ -111,9 +110,12 @@ const fileAndBodyProcessorUsingDiskStorage = () => {
                                 fs_1.default.renameSync(tempPath, fullPath);
                             }
                             catch (err) {
-                                console.error(`Failed to optimize ${filePath}:`, err);
+                                console.error(`Failed to optimize image:`, err);
                             }
                         }
+                        // Upload to R2 (helper handles local file deletion)
+                        const r2Url = await (0, r2_helper_1.uploadToR2)(fullPath, fieldName, file.filename, file.mimetype);
+                        paths.push(r2Url);
                     }));
                     processedFiles[fieldName] = maxCount > 1 ? paths : paths[0];
                 }));
