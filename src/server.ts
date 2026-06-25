@@ -7,6 +7,9 @@ import { errorLogger, logger } from './shared/logger'
 import { socketHelper } from './helpers/socketHelper'
 import { UserServices } from './app/modules/user/user.service'
 import { seedAdmin } from './app/DB'
+import { startEmailWorker } from './workers/email.worker'
+import { startNotificationWorker } from './workers/notification.worker'
+import { startUserCleanupWorker } from './workers/userCleanup.worker'
 
 process.on('uncaughtException', error => {
     errorLogger.error('UnhandledException Detected', error)
@@ -22,6 +25,11 @@ async function main() {
 
         // Seed admin user
         await seedAdmin()
+
+        // Start BullMQ background workers
+        startEmailWorker()
+        startNotificationWorker()
+        startUserCleanupWorker()
 
         const port =
             typeof config.port === 'number' ? config.port : Number(config.port)

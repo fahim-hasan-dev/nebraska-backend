@@ -10,6 +10,7 @@ import config from '../../../config'
 import { emailTemplate } from '../../../shared/emailTemplate'
 import { emailHelper } from '../../../helpers/emailHelper'
 import { RedisHelper } from '../../../helpers/redis'
+import { emailQueue } from '../../../helpers/queue'
 
 
 const getAllUser = async (query: Record<string, unknown>) => {
@@ -152,14 +153,12 @@ const createDriver = async (payload: Partial<IUser>) => {
     }
 
     // Send credentials email to driver
-    setTimeout(async () => {
-        const mailData = emailTemplate.driverAccountCreated({
-            name: result.fullName,
-            email: result.email,
-            password: payload.password as string,
-        });
-        await emailHelper.sendEmail(mailData);
-    }, 0);
+    const mailData = emailTemplate.driverAccountCreated({
+        name: result.fullName,
+        email: result.email,
+        password: payload.password as string,
+    });
+    await emailQueue.add('driver-created', mailData);
 
     return result;
 }

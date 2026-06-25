@@ -6,6 +6,7 @@ import QueryBuilder from '../../builder/QueryBuilder';
 
 import { PushNotificationService } from './pushNotification.service';
 import { User } from '../user/user.model';
+import { notificationQueue } from '../../../helpers/queue';
 
 // insert notification
 const insertNotification = async (payload: Partial<INotification>): Promise<INotification> => {
@@ -22,13 +23,13 @@ const insertNotification = async (payload: Partial<INotification>): Promise<INot
 
         if (receiverUser) {
             if (receiverUser.fcmToken) {
-                console.log(`[NotificationService] Sending push to ${receiverUser.fullName || 'User'} (Token found)`);
-                await PushNotificationService.sendPushNotification(
-                    receiverUser.fcmToken,
-                    result.title,
-                    result.message,
-                    { referenceId: result.referenceId, screen: result.screen }
-                );
+                console.log(`[NotificationService] Enqueuing push to ${receiverUser.fullName || 'User'}`);
+                await notificationQueue.add('send-push', {
+                    token: receiverUser.fcmToken,
+                    title: result.title,
+                    body: result.message,
+                    data: { referenceId: result.referenceId, screen: result.screen }
+                });
             } else {
                 console.warn(`[NotificationService] Push skipped: No fcmToken found for user ${receiverId}`);
             }

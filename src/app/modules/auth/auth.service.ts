@@ -11,6 +11,7 @@ import {
 import { ILoginData } from '../../../interfaces/auth'
 import { emailTemplate } from '../../../shared/emailTemplate'
 import { emailHelper } from '../../../helpers/emailHelper'
+import { emailQueue, userCleanupQueue } from '../../../helpers/queue'
 import { JwtPayload } from 'jsonwebtoken'
 import { jwtHelper } from '../../../helpers/jwtHelper'
 import config from '../../../config'
@@ -63,14 +64,12 @@ export const createUser = async (payload: IUser) => {
     }
 
     // 3. Send OTP email
-    setTimeout(() => {
-      const createAccountEmail = emailTemplate.createAccount({
-        name: payload.fullName,
-        email: payload.email,
-        otp,
-      })
-      emailHelper.sendEmail(createAccountEmail)
-    }, 0)
+    const createAccountEmail = emailTemplate.createAccount({
+      name: payload.fullName,
+      email: payload.email,
+      otp,
+    })
+    await emailQueue.add('create-account', createAccountEmail)
 
     // 4. Create User
     const user = await User.create(
@@ -92,6 +91,17 @@ export const createUser = async (payload: IUser) => {
 
     // 5. Commit Transaction
     await session.commitTransaction()
+
+    // 6. Enqueue a delayed cleanup job (deletes account after 1 hour if still unverified)
+    await userCleanupQueue.add(
+      'cleanup-user',
+      { userId: createdUser._id },
+      {
+        delay: 1 * 60 * 60 * 1000, // 1 hour delay
+        jobId: `cleanup-user-${createdUser._id}`,
+      }
+    )
+
     return createdUser._id
   } catch (error) {
     // Rollback on error
@@ -222,9 +232,7 @@ const forgetPassword = async (email?: string, phone?: string) => {
       otp,
     })
 
-    setTimeout(() => {
-      emailHelper.sendEmail(forgetPasswordEmailTemplate)
-    }, 0)
+    await emailQueue.add('forget-password', forgetPasswordEmailTemplate)
   }
 
   return 'OTP sent successfully.'
@@ -347,6 +355,17 @@ const verifyAccount = async (
       { $set: { verified: true } },
       { new: true },
     )
+
+    // Remove the delayed cleanup task from Redis
+    try {
+      const cleanupJob = await userCleanupQueue.getJob(`cleanup-user-${isUserExist._id}`);
+      if (cleanupJob) {
+        await cleanupJob.remove();
+        console.log(`[verifyAccount] Cleanup job cleanup-user-${isUserExist._id} removed successfully.`);
+      }
+    } catch (jobErr) {
+      console.error('Failed to remove cleanup job:', jobErr);
+    }
 
     const tokens = AuthHelper.createToken(
       isUserExist._id,
@@ -501,7 +520,7 @@ const resendOtpToPhoneOrEmail = async (
       { new: true },
     )
 
-    await emailHelper.sendEmail(forgetPasswordEmailTemplate)
+    await emailQueue.add('resend-otp', forgetPasswordEmailTemplate)
   }
 
   if (phone) {
@@ -605,9 +624,7 @@ const resendOtp = async (
       type: authType,
     })
 
-    setTimeout(() => {
-      emailHelper.sendEmail(forgetPasswordEmailTemplate)
-    }, 0)
+    await emailQueue.add('resend-otp', forgetPasswordEmailTemplate)
   }
 
   return 'OTP sent successfully.'

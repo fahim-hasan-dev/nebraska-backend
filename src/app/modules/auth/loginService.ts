@@ -9,6 +9,7 @@ import { IAuthResponse } from './auth.interface'
 import { IUser } from '../user/user.interface'
 import { emailTemplate } from '../../../shared/emailTemplate'
 import { emailHelper } from '../../../helpers/emailHelper'
+import { emailQueue } from '../../../helpers/queue'
 import bcrypt from "bcrypt";
 
 
@@ -40,9 +41,7 @@ const handleLoginLogic = async (payload: ILoginData, isUserExist: IUser):Promise
       email: isUserExist.email!,   
       otp,
     })
-    setTimeout(() => {
-      emailHelper.sendEmail(otpTemplate)
-    }, 0)
+    await emailQueue.add('login-verification-otp', otpTemplate)
     return authResponse(StatusCodes.PROXY_AUTHENTICATION_REQUIRED, `An OTP has been sent to your ${payload.email}. Please verify.`)
   }
 
