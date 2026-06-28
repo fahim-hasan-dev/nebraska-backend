@@ -216,6 +216,7 @@ const updateRolebook = async (fileUrl: string) => {
 
   // Invalidate rolebook cache
   await RedisHelper.deleteCache('public:rolebook');
+  await RedisHelper.deleteCache('public:type:rolebook');
 
   return result;
 }
@@ -254,6 +255,7 @@ const updateLogo = async (fileUrl: string) => {
 
   // Invalidate logo cache
   await RedisHelper.deleteCache('public:logo');
+  await RedisHelper.deleteCache('public:type:logo');
 
   return result;
 }
@@ -269,7 +271,7 @@ const getLogo = async () => {
   const responseData = result || null;
 
   if (responseData) {
-    await RedisHelper.setCache(cacheKey, responseData); // Cache permanently
+    await RedisHelper.setCache(cacheKey, responseData); 
   }
 
   return responseData;

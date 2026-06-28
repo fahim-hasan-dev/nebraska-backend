@@ -14,6 +14,24 @@ router.post(
   validateRequest(PublicValidation.create),
   PublicController.createPublic,
 )
+
+// Static routes placed BEFORE dynamic /:type route
+router.get('/rolebook', PublicController.getRolebook)
+router.post(
+  '/rolebook',
+  auth(USER_ROLES.ADMIN),
+  fileAndBodyProcessorUsingDiskStorage(),
+  PublicController.updateRolebook
+)
+
+router.get('/logo', PublicController.getLogo)
+router.post(
+  '/logo',
+  auth(USER_ROLES.ADMIN),
+  fileAndBodyProcessorUsingDiskStorage(),
+  PublicController.updateLogo
+)
+
 router.get('/:type', PublicController.getAllPublics)
 
 router.delete('/:id', auth(USER_ROLES.ADMIN), PublicController.deletePublic)
@@ -23,8 +41,6 @@ router.post(
   PublicController.createContact,
 )
 router.get('/contact/all', PublicController.getAllContacts)
-
-
 
 router.post(
   '/faq',
@@ -41,23 +57,5 @@ router.patch(
 router.get('/faq/single/:id', PublicController.getSingleFaq)
 router.get('/faq/all', PublicController.getAllFaqs)
 router.delete('/faq/:id', auth(USER_ROLES.ADMIN), PublicController.deleteFaq)
-
-router.post(
-  '/rolebook',
-  auth(USER_ROLES.ADMIN),
-  fileAndBodyProcessorUsingDiskStorage(),
-  PublicController.updateRolebook
-)
-
-router.get('/rolebook', PublicController.getRolebook)
-
-router.post(
-  '/logo',
-  auth(USER_ROLES.ADMIN),
-  fileAndBodyProcessorUsingDiskStorage(),
-  PublicController.updateLogo
-)
-
-router.get('/logo', PublicController.getLogo)
 
 export const PublicRoutes = router
