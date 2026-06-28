@@ -34,7 +34,7 @@ const getAllEvents = async (query: Record<string, unknown>, user?: any) => {
 
   if (!cachedResult) {
     const eventQueryBuilder = new QueryBuilder(
-      EventModel.find().select('name date time venue location entryFee class pictures'),
+      EventModel.find().select('name date time venue location entryFee class pictures additionalInfo'),
       query
     )
       .search(['name', 'venue']) 
