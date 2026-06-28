@@ -152,6 +152,33 @@ const getRolebook = catchAsync(async (req: Request, res: Response) => {
   })
 })
 
+const updateLogo = catchAsync(async (req: Request, res: Response) => {
+  const fileUrl = req.body.image;
+  if (!fileUrl) {
+    throw new ApiError(StatusCodes.BAD_REQUEST, 'Logo image file is required');
+  }
+  
+  const result = await PublicServices.updateLogo(fileUrl);
+  
+  sendResponse(res, {
+    statusCode: StatusCodes.OK,
+    success: true,
+    message: 'Logo updated successfully',
+    data: result,
+  })
+})
+
+const getLogo = catchAsync(async (req: Request, res: Response) => {
+  const result = await PublicServices.getLogo();
+  
+  sendResponse(res, {
+    statusCode: StatusCodes.OK,
+    success: true,
+    message: 'Logo retrieved successfully',
+    data: result,
+  })
+})
+
 export const PublicController = {
   createPublic,
   getAllPublics,
@@ -165,4 +192,6 @@ export const PublicController = {
   getAllContacts,
   updateRolebook,
   getRolebook,
+  updateLogo,
+  getLogo,
 }

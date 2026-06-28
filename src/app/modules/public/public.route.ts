@@ -51,4 +51,13 @@ router.post(
 
 router.get('/rolebook', PublicController.getRolebook)
 
+router.post(
+  '/logo',
+  auth(USER_ROLES.ADMIN),
+  fileAndBodyProcessorUsingDiskStorage(),
+  PublicController.updateLogo
+)
+
+router.get('/logo', PublicController.getLogo)
+
 export const PublicRoutes = router

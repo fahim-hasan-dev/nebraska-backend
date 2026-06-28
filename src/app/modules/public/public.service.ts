@@ -237,6 +237,44 @@ const getRolebook = async () => {
   return responseData;
 }
 
+const updateLogo = async (fileUrl: string) => {
+  const type = 'logo';
+  const isExist = await Public.findOne({ type });
+  let result;
+  
+  if (isExist) {
+    result = await Public.findByIdAndUpdate(
+      isExist._id,
+      { $set: { content: fileUrl } },
+      { new: true }
+    );
+  } else {
+    result = await Public.create({ type, content: fileUrl });
+  }
+
+  // Invalidate logo cache
+  await RedisHelper.deleteCache('public:logo');
+
+  return result;
+}
+
+const getLogo = async () => {
+  const cacheKey = 'public:logo';
+  const cachedData = await RedisHelper.getCache<any>(cacheKey);
+  if (cachedData) {
+    return cachedData;
+  }
+
+  const result = await Public.findOne({ type: 'logo' }).lean();
+  const responseData = result || null;
+
+  if (responseData) {
+    await RedisHelper.setCache(cacheKey, responseData); // Cache permanently
+  }
+
+  return responseData;
+}
+
 export const PublicServices = {
   createPublic,
   getAllPublics,
@@ -250,5 +288,7 @@ export const PublicServices = {
   getAllContacts,
   updateRolebook,
   getRolebook,
+  updateLogo,
+  getLogo,
 }
 
