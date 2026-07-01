@@ -5,6 +5,7 @@ export interface IResult {
   _id?: Types.ObjectId;
   driver: Types.ObjectId; 
   distance: number;
+  point: number;
   event: Types.ObjectId;
   class: string; 
 }

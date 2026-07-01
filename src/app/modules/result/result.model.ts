@@ -13,6 +13,10 @@ const resultSchema = new Schema<IResult>(
       type: Number,
       required: [true, 'Distance is required'],
     },
+    point: {
+      type: Number,
+      required: [true, 'Points are required'],
+    },
     event: {
       type: Schema.Types.ObjectId,
       ref: 'Event',
