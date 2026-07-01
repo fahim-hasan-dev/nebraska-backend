@@ -18,21 +18,21 @@ router.post(
 // Get sponsor requests list
 router.get(
   '/',
-  auth(USER_ROLES.ADMIN),
+  auth(USER_ROLES.ADMIN, USER_ROLES.SUPER_ADMIN),
   SponsorRequestController.getAllSponsorRequests
 );
 
 // Get sponsor request details by ID
 router.get(
   '/:id',
-  auth(USER_ROLES.ADMIN),
+  auth(USER_ROLES.ADMIN, USER_ROLES.SUPER_ADMIN),
   SponsorRequestController.getSponsorRequestById
 );
 
 // Update sponsor request status (Admin only)
 router.patch(
   '/:id/status',
-  auth(USER_ROLES.ADMIN),
+  auth(USER_ROLES.ADMIN, USER_ROLES.SUPER_ADMIN),
   validateRequest(SponsorRequestValidations.updateSponsorRequestStatusZodSchema),
   SponsorRequestController.updateSponsorRequestStatus
 );
@@ -40,7 +40,7 @@ router.patch(
 // Delete/withdraw a sponsor request inquiry
 router.delete(
   '/:id',
-  auth(USER_ROLES.ADMIN),
+  auth(USER_ROLES.ADMIN, USER_ROLES.SUPER_ADMIN),
   SponsorRequestController.deleteSponsorRequest
 );
 

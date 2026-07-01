@@ -135,14 +135,16 @@ const login = async (payload: ILoginData): Promise<IAuthResponse> => {
 }
 
 const adminLogin = async (payload: ILoginData): Promise<IAuthResponse> => {
+
   const { email, phone } = payload
-  const query = email ? { email: email.trim().toLowerCase() } : { phone: phone }
+  const query = email ? { email: email.trim() } : { phone: phone }
 
   const isUserExist = await User.findOne({
     ...query,
   })
     .select('+password +authentication')
     .lean()
+
 
   if (!isUserExist) {
     throw new ApiError(
@@ -151,7 +153,14 @@ const adminLogin = async (payload: ILoginData): Promise<IAuthResponse> => {
     )
   }
 
-  if (isUserExist.role !== USER_ROLES.ADMIN) {
+  if(isUserExist.status !== USER_STATUS.ACTIVE){
+    throw new ApiError(
+      StatusCodes.BAD_REQUEST,
+      'Your account is not active. Please contact the administrator.',
+    )
+  }
+
+  if (isUserExist.role !== USER_ROLES.ADMIN && isUserExist.role !== USER_ROLES.SUPER_ADMIN) {
     throw new ApiError(
       StatusCodes.BAD_REQUEST,
       'You are not authorized to login as admin',

@@ -42,39 +42,6 @@ const createEventZodSchema = z.object({
     entryFee: z.number({
       required_error: 'Entry fee is required',
     }).min(1, 'Entry fee cannot be less than 1'),
-  }).refine((bodyData) => {
-    const { date, time } = bodyData;
-    try {
-      const datePart = date.includes('T') ? date.split('T')[0] : date;
-      let timePart = time.trim();
-      if (/am|pm/i.test(timePart)) {
-        const match = timePart.match(/^(\d{1,2}):(\d{2})\s*(am|pm)$/i);
-        if (match) {
-          let hours = parseInt(match[1]);
-          const minutes = match[2];
-          const ampm = match[3].toLowerCase();
-          if (ampm === 'pm' && hours < 12) hours += 12;
-          if (ampm === 'am' && hours === 12) hours = 0;
-          timePart = `${String(hours).padStart(2, '0')}:${minutes}`;
-        }
-      }
-      const timeMatch = timePart.match(/^(\d{2}):(\d{2})/);
-      let finalTime = '00:00';
-      if (timeMatch) {
-        finalTime = `${timeMatch[1]}:${timeMatch[2]}`;
-      }
-      const combinedString = `${datePart}T${finalTime}:00`;
-      const parsedDate = new Date(combinedString);
-      if (isNaN(parsedDate.getTime())) {
-        return new Date(date) >= new Date();
-      }
-      return parsedDate >= new Date();
-    } catch (err) {
-      return false;
-    }
-  }, {
-    message: 'Event date and time cannot be in the past',
-    path: ['date'],
   }),
 });
 

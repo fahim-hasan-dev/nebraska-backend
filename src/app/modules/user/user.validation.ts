@@ -52,10 +52,30 @@ export const createDriverSchema = z.object({
   })
 });
 
+export const createAdminSchema = z.object({
+  body: z.object({
+    email: z.string({ required_error: 'Email is required' }).email("Invalid email address").toLowerCase().trim(),
+    fullName: z.string({ required_error: 'Full name is required' }).min(1, "Full name is required"),
+    phone: z.string({ required_error: 'Phone number is required' }).min(1, "Phone number is required"),
+    address: z.string({ required_error: 'Address is required' }).min(1, "Address is required"),
+    password: z.string({ required_error: 'Password is required' }).min(6, "Password must be at least 6 characters"),
+  })
+});
+
+export const updateAdminStatusSchema = z.object({
+  body: z.object({
+    status: z.enum([USER_STATUS.ACTIVE, USER_STATUS.RESTRICTED, USER_STATUS.DELETED], {
+      required_error: 'Status is required and must be active, restricted, or deleted',
+    }),
+  })
+});
+
 export const UserValidations = {
   userSignupSchema,
   userLoginSchema,
   userUpdateSchema,
   changePasswordSchema,
   createDriverSchema,
+  createAdminSchema,
+  updateAdminStatusSchema,
 };

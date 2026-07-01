@@ -18,7 +18,7 @@ router.post(
 // Admin manually registers a driver directly with approved status (Admin only)
 router.post(
   '/admin-add',
-  auth(USER_ROLES.ADMIN),
+  auth(USER_ROLES.ADMIN, USER_ROLES.SUPER_ADMIN),
   validateRequest(EventRegistrationValidations.adminAddRegistrationZodSchema),
   EventRegistrationController.adminAddEventRegistration
 );
@@ -26,7 +26,7 @@ router.post(
 // Draw pulling order positions (Admin only)
 router.post(
   '/draw',
-  auth(USER_ROLES.ADMIN),
+  auth(USER_ROLES.ADMIN, USER_ROLES.SUPER_ADMIN),
   validateRequest(EventRegistrationValidations.drawEventRegistrationZodSchema),
   EventRegistrationController.drawRegistrations
 );
@@ -34,7 +34,7 @@ router.post(
 // Cancel drawing positions (Admin only)
 router.post(
   '/cancel-draw',
-  auth(USER_ROLES.ADMIN),
+  auth(USER_ROLES.ADMIN, USER_ROLES.SUPER_ADMIN),
   validateRequest(EventRegistrationValidations.drawEventRegistrationZodSchema),
   EventRegistrationController.cancelDrawRegistrations
 );
@@ -42,21 +42,21 @@ router.post(
 // Get registrations (driver gets their own, admin gets all)
 router.get(
   '/',
-  auth(USER_ROLES.ADMIN, USER_ROLES.DRIVER, USER_ROLES.FAN),
+  auth(USER_ROLES.ADMIN, USER_ROLES.SUPER_ADMIN, USER_ROLES.DRIVER, USER_ROLES.FAN),
   EventRegistrationController.getAllEventRegistrations
 );
 
 // Get single registration detail
 router.get(
   '/:id',
-  auth(USER_ROLES.ADMIN, USER_ROLES.DRIVER, USER_ROLES.FAN),
+  auth(USER_ROLES.ADMIN, USER_ROLES.SUPER_ADMIN, USER_ROLES.DRIVER, USER_ROLES.FAN),
   EventRegistrationController.getEventRegistrationById
 );
 
 // Admin updates status (approve/reject)
 router.patch(
   '/:id/status',
-  auth(USER_ROLES.ADMIN),
+  auth(USER_ROLES.ADMIN, USER_ROLES.SUPER_ADMIN),
   validateRequest(EventRegistrationValidations.updateEventRegistrationStatusZodSchema),
   EventRegistrationController.updateEventRegistrationStatus
 );
@@ -64,7 +64,7 @@ router.patch(
 // Withdraw/delete registration
 router.delete(
   '/:id',
-  auth(USER_ROLES.ADMIN, USER_ROLES.DRIVER),
+  auth(USER_ROLES.ADMIN, USER_ROLES.SUPER_ADMIN, USER_ROLES.DRIVER),
   EventRegistrationController.deleteEventRegistration
 );
 

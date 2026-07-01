@@ -86,12 +86,55 @@ const createDriver = catchAsync(async (req: Request, res: Response) => {
   })
 })
 
+const createAdmin = catchAsync(async (req: Request, res: Response) => {
+  const result = await UserServices.createAdmin(req.body)
+  sendResponse<IUser>(res, {
+    statusCode: StatusCodes.CREATED,
+    success: true,
+    message: 'Admin account created successfully',
+    data: result,
+  })
+})
+
+const updateAdminStatus = catchAsync(async (req: Request, res: Response) => {
+  const result = await UserServices.updateAdminStatus(req.params.id, req.body.status)
+  sendResponse<IUser>(res, {
+    statusCode: StatusCodes.OK,
+    success: true,
+    message: 'Admin status updated successfully',
+    data: result,
+  })
+})
+
+const deleteAdmin = catchAsync(async (req: Request, res: Response) => {
+  await UserServices.deleteAdmin(req.params.id)
+  sendResponse<IUser>(res, {
+    statusCode: StatusCodes.OK,
+    success: true,
+    message: 'Admin account deleted successfully',
+  })
+})
+
+const getAllAdmins = catchAsync(async (req: Request, res: Response) => {
+  const result = await UserServices.getAllAdmins(req.query)
+  sendResponse(res, {
+    statusCode: StatusCodes.OK,
+    success: true,
+    message: 'Admins fetched successfully',
+    data: {...result},
+  })
+})
+
 export const UserController = {
   getAllUser,
+  getAllAdmins,
   updateProfile,
   getSingleUser,
   deleteUser,
   getProfile,
   deleteMyAccount,
   createDriver,
+  createAdmin,
+  updateAdminStatus,
+  deleteAdmin,
 }

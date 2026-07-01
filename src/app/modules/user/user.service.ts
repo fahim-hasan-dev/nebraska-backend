@@ -15,7 +15,7 @@ import { emailQueue } from '../../../helpers/queue'
 
 const getAllUser = async (query: Record<string, unknown>) => {
     const userQueryBuilder = new QueryBuilder(
-        User.find({ role: { $ne: USER_ROLES.ADMIN } }).select('-password -authentication'),
+        User.find({ role: { $nin: [USER_ROLES.ADMIN, USER_ROLES.SUPER_ADMIN] } }).select('-password -authentication'),
         query
     )
         .filter()
@@ -28,11 +28,35 @@ const getAllUser = async (query: Record<string, unknown>) => {
     const users = await userQueryBuilder.modelQuery.lean()
     const paginationInfo = await userQueryBuilder.getPaginationInfo()
 
-    const totalUsers = await User.countDocuments({ role: { $ne: USER_ROLES.ADMIN } })
+    const totalUsers = await User.countDocuments({ role: { $nin: [USER_ROLES.ADMIN, USER_ROLES.SUPER_ADMIN] } })
     const staticData = { totalUsers }
 
     return {
         users,
+        staticData,
+        meta: paginationInfo,
+    }
+}
+
+const getAllAdmins = async (query: Record<string, unknown>) => {
+    const userQueryBuilder = new QueryBuilder(
+        User.find({ role: USER_ROLES.ADMIN }).select('-password -authentication'),
+        query
+    )
+        .filter()
+        .search(["fullName","email","phone"])
+        .sort()
+        .fields()
+        .paginate()
+
+    const admins = await userQueryBuilder.modelQuery.lean()
+    const paginationInfo = await userQueryBuilder.getPaginationInfo()
+
+    const totalAdmins = await User.countDocuments({ role: USER_ROLES.ADMIN })
+    const staticData = { totalAdmins }
+
+    return {
+        admins,
         staticData,
         meta: paginationInfo,
     }
@@ -163,13 +187,78 @@ const createDriver = async (payload: Partial<IUser>) => {
     return result;
 }
 
+const createAdmin = async (payload: Partial<IUser>) => {
+    const email = payload.email?.toLowerCase().trim();
+    const isUserExist = await User.findOne({
+        email,
+        status: { $ne: USER_STATUS.DELETED },
+    });
+
+    if (isUserExist) {
+        throw new ApiError(StatusCodes.BAD_REQUEST, 'An account with this email already exists.');
+    }
+
+    const adminData = {
+        ...payload,
+        role: USER_ROLES.ADMIN,
+        verified: true,
+        status: USER_STATUS.ACTIVE,
+    };
+
+    const result = await User.create(adminData);
+    if (!result) {
+        throw new ApiError(StatusCodes.BAD_REQUEST, 'Failed to create admin account.');
+    }
+
+    return result;
+}
+
+const updateAdminStatus = async (id: string, status: USER_STATUS) => {
+    const user = await User.findById(id);
+    if (!user) {
+        throw new ApiError(StatusCodes.NOT_FOUND, 'Admin account not found');
+    }
+    if (user.role !== USER_ROLES.ADMIN) {
+        throw new ApiError(StatusCodes.BAD_REQUEST, 'Specified user is not an admin');
+    }
+
+    user.status = status;
+    await user.save();
+
+    // Invalidate profile cache
+    await RedisHelper.deleteCache(`user:profile:${id}`);
+
+    return user;
+}
+
+const deleteAdmin = async (id: string) => {
+    const user = await User.findById(id);
+    if (!user) {
+        throw new ApiError(StatusCodes.NOT_FOUND, 'Admin account not found');
+    }
+    if (user.role !== USER_ROLES.ADMIN) {
+        throw new ApiError(StatusCodes.BAD_REQUEST, 'Specified user is not an admin');
+    }
+
+    const result = await User.findByIdAndDelete(id);
+
+    // Invalidate profile cache
+    await RedisHelper.deleteCache(`user:profile:${id}`);
+
+    return result;
+}
+
 export const UserServices = {
     updateProfile,
     getAllUser,
+    getAllAdmins,
     getSingleUser,
     deleteUser,
     getProfile,
     deleteMyAccount,
     createDriver,
+    createAdmin,
+    updateAdminStatus,
+    deleteAdmin,
 }
 

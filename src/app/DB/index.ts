@@ -18,10 +18,10 @@ export const seedAdmin = async () => {
     }
 
     try {
-        // Check if an admin user already exists (by role 'admin' or by configured admin email)
+        // Check if a super admin user already exists
         const isAdminExist = await User.findOne({
             $or: [
-                { role: USER_ROLES.ADMIN },
+                { role: USER_ROLES.SUPER_ADMIN },
                 { email: adminEmail }
             ]
         })
@@ -29,7 +29,7 @@ export const seedAdmin = async () => {
         if (isAdminExist) {
             logger.info(
                 colors.blue(
-                    'ℹ️ Admin account already exists. Skipping admin creation.'
+                    'ℹ️ Admin/Super Admin account already exists. Skipping admin creation.'
                 )
             )
             return
@@ -42,7 +42,7 @@ export const seedAdmin = async () => {
             fullName: config.super_admin.name || 'Super Admin',
             phone: '+1234567890',
             address: 'Nebraska, USA',
-            role: USER_ROLES.ADMIN,
+            role: USER_ROLES.SUPER_ADMIN,
             verified: true,
             status: USER_STATUS.ACTIVE,
         }

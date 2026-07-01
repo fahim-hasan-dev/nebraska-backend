@@ -11,7 +11,7 @@ const router = express.Router();
 // Admin can create a new event with multiple images uploaded in pictures field
 router.post(
   '/create',
-  auth(USER_ROLES.ADMIN),
+  auth(USER_ROLES.ADMIN, USER_ROLES.SUPER_ADMIN),
   fileAndBodyProcessorUsingDiskStorage(),
   validateRequest(EventValidations.createEventZodSchema),
   EventController.createEvent
@@ -20,21 +20,21 @@ router.post(
 // Anyone logged in can get all events
 router.get(
   '/',
-  auth(USER_ROLES.ADMIN, USER_ROLES.FAN, USER_ROLES.DRIVER),
+  auth(USER_ROLES.ADMIN, USER_ROLES.SUPER_ADMIN, USER_ROLES.FAN, USER_ROLES.DRIVER),
   EventController.getAllEvents
 );
 
 // Anyone logged in can get details of an event by ID
 router.get(
   '/:id',
-  auth(USER_ROLES.ADMIN, USER_ROLES.FAN, USER_ROLES.DRIVER),
+  auth(USER_ROLES.ADMIN, USER_ROLES.SUPER_ADMIN, USER_ROLES.FAN, USER_ROLES.DRIVER),
   EventController.getEventById
 );
 
 // Admin can update event details and images
 router.patch(
   '/:id',
-  auth(USER_ROLES.ADMIN),
+  auth(USER_ROLES.ADMIN, USER_ROLES.SUPER_ADMIN),
   fileAndBodyProcessorUsingDiskStorage(),
   validateRequest(EventValidations.updateEventZodSchema),
   EventController.updateEvent
@@ -43,14 +43,14 @@ router.patch(
 // Admin can delete an event
 router.delete(
   '/:id',
-  auth(USER_ROLES.ADMIN),
+  auth(USER_ROLES.ADMIN, USER_ROLES.SUPER_ADMIN),
   EventController.deleteEvent
 );
 
 // Admin can add a class to an event
 router.post(
   '/:id/class',
-  auth(USER_ROLES.ADMIN),
+  auth(USER_ROLES.ADMIN, USER_ROLES.SUPER_ADMIN),
   validateRequest(EventValidations.addClassZodSchema),
   EventController.addClassToEvent
 );
@@ -58,7 +58,7 @@ router.post(
 // Admin can update a class status
 router.patch(
   '/:id/class/:className/status',
-  auth(USER_ROLES.ADMIN),
+  auth(USER_ROLES.ADMIN, USER_ROLES.SUPER_ADMIN),
   validateRequest(EventValidations.updateClassStatusZodSchema),
   EventController.updateClassStatus
 );
@@ -66,7 +66,7 @@ router.patch(
 // Admin can delete a class from an event
 router.delete(
   '/:id/class/:className',
-  auth(USER_ROLES.ADMIN),
+  auth(USER_ROLES.ADMIN, USER_ROLES.SUPER_ADMIN),
   EventController.deleteClassFromEvent
 );
 

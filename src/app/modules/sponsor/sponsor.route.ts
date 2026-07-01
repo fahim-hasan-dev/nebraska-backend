@@ -11,7 +11,7 @@ const router = express.Router();
 // Add new sponsor (Admin only)
 router.post(
   '/create',
-  auth(USER_ROLES.ADMIN),
+  auth(USER_ROLES.ADMIN, USER_ROLES.SUPER_ADMIN),
   fileAndBodyProcessorUsingDiskStorage(),
   validateRequest(SponsorValidations.createSponsorZodSchema),
   SponsorController.createSponsor
@@ -20,21 +20,21 @@ router.post(
 // Get sponsors list (Admin, Driver, Fan)
 router.get(
   '/',
-  auth(USER_ROLES.ADMIN, USER_ROLES.DRIVER, USER_ROLES.FAN),
+  auth(USER_ROLES.ADMIN, USER_ROLES.SUPER_ADMIN, USER_ROLES.DRIVER, USER_ROLES.FAN),
   SponsorController.getAllSponsors
 );
 
 // Get sponsor details by ID (Admin, Driver, Fan)
 router.get(
   '/:id',
-  auth(USER_ROLES.ADMIN, USER_ROLES.DRIVER, USER_ROLES.FAN),
+  auth(USER_ROLES.ADMIN, USER_ROLES.SUPER_ADMIN, USER_ROLES.DRIVER, USER_ROLES.FAN),
   SponsorController.getSponsorById
 );
 
 // Update sponsor details (Admin only)
 router.patch(
   '/:id',
-  auth(USER_ROLES.ADMIN),
+  auth(USER_ROLES.ADMIN, USER_ROLES.SUPER_ADMIN),
   fileAndBodyProcessorUsingDiskStorage(),
   validateRequest(SponsorValidations.updateSponsorZodSchema),
   SponsorController.updateSponsor
@@ -43,7 +43,7 @@ router.patch(
 // Delete sponsor (Admin only)
 router.delete(
   '/:id',
-  auth(USER_ROLES.ADMIN),
+  auth(USER_ROLES.ADMIN, USER_ROLES.SUPER_ADMIN),
   SponsorController.deleteSponsor
 );
 

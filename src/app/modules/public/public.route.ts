@@ -10,7 +10,7 @@ const router = express.Router()
 
 router.post(
   '/',
-  auth(USER_ROLES.ADMIN),
+  auth(USER_ROLES.ADMIN, USER_ROLES.SUPER_ADMIN),
   validateRequest(PublicValidation.create),
   PublicController.createPublic,
 )
@@ -19,7 +19,7 @@ router.post(
 router.get('/rolebook', PublicController.getRolebook)
 router.post(
   '/rolebook',
-  auth(USER_ROLES.ADMIN),
+  auth(USER_ROLES.ADMIN, USER_ROLES.SUPER_ADMIN),
   fileAndBodyProcessorUsingDiskStorage(),
   PublicController.updateRolebook
 )
@@ -27,14 +27,14 @@ router.post(
 router.get('/logo', PublicController.getLogo)
 router.post(
   '/logo',
-  auth(USER_ROLES.ADMIN),
+  auth(USER_ROLES.ADMIN, USER_ROLES.SUPER_ADMIN),
   fileAndBodyProcessorUsingDiskStorage(),
   PublicController.updateLogo
 )
 
 router.get('/:type', PublicController.getAllPublics)
 
-router.delete('/:id', auth(USER_ROLES.ADMIN), PublicController.deletePublic)
+router.delete('/:id', auth(USER_ROLES.ADMIN, USER_ROLES.SUPER_ADMIN), PublicController.deletePublic)
 router.post(
   '/contact',
   validateRequest(PublicValidation.contactZodSchema),
@@ -44,18 +44,18 @@ router.get('/contact/all', PublicController.getAllContacts)
 
 router.post(
   '/faq',
-  auth(USER_ROLES.ADMIN),
+  auth(USER_ROLES.ADMIN, USER_ROLES.SUPER_ADMIN),
   validateRequest(FaqValidations.create),
   PublicController.createFaq,
 )
 router.patch(
   '/faq/:id',
-  auth(USER_ROLES.ADMIN),
+  auth(USER_ROLES.ADMIN, USER_ROLES.SUPER_ADMIN),
   validateRequest(FaqValidations.update),
   PublicController.updateFaq,
 )
 router.get('/faq/single/:id', PublicController.getSingleFaq)
 router.get('/faq/all', PublicController.getAllFaqs)
-router.delete('/faq/:id', auth(USER_ROLES.ADMIN), PublicController.deleteFaq)
+router.delete('/faq/:id', auth(USER_ROLES.ADMIN, USER_ROLES.SUPER_ADMIN), PublicController.deleteFaq)
 
 export const PublicRoutes = router
