@@ -4,7 +4,6 @@ import { Types } from 'mongoose';
 export interface ISponsor {
   _id?: Types.ObjectId;
   name: string;
-  type: 'platinum' | 'gold' | 'silver';
   image: string;
   isActive: boolean;
 }

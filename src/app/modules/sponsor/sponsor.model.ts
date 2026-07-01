@@ -9,11 +9,6 @@ const sponsorSchema = new Schema<ISponsor>(
       required: [true, 'Sponsor name is required'],
       trim: true,
     },
-    type: {
-      type: String,
-      enum: ['platinum', 'gold', 'silver'],
-      required: [true, 'Sponsor type is required'],
-    },
     image: {
       type: String,
       required: [true, 'Sponsor logo is required'],
